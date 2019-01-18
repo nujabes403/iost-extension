@@ -2,5 +2,25 @@
 @import "colors.scss";
 
 .Header {
-  
+  position: relative;
+  background-color: $brand-black;
+  padding: 10px;
+}
+
+.Header__logo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  background-image: url(/static/images/logo.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+.Header__NetworkSelector {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
 }

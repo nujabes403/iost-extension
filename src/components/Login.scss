@@ -1,0 +1,40 @@
+@import "colors.scss";
+
+.Login {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-family: 'Montserrat';
+}
+
+.Login__label {
+  font-size: 14px;
+}
+
+.Login__input {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  font-size: 20px;
+  padding: 6px;
+  border-bottom: 1px solid $brand-black2;
+  margin-bottom: 14px;
+
+  &--account {
+
+  }
+
+  &--privateKey {
+
+  }
+}
+
+.Login__button {
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-size: 14px;
+  width: 200px;
+  background-color: $brand-black2;
+  display: block;
+}

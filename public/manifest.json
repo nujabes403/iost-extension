@@ -1,6 +1,5 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "IOST Extension",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,8 +7,41 @@
       "type": "image/x-icon"
     }
   ],
-  "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+	"manifest_version": 2,
+	"version": "0.0.1",
+	"description": "Extension for IOST",
+	"browser_action": {
+		"default_popup": "index.html",
+		"default_title": "IOST Extension"
+	},
+	"icons": {
+		"16": "assets/icon16.png",
+		"48": "assets/icon48.png",
+		"128": "assets/icon128.png"
+	},
+	"permissions": [
+    "webRequest",
+    "*://developer.mozilla.org/",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "app/content-script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "app/inpage.js"
+  ]
 }

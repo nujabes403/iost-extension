@@ -1,0 +1,37 @@
+@import "colors.scss";
+
+.Dropdown {
+  position: relative;
+  border: 1px solid $brand-blue;
+  border-radius: 20px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 300ms;
+  &:hover {
+    background-color: $brand-blue;
+  }
+}
+
+.Dropdown__currentItem {
+  color: $white;
+}
+
+.Dropdown__menu {
+  background-color: rgba($black, .8);
+  position: absolute;
+  top: 46px;
+  width: 300px;
+  right: -11px;
+}
+
+.Dropdown__menuItem {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  color: $white;
+  font-size: 18px;
+  text-align: center;
+  &:hover {
+    background-color: rgba($white, 0.05);
+  }
+}

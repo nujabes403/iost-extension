@@ -1,0 +1,59 @@
+@import "colors.scss";
+
+.Account {
+
+}
+
+.Account__header {
+  position: relative;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid $light-grey;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.Account__headerTitle {
+  color: $dark-grey;
+  font-size: 16px;
+}
+
+.Account__accountName {
+  color: $light-grey2;
+  font-size: 12px;
+}
+
+.Account__logoutButton {
+  font-size: 10px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 2px solid transparent;
+  color: $brand-red;
+  background-color: $white !important;
+  transition: border-color 300ms;
+
+  &:hover {
+    border: 2px solid $brand-red;
+  }
+}
+
+.Account__TokenTransfer {
+  width: 63%;
+  margin: 0 auto;
+}
+
+.Account__buttons {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.Account__button {
+  margin: 0 6px;
+  font-family: 'Montserrat';
+  font-size: 12px;
+  display: inline-block;
+  padding: 10px;
+  width: 45%;
+}

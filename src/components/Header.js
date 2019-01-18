@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router'
 import cx from 'classnames'
 
+import NetworkSelector from 'components/NetworkSelector'
+
 import './Header.scss'
 
 class Header extends Component<Props> {
@@ -12,7 +14,10 @@ class Header extends Component<Props> {
   render() {
     return (
       <div className="Header">
-        Header
+        <div className="Header__logo" />
+        <NetworkSelector
+          className="Header__NetworkSelector"
+        />
       </div>
     )
   }

@@ -1,0 +1,43 @@
+@import "colors.scss";
+
+.Button {
+  border: 0;
+  padding: 8px;
+  border-radius: 5px;
+  text-align: center;
+  color: $white;
+  outline: 0;
+  cursor: pointer;
+  transition: background-color 300ms, color 300ms;
+  background-color: $brand-black2;
+
+  &:hover {
+    background-color: rgba($brand-black2, .8);
+  }
+
+  &:focus {
+    background-color: rgba($brand-black2, .9);
+  }
+
+  &--blue {
+    color: $brand-blue;
+    background-color: $white;
+    border: 1px solid $brand-blue;
+
+    &:hover {
+      color: $white;
+      background-color: rgba($brand-blue, .8);
+    }
+
+    &:focus {
+      color: $white;
+      background-color: rgba($brand-blue, .6);
+    }
+  }
+}
+
+.Button__loading {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}

@@ -64,6 +64,7 @@ module.exports = {
       actions: path.resolve(__dirname, 'src/actions'),
       images: path.resolve(__dirname, 'static/images/'),
       pages: path.resolve(__dirname, 'src/pages/'),
+      iostJS: path.resolve(__dirname, 'src/iost/'),
     },
   },
   plugins: [

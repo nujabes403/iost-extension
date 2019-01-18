@@ -75,6 +75,7 @@ module.exports = {
       actions: path.resolve(__dirname, 'src/actions'),
       images: path.resolve(__dirname, 'static/images/'),
       pages: path.resolve(__dirname, 'src/pages/'),
+      iostJS: path.resolve(__dirname, 'src/iost/'),
     },
   },
   optimization: {
@@ -97,7 +98,12 @@ module.exports = {
       from: 'static',
       to: 'static',
       toType: 'dir',
-    }]),
+    },
+    { from: 'public/manifest.json' },
+    { from: 'public/assets', to: 'assets', toType: 'dir' },
+    { from: 'public/app', to: 'app', toType: 'dir' },
+    { from: 'public/askTx.html' },
+  ]),
     new Dotenv({
       path: envPath,
     }),

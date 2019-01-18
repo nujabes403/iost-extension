@@ -1,3 +1,18 @@
+@font-face {
+  font-family: 'SF-UI';
+  src: url(/static/fonts/SF-UI-Display-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(/static/fonts/Roboto-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(/static/fonts/Montserrat-Regular.ttf) format('truetype');
+}
+
 html {
   font-size: 10px;
 }
@@ -5,6 +20,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  font-family: 'SF-UI';
 
   * {
     box-sizing: border-box;
