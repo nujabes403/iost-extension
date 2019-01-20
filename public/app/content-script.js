@@ -26,9 +26,17 @@ function listenForProviderRequest() {
         chrome.runtime.sendMessage({
           action: data.action,
           payload: data.payload,
+          actionId: data.actionId,
         })
       default:
     }
+  })
+
+  chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    // From content script to webpage injected script.
+    window.postMessage({
+      message,
+    }, '*')
   })
 }
 

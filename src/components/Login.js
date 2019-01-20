@@ -26,14 +26,8 @@ class Login extends Component<Props> {
   tryLogin = async () => {
     const { account, privateKey } = this.state
     const { changeLocation } = this.props
+
     iost.loginAccount(account, privateKey)
-    chrome.runtime.sendMessage({
-      action: 'LOGIN_SUCCESS',
-      payload: {
-        account,
-        privateKey,
-      }
-    })
     changeLocation('/account')
   }
 

@@ -34,10 +34,23 @@ const iost = {
     const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey))
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
+
+    // CHROME send message
+    chrome.runtime.sendMessage({
+      action: 'LOGIN_SUCCESS',
+      payload: {
+        id,
+        encodedPrivateKey,
+      }
+    })
     return iost.account
   },
   logoutAccount: () => {
     iost.account = new IOST.Account('empty')
+    // CHROME send message
+    chrome.runtime.sendMessage({
+      action: 'LOGOUT_SUCCESS'
+    })
   }
 }
 

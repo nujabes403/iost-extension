@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import iost from 'iostJS/iost'
 import Button from 'components/Button'
@@ -20,6 +21,11 @@ class Account extends Component<Props> {
     changeLocation('/login')
   }
 
+  moveToSetting = () => {
+    const { changeLocation } = this.props
+    changeLocation('/setting')
+  }
+
   render() {
     return (
       <div className="Account">
@@ -27,7 +33,13 @@ class Account extends Component<Props> {
           <p className="Account__headerTitle">Account</p>
           <p className="Account__accountName">{iost.account.getID()}</p>
           <Button
-            className="Account__logoutButton"
+            className={cx('Account__controlButton', 'Account__controlButton--setting')}
+            onClick={this.moveToSetting}
+          >
+            Settings
+          </Button>
+          <Button
+            className={cx('Account__controlButton', 'Account__controlButton--logout')}
             onClick={this.logout}
           >
             Logout

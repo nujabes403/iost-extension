@@ -4,40 +4,59 @@ function TxController() {
   this.txQueue = []
 }
 
-TxController.prototype.addTx = function(tx) {
-  this.txQueue.push(tx)
+TxController.prototype.addTx = function(txInfo) {
+  this.txQueue.push(txInfo)
   return this.txQueue.length
 }
 
 TxController.prototype.processTx = function(txIdx) {
-  if (!this.txQueue[txIdx]) throw new Error(`That TX is not exist. slotIdx: ${txIdx}`)
-  console.log(this.txQueue[txIdx], 'this.txQueue[txIdx]')
-  const tx = iostController.iostInstance.callABI(...this.txQueue[txIdx])
+  const txInfo = this.txQueue[txIdx]
+  if (!txInfo) throw new Error(`That TX does not exist. slotIdx: ${txIdx}`)
+
+  const txObject = txInfo.tx
+  const actionId = txInfo.actionId
+
+  const tx = iostController.iostInstance.callABI(...txObject)
   tx.addApprove("*", "unlimited")
-  tx.addApprove("iost", this.txQueue[txIdx][2][3])
-  console.log(tx, 'tx')
-  tx.chain_id = 1024
-  console.log(tx, 'tx after')
+
+  if (txObject[1] === 'transfer') {
+    tx.addApprove("iost", txObject[2][3])
+  }
 
   // 2. Sign on transfer tx
-  console.log(iostController.account, 'iostController.account')
   iostController.account.signTx(tx)
 
   // 3. Handle transfer tx
   const handler = new iostController.pack.TxHandler(tx, iostController.rpc)
 
-  handler
-    .onPending((pending) => {
-      console.log(pending, 'pending')
-    })
-    .onSuccess(async (response) => {
-      console.log(response, 'success response')
-    })
-    .onFailed((err) => {
-      console.log(err, 'err')
-    })
-    .send()
-    .listen(1000, 15)
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    const activeTab = tabs[0].id
+    handler
+      .onPending((pending) => {
+        console.log(actionId, pending)
+        chrome.tabs.sendMessage(activeTab, {
+          actionId,
+          pending: pending
+        })
+      })
+      .onSuccess(async (response) => {
+        console.log(actionId, response)
+        chrome.tabs.sendMessage(activeTab, {
+          actionId,
+          success: response
+        })
+      })
+      .onFailed((err) => {
+        console.log(actionId, err)
+        chrome.tabs.sendMessage(activeTab, {
+          actionId,
+          failed: err
+        })
+      })
+      .send()
+      .listen(1000, 15)
+  })
+
   this.txQueue.splice(txIdx, 1)
 }
 

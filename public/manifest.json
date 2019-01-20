@@ -22,7 +22,9 @@
 	"permissions": [
     "webRequest",
     "*://developer.mozilla.org/",
-    "tabs"
+    "activeTab",
+    "tabs",
+    "storage"
   ],
   "background": {
     "scripts": ["app/background.js"]

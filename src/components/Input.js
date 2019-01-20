@@ -8,7 +8,11 @@ type Props = {
 }
 
 const Input = (props) => (
-  <input {...props} className={cx('Input', props.className)} />
+  <input
+    {...props}
+    className={cx('Input', props.className)}
+    autoComplete="off"
+  />
 )
 
 export default Input

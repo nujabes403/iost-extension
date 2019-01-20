@@ -1,0 +1,25 @@
+@import "colors.scss";
+
+.NetworkSetting {
+  margin-bottom: 20px;
+}
+
+.NetworkSetting__title {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.NetworkSetting__input {
+  border-bottom: 1px solid $brand-black2;
+  display: inline-block;
+}
+
+.NetworkSetting__button {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.NetworkSetting__errorMessage {
+  font-size: 8px;
+  color: $brand-red;
+}

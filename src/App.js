@@ -5,7 +5,10 @@ import Header from 'components/Header'
 import Landing from 'components/Landing'
 import Login from 'components/Login'
 import Account from 'components/Account'
+import Settings from 'components/Settings'
 import Popup from 'components/Popup'
+
+import iost from 'iostJS/iost'
 
 import './App.scss'
 
@@ -33,7 +36,20 @@ class App extends Component<Props> {
         return <Login changeLocation={this.changeLocation} />
       case '/account':
         return <Account changeLocation={this.changeLocation} />
+      case '/setting':
+        return <Settings changeLocation={this.changeLocation} />
     }
+  }
+
+  componentDidMount() {
+    chrome.storage.sync.get(['activeAccount'], (result) => {
+      const activeAccount = result && result.activeAccount
+      if (!activeAccount) return
+
+      const { id, encodedPrivateKey } = activeAccount
+      iost.loginAccount(id, encodedPrivateKey)
+      this.changeLocation('/account')
+    })
   }
 
   render() {

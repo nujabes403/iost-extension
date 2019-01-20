@@ -5,7 +5,8 @@ const TX_CANCEL = 'TX_CANCEL'
 const CHANGE_NETWORK = 'CHANGE_NETWORK'
 
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
-
+const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
+const SAVE_NEW_NETWORK = 'SAVE_NEW_NETWORK'
 
 module.exports = {
   // tx
@@ -18,4 +19,8 @@ module.exports = {
 
   // auth
   LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+
+  // network
+  SAVE_NEW_NETWORK,
 }

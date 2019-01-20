@@ -5,6 +5,8 @@ import iost from 'iostJS/iost'
 import Input from 'components/Input'
 import Button from 'components/Button'
 import TokenBalance from 'components/TokenBalance'
+import TokenTransferSuccess from 'components/TokenTransferSuccess'
+import ui from 'utils/ui'
 
 import './TokenTransfer.scss'
 
@@ -41,11 +43,17 @@ class TokenTransfer extends Component<Props> {
 
     this.setState({ isSending: true })
     handler
+      .onPending(async (res) => {
+        const intervalID = setInterval(async() => {
+          const tx = await iost.rpc.transaction.getTxByHash(res.hash)
+        }, 1000)
+      })
       .onSuccess(async (response) => {
-        console.log(response, 'success response')
-        const afterBalance = await iost.rpc.blockchain.getBalance(accountName, symbol)
         this.setState({
           isSending: false,
+        })
+        ui.openPopup({
+          content: <TokenTransferSuccess tx={response} />
         })
       })
       .onFailed((err) => {

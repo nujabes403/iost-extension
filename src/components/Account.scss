@@ -7,7 +7,7 @@
 .Account__header {
   position: relative;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid $light-grey;
   font-size: 14px;
   margin-bottom: 20px;
@@ -23,19 +23,32 @@
   font-size: 12px;
 }
 
-.Account__logoutButton {
+
+.Account__controlButton {
   font-size: 10px;
   position: absolute;
-  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   border: 2px solid transparent;
-  color: $brand-red;
   background-color: $white !important;
   transition: border-color 300ms;
 
-  &:hover {
-    border: 2px solid $brand-red;
+  &--setting {
+    color: $brand-black2;
+    right: 70px;
+
+    &:hover {
+      border: 2px solid $brand-black2;
+    }
+  }
+
+  &--logout {
+    color: $brand-red;
+    right: 10px;
+
+    &:hover {
+      border: 2px solid $brand-red;
+    }
   }
 }
 

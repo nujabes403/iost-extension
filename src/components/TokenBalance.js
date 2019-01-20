@@ -20,7 +20,10 @@ class TokenBalance extends Component<Props> {
   intervalID = null
 
   componentDidMount() {
-    this.intervalID = setInterval(this.getTokenBalance, GET_TOKEN_BALANCE_INTERVAL)
+    this.intervalID = setInterval(() => {
+      this.getTokenBalance()
+      this.getResourceBalance()
+    }, GET_TOKEN_BALANCE_INTERVAL)
   }
 
   componentWillUnmount() {
@@ -36,14 +39,28 @@ class TokenBalance extends Component<Props> {
     })
   }
 
+  getResourceBalance = async () => {
+    const { gas_info, ram_info } = await iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+    this.setState({
+      gas: gas_info && gas_info.current_total,
+      ram: ram_info && ram_info.available,
+      isLoading: false,
+    })
+  }
+
   render() {
-    const { amount, isLoading } = this.state
+    const { amount, gas, ram, isLoading } = this.state
     const { symbol } = this.props
     return (
       <div className="TokenBalance">
         <img className="TokenBalance__logo" src={iconSrc[symbol]} />
         <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
         <span className="TokenBalance__symbol">{symbol}</span>
+        <div className="TokenBalance__resources">
+          <span className="TokenBalance__gasResource">iGAS: {gas}</span>
+          &nbsp;/&nbsp;
+          <span className="TokenBalance__ramResource">iRAM: {ram}</span>
+        </div>
       </div>
     )
   }

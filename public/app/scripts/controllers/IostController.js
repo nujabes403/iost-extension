@@ -21,7 +21,10 @@ const iost = {
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
 
-    const { balance } = await iost.rpc.blockchain.getBalance(iost.account.getID(), 'iost')
+    // Save last network you used in extension storage.
+    chrome.storage.sync.set({
+      activeNetwork: url
+    })
   },
   // account
   loginAccount: (id, encodedPrivateKey) => {
@@ -29,10 +32,21 @@ const iost = {
     const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey))
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
+
+    // Save secure account information in extension storage.
+    chrome.storage.sync.set({
+      activeAccount: {
+        id,
+        encodedPrivateKey,
+      }
+    })
+
     return iost.account
   },
   logoutAccount: () => {
     iost.account = new IOST.Account('empty')
+    // Save secure account information in extension storage.
+    chrome.storage.sync.remove(['activeAccount'])
   }
 }
 

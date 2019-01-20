@@ -5,6 +5,7 @@ function confirmTx () {
       slotIdx: window.location.search.split('=')[1],
     }
   })
+  window.close()
 }
 
 function cancelTx () {
