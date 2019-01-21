@@ -1,0 +1,91 @@
+@import "colors.scss";
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(/static/fonts/Montserrat-Regular.ttf) format('truetype');
+}
+
+p {
+  margin: 0;
+}
+
+.AskPopup {
+  font-family: 'Montserrat';
+  text-align: center;
+}
+
+.AskPopup__title {
+  font-size: 20px;
+}
+
+.AskPopup__tx {
+  border: 1px solid $brand-deepblue;
+  padding: 10px;
+  text-align: center;
+}
+
+.AskPopup__button {
+  margin: 0 6px;
+
+  &--confirm {
+    background-color: $brand-deepblue;
+  }
+
+  &--cancel {
+    background-color: $brand-red;
+  }
+}
+
+.AskPopup__confirmMessage {
+  margin: 8px;
+  font-weight: bold;
+}
+
+.AskPopupSummary {
+  display: block;
+  word-break: break-all;
+}
+
+.AskPopupSummary__description {
+  padding: 8px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.AskPopupSummary__item {
+  font-weight: bold;
+
+  &--abi {
+    color: $brand-deepblue;
+  }
+
+  &--contractAddress {
+    display: block;
+    color: $brand-black;
+    font-size: 8px;
+  }
+
+  &--args {
+    color: $brand-red;
+  }
+}
+
+.AskPopupDetail {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid black;
+  margin-bottom: 6px;
+}
+
+.AskPopupDetail__contract {
+  font-size: 8px;
+  word-break: break-all;
+}
+
+.AskPopupDetail__abi {
+  display: inline-block;
+}
+
+.AskPopupDetail__args {
+  display: inline-block;
+}

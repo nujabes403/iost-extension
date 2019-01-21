@@ -17,12 +17,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         actionId: message.actionId,
       })
       const slotIdx = totalTxLength - 1
+      // const [contractAddress, abi, args] = message.payload
       chrome.windows.create({
-        url: `askTx.html?slotIdx=${slotIdx}`,
+        url: 'askTx.html'
+          + `?slotIdx=${slotIdx}`
+          + `&tx=${encodeURIComponent(JSON.stringify(message.payload))}`,
         type: 'popup',
         width: 400,
         height: 400,
-      }, console.log)
+      })
       break
     case ACTION.TX_CONFIRM:
       txController.processTx(message.payload.slotIdx)
