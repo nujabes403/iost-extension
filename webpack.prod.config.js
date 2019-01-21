@@ -10,7 +10,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 
-const extractCSS = new ExtractTextPlugin('bundle-[hash:6].css')
+const extractCSS = new ExtractTextPlugin('bundle-[name].css')
 
 const ENV_DIR = './config/'
 const envPath = ENV_DIR + `${process.env.NODE_ENV}`.toLowerCase() + '.env'
@@ -18,14 +18,14 @@ const envPath = ENV_DIR + `${process.env.NODE_ENV}`.toLowerCase() + '.env'
 module.exports = {
   devtool: 'source-map',
   mode: 'production',
-  entry: [
-    '@babel/polyfill',
-    path.resolve(__dirname, 'src/index.js'),
-  ],
+  entry: {
+    main: ['@babel/polyfill', path.resolve(__dirname, 'src/index.js')],
+    popup: ['@babel/polyfill', path.resolve(__dirname, 'public/app/scripts/ui/popup-index.js')],
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'bundle-[hash:6].js',
+    filename: 'bundle-[name].js',
   },
   module: {
     rules: [
@@ -89,6 +89,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
       inject: 'body',
+      chunks: ['main'],
+      filename: 'index.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'public/askTx.html'),
+      inject: 'body',
+      chunks: ['popup'],
+      filename: 'askTx.html',
     }),
     extractCSS,
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
@@ -102,7 +110,6 @@ module.exports = {
     { from: 'public/manifest.json' },
     { from: 'public/assets', to: 'assets', toType: 'dir' },
     { from: 'public/app', to: 'app', toType: 'dir' },
-    { from: 'public/askTx.html' },
   ]),
     new Dotenv({
       path: envPath,
