@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import LoadingImage from 'components/LoadingImage'
 import iost from 'iostJS/iost'
@@ -31,8 +32,8 @@ class TokenBalance extends Component<Props> {
   }
 
   getTokenBalance = async () => {
-    const { symbol } = this.props
-    const { balance } = await iost.rpc.blockchain.getBalance(iost.account.getID(), symbol)
+    const { selectedTokenSymbol } = this.props
+    const { balance } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)
     this.setState({
       amount: balance,
       isLoading: false,
@@ -50,12 +51,12 @@ class TokenBalance extends Component<Props> {
 
   render() {
     const { amount, gas, ram, isLoading } = this.state
-    const { symbol } = this.props
+    const { selectedTokenSymbol } = this.props
     return (
       <div className="TokenBalance">
-        <img className="TokenBalance__logo" src={iconSrc[symbol]} />
+        <img className="TokenBalance__logo" src={iconSrc[selectedTokenSymbol]} />
         <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
-        <span className="TokenBalance__symbol">{symbol}</span>
+        <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
         <div className="TokenBalance__resources">
           <span className="TokenBalance__gasResource">iGAS: {gas}</span>
           &nbsp;/&nbsp;
@@ -66,4 +67,8 @@ class TokenBalance extends Component<Props> {
   }
 }
 
-export default TokenBalance
+const mapStateToProps = (state) => ({
+  selectedTokenSymbol: state.token.selectedTokenSymbol,
+})
+
+export default connect(mapStateToProps)(TokenBalance)

@@ -1,0 +1,26 @@
+@import "colors.scss";
+
+.TokenAddition {
+  text-align: center;
+}
+
+.TokenAddition__description {
+  font-family: 'Montserrat';
+  font-size: 8px;
+  margin-bottom: 6px;
+}
+
+.TokenAddition__input {
+  font-family: 'Montserrat';
+  font-size: 12px;
+  width: 170px;
+  padding-bottom: 5px;
+  display: inline-block;
+  vertical-align: bottom;
+  border-bottom: 1px solid $brand-black2;
+}
+
+.TokenAddition__addButton {
+  display: inline-block;
+  vertical-align: middle;
+}

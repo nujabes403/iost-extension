@@ -45,14 +45,13 @@ class Account extends Component<Props> {
             Logout
           </Button>
         </div>
-        <TokenBalance symbol="iost" />
+        <TokenBalance />
         <div className="Account__buttons">
           <Button
             className="Account__button"
             blue
             onClick={() => ui.openPopup({ content: (
               <TokenTransfer
-                symbol="iost"
                 className="Account__TokenTransfer"
               />
             )})}

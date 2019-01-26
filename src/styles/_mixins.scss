@@ -1,1 +1,37 @@
 @import "colors.scss";
+
+@mixin closeButton {
+  position: absolute;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  overflow: hidden;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    transform: rotate(45deg);
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    margin-top: -2px;
+    background: $brand-red;
+  }
+
+  &::after {
+    content: '';
+    transform: rotate(-45deg);
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    background: $brand-red;
+    height: 2px;
+    margin-top: -2px;
+  }
+}

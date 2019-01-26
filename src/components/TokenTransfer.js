@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
@@ -16,7 +17,6 @@ type Props = {
 
 class TokenTransfer extends Component<Props> {
   state = {
-    symbol: 'iost',
     to: '',
     amount: '',
     isSending: false,
@@ -30,10 +30,10 @@ class TokenTransfer extends Component<Props> {
 
   transfer = () => {
     const { to, amount } = this.state
-    const { symbol } = this.props
+    const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
     // 1. Create transfer tx
-    const tx = iost.iost.transfer(symbol, accountName, to, amount)
+    const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
 
     // 2. Sign on transfer tx
     iost.account.signTx(tx)
@@ -68,12 +68,12 @@ class TokenTransfer extends Component<Props> {
 
   render() {
     const { isSending } = this.state
-    const { className } = this.props
+    const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
-        <TokenBalance symbol="iost" />
+        <TokenBalance />
         <div className={cx('TokenTransfer', className)}>
-          <header className="TokenTransfer__title">Send IOST</header>
+          <header className="TokenTransfer__title">Send {selectedTokenSymbol}</header>
           <label className="TokenTransfer__InputLabel">FROM: </label>
           <Input
             className="TokenTransfer__Input"
@@ -104,4 +104,8 @@ class TokenTransfer extends Component<Props> {
   }
 }
 
-export default TokenTransfer
+const mapStateToProps = (state) => ({
+  selectedTokenSymbol: state.token.selectedTokenSymbol,
+})
+
+export default connect(mapStateToProps)(TokenTransfer)

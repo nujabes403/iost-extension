@@ -3,7 +3,6 @@ function NetworkController() {
   this.networkList = []
 
   chrome.storage.sync.get(['networkList'], (result) => {
-    console.log(result, 'result')
     _this.networkList = result.networkList || _this.networkList
   })
 }
