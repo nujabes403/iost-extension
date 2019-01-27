@@ -7,9 +7,18 @@ import Input from 'components/Input'
 import Button from 'components/Button'
 import TokenBalance from 'components/TokenBalance'
 import TokenTransferSuccess from 'components/TokenTransferSuccess'
+import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
 
 import './TokenTransfer.scss'
+
+const defaultConfig = {
+  gasRatio: 1,
+  gasLimit: 2000000,
+  delay: 0,
+  expiration: 90,
+  defaultLimit: "unlimited"
+}
 
 type Props = {
 
@@ -20,20 +29,33 @@ class TokenTransfer extends Component<Props> {
     to: '',
     amount: '',
     isSending: false,
+    iGASPrice: defaultConfig.gasRatio,
+    iGASLimit: defaultConfig.gasLimit,
+    errorMessage: '',
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+      errorMessage: '',
     })
   }
 
   transfer = () => {
-    const { to, amount } = this.state
+    const { to, amount, iGASPrice, iGASLimit } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
     // 1. Create transfer tx
-    const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
+    const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
+    tx.addAction(
+      'token.iost',
+      'transfer',
+      JSON.stringify([selectedTokenSymbol, accountName, to, amount, '']),
+    )
+    tx.setTime(defaultConfig.expiration, defaultConfig.delay)
+    tx.addApprove("*", defaultConfig.defaultLimit)
+
+    // const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
 
     // 2. Sign on transfer tx
     iost.account.signTx(tx)
@@ -57,17 +79,26 @@ class TokenTransfer extends Component<Props> {
         })
       })
       .onFailed((err) => {
-        console.log(err, 'err')
-        this.setState({
-          isSending: false,
-        })
+        if (typeof err === 'string') {
+          this.setState({
+            isSending: false,
+            errorMessage: typeof err === 'string' && err,
+          })
+        } else {
+          this.setState({
+            isSending: false,
+          })
+          ui.openPopup({
+            content: <TokenTransferFailed tx={err} />
+          })
+        }
       })
       .send()
       .listen(1000, 15)
   }
 
   render() {
-    const { isSending } = this.state
+    const { isSending, iGASPrice, iGASLimit, errorMessage } = this.state
     const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
@@ -91,6 +122,20 @@ class TokenTransfer extends Component<Props> {
             onChange={this.handleChange}
             className="TokenTransfer__Input"
           />
+          <label className="TokenTransfer__InputLabel">iGAS Price: </label>
+          <Input
+            name="iGASPrice"
+            value={iGASPrice}
+            onChange={this.handleChange}
+            className="TokenTransfer__Input"
+          />
+          <label className="TokenTransfer__InputLabel">iGAS Limit: </label>
+          <Input
+            name="iGASLimit"
+            value={iGASLimit}
+            onChange={this.handleChange}
+            className="TokenTransfer__Input"
+          />
           <Button
             className="TokenTransfer__sendButton"
             onClick={this.transfer}
@@ -98,6 +143,7 @@ class TokenTransfer extends Component<Props> {
           >
             SEND
           </Button>
+          <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>
       </Fragment>
     )

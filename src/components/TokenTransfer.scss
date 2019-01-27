@@ -32,3 +32,9 @@
   margin: 0 auto;
   margin-bottom: 10px;
 }
+
+.TokenTransfer__errorMessage {
+  margin-top: 4px;
+  color: $brand-red;
+  font-size: 8px;
+}

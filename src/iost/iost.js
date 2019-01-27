@@ -16,6 +16,7 @@ const iost = {
   iost: new IOST.IOST(DEFAULT_IOST_CONFIG, IOST_PROVIDER),
   rpc: new IOST.RPC(IOST_PROVIDER),
   account: new IOST.Account('empty'),
+  Tx: IOST.Tx,
   // network
   changeNetwork: (url) => {
     const newNetworkProvider = new IOST.HTTPProvider(url)
