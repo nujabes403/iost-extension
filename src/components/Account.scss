@@ -19,8 +19,12 @@
 }
 
 .Account__accountName {
+  cursor: pointer;
   color: $light-grey2;
   font-size: 12px;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 
