@@ -1,0 +1,31 @@
+@import "colors.scss";
+
+.LanguageSetting {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.LanguageSetting__title {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.LanguageSetting__input {
+  border-bottom: 1px solid $brand-black2;
+  display: inline-block;
+}
+
+.LanguageSetting__button {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.LanguageSetting__errorMessage {
+  font-size: 8px;
+  color: $brand-red;
+}
+
+.LanguageSetting__Dropdown {
+  color: $brand-deepblue;
+  border-radius: 0;
+}

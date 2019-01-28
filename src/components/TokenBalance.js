@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { I18n } from 'react-redux-i18n'
 
 import LoadingImage from 'components/LoadingImage'
 import iost from 'iostJS/iost'
@@ -58,9 +59,9 @@ class TokenBalance extends Component<Props> {
         <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
         <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
         <div className="TokenBalance__resources">
-          <span className="TokenBalance__gasResource">iGAS: {gas}</span>
+          <span className="TokenBalance__gasResource">{I18n.t('iGAS')}: {gas}</span>
           &nbsp;/&nbsp;
-          <span className="TokenBalance__ramResource">iRAM: {ram}</span>
+          <span className="TokenBalance__ramResource">{I18n.t('iRAM')}: {ram}</span>
         </div>
       </div>
     )

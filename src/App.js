@@ -9,6 +9,7 @@ import Settings from 'components/Settings'
 import Popup from 'components/Popup'
 
 import iost from 'iostJS/iost'
+import i18n from 'utils/i18n'
 
 import './App.scss'
 
@@ -68,4 +69,8 @@ class App extends Component<Props> {
   }
 }
 
-export default App
+const mapStateToProps = (state) => ({
+  locale: state.i18n.locale,
+})
+
+export default connect(mapStateToProps)(App)

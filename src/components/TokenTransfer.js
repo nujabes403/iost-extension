@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
@@ -104,32 +105,44 @@ class TokenTransfer extends Component<Props> {
       <Fragment>
         <TokenBalance />
         <div className={cx('TokenTransfer', className)}>
-          <header className="TokenTransfer__title">Send {selectedTokenSymbol}</header>
-          <label className="TokenTransfer__InputLabel">FROM: </label>
+          <header className="TokenTransfer__title">
+            {I18n.t('sendToken', { token: selectedTokenSymbol })}
+          </header>
+          <label className="TokenTransfer__InputLabel">
+            {I18n.t('transactionFrom')}:
+          </label>
           <Input
             className="TokenTransfer__Input"
             value={iost.account.getID()}
           />
-          <label className="TokenTransfer__InputLabel">TO: </label>
+          <label className="TokenTransfer__InputLabel">
+            {I18n.t('transactionTo')}:
+          </label>
           <Input
             name="to"
             onChange={this.handleChange}
             className="TokenTransfer__Input"
           />
-          <label className="TokenTransfer__InputLabel">AMOUNT: </label>
+          <label className="TokenTransfer__InputLabel">
+            {I18n.t('transactionAmount')}:
+          </label>
           <Input
             name="amount"
             onChange={this.handleChange}
             className="TokenTransfer__Input"
           />
-          <label className="TokenTransfer__InputLabel">iGAS Price: </label>
+          <label className="TokenTransfer__InputLabel">
+            {I18n.t('transactioniGasPrice')}:
+          </label>
           <Input
             name="iGASPrice"
             value={iGASPrice}
             onChange={this.handleChange}
             className="TokenTransfer__Input"
           />
-          <label className="TokenTransfer__InputLabel">iGAS Limit: </label>
+          <label className="TokenTransfer__InputLabel">
+            {I18n.t('transactioniGasLimit')}:
+          </label>
           <Input
             name="iGASLimit"
             value={iGASLimit}
@@ -141,7 +154,7 @@ class TokenTransfer extends Component<Props> {
             onClick={this.transfer}
             isLoading={isSending}
           >
-            SEND
+            {I18n.t('transactionSend')}
           </Button>
           <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>

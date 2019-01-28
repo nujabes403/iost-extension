@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import './Dropdown.scss'
 
@@ -34,10 +35,10 @@ class Dropdown extends Component<Props> {
 
   render() {
     const { selected, isShowing }  = this.state
-    const { items } = this.props
+    const { items, className } = this.props
     return (
       <div
-        className="Dropdown"
+        className={cx('Dropdown', className)}
         onClick={this.toggleMenu}
       >
         <div className="Dropdown__currentItem" >

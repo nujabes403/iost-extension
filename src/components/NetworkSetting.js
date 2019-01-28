@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
 import Button from 'components/Button'
@@ -48,9 +49,9 @@ class NetworkSetting extends Component<Props> {
     return (
       <div className="NetworkSetting">
         <header className="NetworkSetting__title">
-          Network setting
+          {I18n.t('networkSetting')}
         </header>
-        <p>Register new network:</p>
+        <p>{I18n.t('registerNewNetwork')}:</p>
         <Input
           className="NetworkSetting__input"
           name="newNetworkURL"
@@ -60,7 +61,7 @@ class NetworkSetting extends Component<Props> {
           className="NetworkSetting__button"
           onClick={this.saveNewNetwork}
         >
-          Save
+          {I18n.t('save')}
         </Button>
         {errorMessage && (
           <p className="NetworkSetting__errorMessage">{errorMessage}</p>

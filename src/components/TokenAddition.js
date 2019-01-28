@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
 import Button from 'components/Button'
@@ -35,7 +36,7 @@ class TokenAddition extends Component<Props> {
     return (
       <div className="TokenAddition">
         <p className="TokenAddition__description">
-          If you can't find your token on the list, please add it!
+          {I18n.t('pleaseAddToken')}
         </p>
         <Input
           name="tokenSymbol"

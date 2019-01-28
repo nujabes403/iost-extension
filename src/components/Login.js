@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
 import Button from 'components/Button'
@@ -36,13 +37,17 @@ class Login extends Component<Props> {
       <Fragment>
         <Landing />
         <div className="Login">
-          <label className="Login__label Login__label--account">Account Name:</label>
+          <label className="Login__label Login__label--account">
+            {I18n.t('accountName')}:
+          </label>
           <Input
             name="account"
             className="Login__input"
             onChange={this.handleChange}
           />
-          <label className="Login__label Login__label--privateKey">Please paste your private key:</label>
+          <label className="Login__label Login__label--privateKey">
+            {I18n.t('plasePastePrivateKey')}:
+          </label>
           <Input
             name="privateKey"
             type="password"
@@ -53,7 +58,7 @@ class Login extends Component<Props> {
             className="Login__button"
             onClick={this.tryLogin}
           >
-            Login
+            {I18n.t('login')}:
           </Button>
         </div>
       </Fragment>

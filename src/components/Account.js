@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
@@ -31,7 +32,7 @@ class Account extends Component<Props> {
     return (
       <div className="Account">
         <div className="Account__header">
-          <p className="Account__headerTitle">Account</p>
+          <p className="Account__headerTitle">{I18n.t('account')}</p>
           <p
             className="Account__accountName"
             onClick={() => ui.openPopup({
@@ -44,13 +45,13 @@ class Account extends Component<Props> {
             className={cx('Account__controlButton', 'Account__controlButton--setting')}
             onClick={this.moveToSetting}
           >
-            Settings
+            {I18n.t('settings')}
           </Button>
           <Button
             className={cx('Account__controlButton', 'Account__controlButton--logout')}
             onClick={this.logout}
           >
-            Logout
+            {I18n.t('logout')}
           </Button>
         </div>
         <TokenBalance />
@@ -64,14 +65,14 @@ class Account extends Component<Props> {
               />
             )})}
           >
-            Transfer
+            {I18n.t('transfer')}
           </Button>
           <Button
             className="Account__button"
             blue
             onClick={() => ui.openPopup({ content: <TokenSelector /> })}
           >
-            Select Another Token
+            {I18n.t('selectAnotherToken')}
           </Button>
         </div>
       </div>
