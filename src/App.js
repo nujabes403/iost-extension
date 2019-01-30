@@ -44,6 +44,7 @@ class App extends Component<Props> {
 
   componentDidMount() {
     chrome.storage.sync.get(['activeAccount'], (result) => {
+
       const activeAccount = result && result.activeAccount
       if (!activeAccount) return
 

@@ -27,7 +27,7 @@
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
     "gulp": "^4.0.0",
-    "iost": "0.0.15",
+    "iost": "0.0.17",
     "json-format": "^1.0.1",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",

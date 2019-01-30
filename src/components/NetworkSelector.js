@@ -13,12 +13,8 @@ type Props = {
 
 const _iostNetworks = [
   {
-    label: 'IOST TESTNET (ZIRAN)',
-    value: 'http://13.115.202.226:30001',
-  },
-  {
-    label: 'CUSTOM NETWORK',
-    value: 'http://localhost:30001',
+    label: 'IOST TESTNET (EVEREST 2.0)',
+    value: 'http://13.52.105.102:30001',
   },
 ]
 
@@ -52,9 +48,7 @@ class NetworkSelector extends Component<Props> {
         value: activeNetwork
       })
 
-      if (isKnownNetworkIdx !== undefined) {
-        this.$Dropdown.select(isKnownNetworkIdx)()
-      }
+      this.$Dropdown.select(isKnownNetworkIdx !== -1 ? isKnownNetworkIdx : 0)()
     })
   }
 

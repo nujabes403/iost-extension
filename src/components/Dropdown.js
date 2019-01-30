@@ -19,7 +19,6 @@ class Dropdown extends Component<Props> {
 
   select = (itemIdx) => () => {
     const { items, onClick } = this.props
-    console.log(items, 'items')
     const selectedItem = items[itemIdx]
     this.setState({
       selected: selectedItem,
