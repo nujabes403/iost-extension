@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import Input from 'components/Input'
 import TokenAddition from 'components/TokenAddition'
+import { DEFAULT_TOKEN_LIST } from 'constants/token'
 
 import ui from 'utils/ui'
 import token from 'utils/token'
@@ -22,6 +23,7 @@ class TokenSelector extends Component<Props> {
   componentDidMount() {
     chrome.storage.sync.get(['savedTokenSymbols'], (result) => {
       this.setState({ isLoading: false })
+      console.log(result, result.savedTokenSymbols, 'result')
       if (!result.savedTokenSymbols instanceof Array) return
       token.updateSavedTokenSymbols(result.savedTokenSymbols)
     })
@@ -83,7 +85,7 @@ class TokenSelector extends Component<Props> {
 }
 
 const mapStateToProps = (state) => ({
-  tokenSymbols: state.token.savedTokenSymbols,
+  tokenSymbols: state.token.savedTokenSymbols || DEFAULT_TOKEN_LIST,
 })
 
 export default connect(mapStateToProps)(TokenSelector)

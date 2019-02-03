@@ -1,0 +1,62 @@
+@import "colors.scss";
+
+.BuyRam {
+
+}
+
+.BuyRam__description {
+  margin-top: 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.BuyRam__InputWrapper {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.BuyRam__Input {
+  width: 50%;
+  border-bottom: 1px solid $brand-black2 !important;
+  font-size: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  padding: 4px;
+  text-align: right;
+}
+
+.BuyRam__InputDescription {
+  margin-left: 4px;
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.BuyRam__advancedOption {
+  margin-top: 2px;
+  text-align: right;
+  text-decoration: underline;
+  color: $brand-blue;
+  cursor: pointer;
+}
+
+.BuyRam__buyButton {
+  margin: 10px auto;
+  display: block;
+  width: 50%;
+}
+
+.BuyRam__expectedPrice {
+  color: grey;
+  font-size: 10px;
+  width: 50%;
+  text-align: right;
+}
+
+.BuyRam__ramPrice {
+  text-align: left;
+  font-size: 10px;
+  color: grey;
+}

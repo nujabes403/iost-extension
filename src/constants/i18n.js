@@ -33,6 +33,19 @@ const enTranslation = {
   receiptAmount: 'Amount',
   receiptMemo: 'Memo',
   receiptContractFunctionName: 'Contract/function name',
+  viewResourceDetail: 'View resource(GAS, RAM) detail',
+  howManyBytesWillYouBuy: 'How many bytes will you buy?',
+  howManyBytesWillYouSell: 'How many bytes will you sell?',
+  howManyBytesWillYouLend: 'How many bytes will you transfer?',
+  buy: 'BUY',
+  sell: 'SELL',
+  lend: 'TRANSFER',
+  bytes: 'Bytes',
+  whichAccountWillGetBoughtRAM: 'Which account will get the bought RAM? (default: your account)',
+  whichAccountWillGetSoldIost: 'Which account will get the IOST for selling RAM? (default: your account)',
+  whichAccountWillGetLendRam: 'Which account will you transfer your RAM?',
+  currentBuyRamPrice: 'buy price per 1 byte: %{price} IOST',
+  currentSellRamPrice: 'sell price per 1 byte: %{price} IOST',
 }
 
 const koTranslation = {
@@ -69,6 +82,19 @@ const koTranslation = {
   receiptAmount: '금액',
   receiptMemo: '메모',
   receiptContractFunctionName: '컨트랙트/함수명',
+  viewResourceDetail: '자원(가스, 램) 상세보기',
+  howManyBytesWillYouBuy: '몇 바이트의 램을 사시겠습니까?',
+  howManyBytesWillYouSell: '몇 바이트의 램을 파시겠습니까?',
+  howManyBytesWillYouLend: '몇 바이트의 램을 전송하시겠습니까?',
+  buy: '구매하기',
+  sell: '판매하기',
+  lend: '전송하기',
+  bytes: '바이트',
+  whichAccountWillGetBoughtRAM: '어떤 계정으로 구매한 램을 받겠습니까? (기본 값: 현재 계정)',
+  whichAccountWillGetSoldIost: '어떤 계정으로 램의 판매금(IOST)을 받겠습니까? (기본 값: 현재 계정)',
+  whichAccountWillGetLendRam: '어떤 계정으로 램을 전송하시겠습니까?',
+  currentBuyRamPrice: '1 바이트 당 구매가격: %{price} IOST',
+  currentSellRamPrice: '1 바이트 당 판매가격: %{price} IOST',
 }
 
 export default {

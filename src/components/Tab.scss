@@ -1,0 +1,27 @@
+@import "colors.scss";
+
+.Tab {
+
+}
+
+.Tab__header {
+  margin-bottom: 20px;
+}
+
+.Tab__headerItem {
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  display: inline-block;
+  padding-bottom: 4px;
+  transition: border-color 300ms;
+  border-bottom: 3px solid $light-grey;
+
+  &:hover {
+    border-color: rgba($brand-blue, .8);
+  }
+
+  &--active {
+    border-color: $brand-blue;
+  }
+}

@@ -32,3 +32,21 @@
   font-size: 10px;
   color: $brand-deepblue;
 }
+
+.TokenBalance__viewResourceDetail {
+  display: block;
+  font-size: 10px;
+  color: $brand-blue;
+  text-decoration: underline;
+  margin-top: 4px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.TokenBalance__frozenBalance {
+  display: inline-block;
+  margin-left: 2px;
+  color: $frozen;
+  font-size: 14px;
+}

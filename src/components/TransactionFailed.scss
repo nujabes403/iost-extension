@@ -1,0 +1,33 @@
+@import "colors.scss";
+
+.TransactionFailed {
+  font-family: 'Montserrat';
+}
+
+.TransactionFailed__title {
+  font-size: 20px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.TransactionFailed__item {
+  display: block;
+  border-bottom: 1px solid $brand-black2;
+  font-family: 'Montserrat';
+  font-size: 16px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+  &--txhash {
+    font-size: 10px;
+  }
+
+  &--message {
+    color: $brand-red;
+  }
+}
+
+.TransactionFailed__receipt {
+  border: 1px solid $brand-black2;
+  padding: 10px;
+}

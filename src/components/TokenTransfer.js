@@ -95,7 +95,7 @@ class TokenTransfer extends Component<Props> {
         }
       })
       .send()
-      .listen(1000, 15)
+      .listen(1000, 30)
   }
 
   render() {

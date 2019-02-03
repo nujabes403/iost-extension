@@ -52,6 +52,47 @@ const iost = {
     chrome.runtime.sendMessage({
       action: 'LOGOUT_SUCCESS'
     })
+  },
+  sendTransaction: (contractAddress, contractAction, args) => {
+    const tx = iost.iost.callABI(contractAddress, contractAction, args)
+    tx.addApprove("*", "unlimited")
+    iost.account.signTx(tx)
+
+    const fire = {
+      pending: () => {},
+      success: () => {},
+      failed: () => {},
+    }
+
+    const handler = new iost.pack.TxHandler(tx, iost.rpc)
+
+    handler
+      .onPending((pending) => {
+        fire.pending(pending)
+      })
+      .onSuccess(async (response) => {
+        fire.success(response)
+      })
+      .onFailed((err) => {
+        fire.failed(err)
+      })
+      .send()
+      .listen(1000, 30)
+
+    return {
+      onPending: (callback) => {
+        fire.pending = callback
+        return handler
+      },
+      onSuccess: (callback) => {
+        fire.success = callback
+        return handler
+      },
+      onFailed: (callback) => {
+        fire.failed = callback
+        return handler
+      }
+    }
   }
 }
 

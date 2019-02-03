@@ -1,0 +1,56 @@
+@import "colors.scss";
+
+.LendRam {
+
+}
+
+.LendRam__description {
+  margin-top: 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.LendRam__InputWrapper {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.LendRam__Input {
+  width: 50%;
+  border-bottom: 1px solid $brand-black2 !important;
+  font-size: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  padding: 4px;
+  text-align: right;
+}
+
+.LendRam__InputDescription {
+  margin-left: 4px;
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.LendRam__advancedOption {
+  margin-top: 2px;
+  text-align: right;
+  text-decoration: underline;
+  color: $brand-blue;
+  cursor: pointer;
+}
+
+.LendRam__lendButton {
+  margin: 10px auto;
+  display: block;
+  width: 50%;
+}
+
+.LendRam__expectedPrice {
+  color: grey;
+  font-size: 10px;
+  width: 50%;
+  text-align: right;
+}
