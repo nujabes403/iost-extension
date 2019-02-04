@@ -8,5 +8,14 @@
 }
 
 .ResourceDetail__hr {
-  margin: 6px 0;
+  margin: 20px 0;
+  border-top: 0;
+}
+
+.ResourceDetail__questionMark {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  margin-left: 2px;
+  vertical-align: middle;
 }

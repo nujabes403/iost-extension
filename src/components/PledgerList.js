@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import Button from 'components/Button'
 import LoadingImage from 'components/LoadingImage'
+import TransactionSuccess from 'components/TransactionSuccess'
+import TransactionFailed from 'components/TransactionFailed'
+import ui from 'utils/ui'
 import iost from 'iostJS/iost'
 
 import './PledgerList.scss'
@@ -13,49 +16,57 @@ type Props = {
 class PledgerList extends Component<Props> {
   state = {
     isLoading: false,
+    activeItem: '',
   }
 
   unpledge = (pledger, amount) => () => {
     const ID = iost.account.getID()
     iost.sendTransaction('gas.iost', 'unpledge', [ID, pledger, amount])
-      .onPending((pending) => {
-        console.log(pending)
+      .onPending(() => {
         this.setState({
           isLoading: true,
         })
       })
-      .onSuccess((success) => {
-        console.log(success)
-        this.setState({
-          isLoading: false
-        })
+      .onSuccess((response) => {
+        this.setState({ isLoading: false })
+        ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
-      .onFailed((failed) => {
-        console.log(failed)
-        this.setState({
-          isLoading: false
-        })
+      .onFailed((err) => {
+        this.setState({ isLoading: false })
+        ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
   }
 
+  setActiveItem = (pledger) => () => {
+    this.setState({
+      activeItem: pledger,
+    })
+  }
+
   render() {
-    const { isLoading } = this.state
+    const { isLoading, activeItem } = this.state
     const { pledged_info } = this.props
     return (
       <div className="PledgerList">
         {pledged_info.map(({ pledger, amount }) => {
           return (
-            <div className="PledgerList__item">
-              <p className="PledgerList__itemDescription">pledger: {pledger} / amount: {amount}</p>
-              <Button onClick={this.unpledge(pledger, String(amount))}>Unpledge</Button>
-              {isLoading && <LoadingImage />}
-            </div>
+              <div
+                className="PledgerList__item"
+                onClick={this.setActiveItem(pledger)}
+              >
+                <div className="PledgerList__itemInner">
+                  <p className="PledgerList__itemDescription">pledger: {pledger}</p>
+                  <p className="PledgerList__itemDescription">amount: {amount}</p>
+                </div>
+                {activeItem === pledger && (
+                  <Fragment>
+                    <Button className="PledgerList__unpledgeButton" onClick={this.unpledge(pledger, String(amount))}>Unpledge</Button>
+                    {isLoading && <LoadingImage />}
+                  </Fragment>
+                )}
+              </div>
           )
         })}
-        {!!pledged_info
-          ? <p className="PledgerList__additionalInfo">*pldger: the account receiving the deposit</p>
-          : <p className="PledgerList__additionalInfo">You're not pledging</p>
-        }
       </div>
     )
   }

@@ -11,16 +11,16 @@ class UserRamStauts extends Component<Props> {
   render() {
     const { ramInfo } = this.props
 
-    let usedWidth = (ramInfo.used / ramInfo.total * 100).toFixed(2)
-    usedWidth = usedWidth < 5 ? 5 : usedWidth
+    let availWidth = (ramInfo.available / ramInfo.total * 100).toFixed(2)
+    availWidth = availWidth < 5 ? 5 : availWidth
 
     return (
       <div className="UserRamStatus">
-        <header className="UserRamStatus__title">Your RAM resource status</header>
+        <header className="UserRamStatus__title">Your available RAM resource status</header>
         <div className="UserRamStatus__gauge">
-          <div className="UserRamStatus__bar" style={{ width: usedWidth + '%' }} />
+          <div className="UserRamStatus__bar" style={{ width: availWidth + '%' }} />
         </div>
-        <p className="UserRamStauts__barDescription">{ramInfo.used} {I18n.t('bytes')} / {ramInfo.total} {I18n.t('bytes')} </p>
+        <p className="UserRamStauts__barDescription">{ramInfo.available} {I18n.t('bytes')} / {ramInfo.total} {I18n.t('bytes')} </p>
       </div>
     )
   }

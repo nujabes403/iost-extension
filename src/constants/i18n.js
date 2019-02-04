@@ -44,8 +44,18 @@ const enTranslation = {
   whichAccountWillGetBoughtRAM: 'Which account will get the bought RAM? (default: your account)',
   whichAccountWillGetSoldIost: 'Which account will get the IOST for selling RAM? (default: your account)',
   whichAccountWillGetLendRam: 'Which account will you transfer your RAM?',
+  whichAccountWillGetGasThroughPledge: 'Which account will get the GAS? (default: your account)',
   currentBuyRamPrice: 'buy price per 1 byte: %{price} IOST',
   currentSellRamPrice: 'sell price per 1 byte: %{price} IOST',
+  pledge: 'PLEDGE',
+  unpledge: 'UNPLEDGE(%{length})',
+  gas: 'GAS',
+  howManyIOSTWillYouPledge: 'How many IOST will you pledge?',
+  currentlyYouArePledging: "Currently you're pledging for %{length} accounts.",
+  unpledgeAndGetBackYourIOST: 'You could unpledge and get back your IOST.',
+  makeSureThatAfterUnpledging: 'Make sure that, after unpledging,',
+  unpledgingDestroyGas: 'your GAS earned by pledging IOST will be destroyed.',
+  unpledgingFreezeIOST: 'returned IOST will be "frozen" status during 72 hours.',
 }
 
 const koTranslation = {
@@ -92,9 +102,19 @@ const koTranslation = {
   bytes: '바이트',
   whichAccountWillGetBoughtRAM: '어떤 계정으로 구매한 램을 받겠습니까? (기본 값: 현재 계정)',
   whichAccountWillGetSoldIost: '어떤 계정으로 램의 판매금(IOST)을 받겠습니까? (기본 값: 현재 계정)',
+  whichAccountWillGetGasThroughPledge: '어떤 계정으로 GAS를 받겠습니까? (기본 값: 현재 계정)',
   whichAccountWillGetLendRam: '어떤 계정으로 램을 전송하시겠습니까?',
   currentBuyRamPrice: '1 바이트 당 구매가격: %{price} IOST',
   currentSellRamPrice: '1 바이트 당 판매가격: %{price} IOST',
+  pledge: '저당설정',
+  unpledge: '저당해제(%{length})',
+  gas: '가스',
+  howManyIOSTWillYouPledge: '얼마만큼의 IOST를 저당설정 하시겠습니까?',
+  currentlyYouArePledging: "현재 %{length} 개의 계정에 저당이 설정되어있습니다.",
+  unpledgeAndGetBackYourIOST: '저당해제를 통해 IOST를 반환 받을 수 있습니다.',
+  makeSureThatAfterUnpledging: '저당해제를 하고 나면,',
+  unpledgingDestroyGas: '저당설정을 통해 얻어진 GAS는 소멸됩니다.',
+  unpledgingFreezeIOST: '반환 된 IOST는 72시간 동안 "얼려진" 상태가 되어 사용할 수 없습니다.',
 }
 
 export default {

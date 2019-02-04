@@ -1,10 +1,14 @@
 @import "colors.scss";
 
-.UserRamStatus__title {
+.UserGasStatus {
+  margin-bottom: 10px;
+}
+
+.UserGasStatus__title {
   margin-bottom: 4px;
 }
 
-.UserRamStatus__gauge {
+.UserGasStatus__gauge {
   position: relative;
   width: 100%;
   padding: 10px;
@@ -13,17 +17,18 @@
   box-shadow: aliceblue 2px 2px 2px 2px;
 }
 
-.UserRamStatus__bar {
+.UserGasStatus__bar {
   position: absolute;
-  background-color: $ram-gauge;
+  background-color: $gas-gauge;
   height: 100%;
   top: 0;
   left: 0;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-radius: 10px;
+  // border-top-left-radius: 10px;
+  // border-bottom-left-radius: 10px;
 }
 
-.UserRamStauts__barDescription {
+.UserGasStatus__barDescription {
   margin-top: 4px;
   font-size: 10px;
   text-align: center;

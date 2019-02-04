@@ -1,0 +1,63 @@
+@import "colors.scss";
+
+.PledgeGas {
+
+}
+
+.PledgeGas__description {
+  margin-top: 6px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.PledgeGas__InputWrapper {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.PledgeGas__Input {
+  width: 50%;
+  border-bottom: 1px solid $brand-black2 !important;
+  font-size: 24px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+  padding: 4px;
+  text-align: right;
+}
+
+.PledgeGas__InputDescription {
+  margin-top: 2px;
+  margin-left: 4px;
+  font-size: 14px;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.PledgeGas__advancedOption {
+  margin-top: 2px;
+  text-align: right;
+  text-decoration: underline;
+  color: $brand-blue;
+  cursor: pointer;
+}
+
+.PledgeGas__pledgeButton {
+  margin: 10px auto;
+  display: block;
+  width: 50%;
+}
+
+.PledgeGas__expectedEarnGas {
+  color: grey;
+  font-size: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.PledgeGas__ramPrice {
+  text-align: left;
+  font-size: 10px;
+  color: grey;
+}

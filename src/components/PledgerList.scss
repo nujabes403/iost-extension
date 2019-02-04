@@ -1,3 +1,41 @@
+@import "colors.scss";
+
 .PledgerList {
-  
+  width: 100%;
+  max-height: 300px;
+  padding-bottom: 4px;
+  overflow: scroll;
+  border: 1px solid $brand-black2;
+}
+
+.PledgerList__item {
+  width: 30%;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.PledgerList__itemInner {
+  cursor: pointer;
+  display: block;
+  border: 1px solid $brand-black;
+  margin: 6px;
+  transition: border 200ms;
+  min-height: 50px;
+  padding: 4px;
+
+  &:hover {
+    border: 2px solid $brand-red;
+  }
+}
+
+.PledgerList__unpledgeButton {
+  display: block;
+  margin: 0 auto;
+  margin-top: 2px;
+  padding: 6px;
+  background-color: $brand-red;
+}
+
+.PledgerList__itemDescription {
+  font-family: monospace;
 }
