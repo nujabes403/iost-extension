@@ -10,9 +10,9 @@ type Props = {
 class Dropdown extends Component<Props> {
   constructor(props) {
     super(props)
-    const { items } = props
+    const { defaultValue, items } = props
     this.state = {
-      selected: items && items[0],
+      selected: defaultValue || (items && items[0]),
       isShowing: false,
     }
   }

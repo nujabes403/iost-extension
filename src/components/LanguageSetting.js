@@ -11,11 +11,16 @@ type Props = {
 
 }
 
+const localeToLabel = {
+  'en': 'English',
+  'ko': '한글',
+}
+
 const languages = [{
-  label: 'English',
+  label: localeToLabel['en'],
   value: 'en'
 }, {
-  label: '한글',
+  label: localeToLabel['ko'],
   value: 'ko'
 }]
 
@@ -25,6 +30,12 @@ class LanguageSetting extends Component<Props> {
   }
 
   render() {
+    const locale = i18n.getLocale()
+    const defaultValue = {
+      label: localeToLabel[locale],
+      value: locale,
+    }
+    console.log(locale, 'locale')
     return (
       <div className="LanguageSetting">
         <header className="LanguageSetting__title">
@@ -32,6 +43,7 @@ class LanguageSetting extends Component<Props> {
         </header>
         <Dropdown
           className="LanguageSetting__Dropdown"
+          defaultValue={defaultValue}
           items={languages}
           onClick={this.changeLanguage}
         />
