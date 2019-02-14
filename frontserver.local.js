@@ -24,6 +24,7 @@ const middleware = webpackMiddleware(compiler, {
     chunkModules: false,
     modules: false,
   },
+  writeToDisk: true,
 })
 
 app.use('/', express.static(path.resolve(__dirname)))
