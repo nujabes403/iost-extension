@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import cx from 'classnames'
 import _ from 'lodash'
 
@@ -57,7 +58,24 @@ class NetworkSelector extends Component<Props> {
   }
 
   changeNetwork = (url) => {
+    const { userInfo, changeLocation } = this.props
+
     iost.changeNetwork(url)
+
+    if (!userInfo) return
+
+    iost.rpc.blockchain.getAccountInfo(userInfo.accountName)
+      .then((accountInfo) => {
+        if (!iost.isValidAccount(accountInfo, userInfo.publicKey)) {
+          iost.logoutAccount()
+          changeLocation('/login')
+          return
+        }
+      })
+      .catch(() => {
+        iost.logoutAccount()
+        changeLocation('/login')
+      })
   }
 
   render() {
@@ -75,4 +93,8 @@ class NetworkSelector extends Component<Props> {
   }
 }
 
-export default NetworkSelector
+const mapStateToProps = (state) => ({
+  userInfo: state.user.userInfo,
+})
+
+export default connect(mapStateToProps)(NetworkSelector)

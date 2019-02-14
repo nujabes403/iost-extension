@@ -12,10 +12,12 @@ class Header extends Component<Props> {
   componentDidMount() {}
 
   render() {
+    const { changeLocation } = this.props
     return (
       <div className="Header">
         <div className="Header__logo" />
         <NetworkSelector
+          changeLocation={changeLocation}
           className="Header__NetworkSelector"
         />
       </div>

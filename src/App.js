@@ -60,7 +60,7 @@ class App extends Component<Props> {
 
     return (
       <div className="App">
-        <Header />
+        <Header changeLocation={this.changeLocation} />
         <div className="App__content">
           {this.renderComponentByLocation()}
           <Popup />

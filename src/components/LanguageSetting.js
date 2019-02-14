@@ -35,7 +35,6 @@ class LanguageSetting extends Component<Props> {
       label: localeToLabel[locale],
       value: locale,
     }
-    console.log(locale, 'locale')
     return (
       <div className="LanguageSetting">
         <header className="LanguageSetting__title">

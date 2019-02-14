@@ -47,28 +47,14 @@ class Login extends Component<Props> {
     }
 
     iost.rpc.blockchain.getAccountInfo(account)
-      .then((result) => {
-        if (!result || !result.permissions) {
+      .then((accountInfo) => {
+        if (!iost.isValidAccount(accountInfo, publicKey)) {
           this.throwErrorMessage()
           return
         }
 
-        const permissions = result.permissions
-        let foundKey = false
-        Object
-          .keys(permissions)
-          .forEach((permissionName) => {
-            permissions[permissionName].items.forEach(({ id }) => {
-              if (id === publicKey) {
-                foundKey = true
-                iost.loginAccount(account, privateKey)
-                changeLocation('/account')
-                return
-              }
-            })
-          })
-
-        if (!foundKey) this.throwErrorMessage()
+        iost.loginAccount(account, privateKey)
+        changeLocation('/account')
       })
       .catch(this.throwErrorMessage)
 
