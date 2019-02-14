@@ -38,3 +38,10 @@
   background-color: $brand-black2;
   display: block;
 }
+
+.Login__errorMessage {
+  font-size: 10px;
+  color: $brand-red;
+  margin: 4px;
+  text-align: left;
+}

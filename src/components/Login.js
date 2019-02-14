@@ -6,6 +6,7 @@ import Button from 'components/Button'
 import Landing from 'components/Landing'
 import TokenBalance from 'components/TokenBalance'
 import iost from 'iostJS/iost'
+import { privateKeyToPublicKey } from 'utils/key'
 
 import './Login.scss'
 
@@ -15,12 +16,15 @@ type Props = {
 
 class Login extends Component<Props> {
   state = {
-    privateKey: ''
+    account: '',
+    privateKey: '',
+    errorMessage: '',
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+      errorMessage: '',
     })
   }
 
@@ -28,11 +32,56 @@ class Login extends Component<Props> {
     const { account, privateKey } = this.state
     const { changeLocation } = this.props
 
-    iost.loginAccount(account, privateKey)
-    changeLocation('/account')
+    let publicKey
+    try {
+      publicKey = privateKeyToPublicKey(privateKey)
+    } catch (e) {
+      publicKey = ''
+    }
+
+    const invalidLoginInput = !account || !privateKey || !publicKey
+
+    if (invalidLoginInput) {
+      this.throwErrorMessage()
+      return
+    }
+
+    iost.rpc.blockchain.getAccountInfo(account)
+      .then((result) => {
+        if (!result || !result.permissions) {
+          this.throwErrorMessage()
+          return
+        }
+
+        const permissions = result.permissions
+        let foundKey = false
+        Object
+          .keys(permissions)
+          .forEach((permissionName) => {
+            permissions[permissionName].items.forEach(({ id }) => {
+              if (id === publicKey) {
+                foundKey = true
+                iost.loginAccount(account, privateKey)
+                changeLocation('/account')
+                return
+              }
+            })
+          })
+
+        if (!foundKey) this.throwErrorMessage()
+      })
+      .catch(this.throwErrorMessage)
+
+  }
+
+  throwErrorMessage = () => {
+    this.setState({
+      errorMessage: I18n.t('invalidLoginInfo')
+    })
   }
 
   render() {
+    const { errorMessage } = this.state
     return (
       <Fragment>
         <Landing />
@@ -54,6 +103,7 @@ class Login extends Component<Props> {
             className="Login__input"
             onChange={this.handleChange}
           />
+          {!!errorMessage && <p className="Login__errorMessage">{errorMessage}</p>}
           <Button
             className="Login__button"
             onClick={this.tryLogin}
