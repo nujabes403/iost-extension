@@ -77,7 +77,7 @@ const iost = {
         fire.failed(err)
       })
       .send()
-      .listen(1000, 30)
+      .listen(1000, 60)
 
     return {
       onPending: (callback) => {

@@ -13,6 +13,10 @@ type Props = {
 
 const _iostNetworks = [
   {
+    label: 'IOST MAINNET',
+    value: 'http://api.iost.io',
+  },
+  {
     label: 'IOST TESTNET (EVEREST 2.0)',
     value: 'http://13.52.105.102:30001',
   },
