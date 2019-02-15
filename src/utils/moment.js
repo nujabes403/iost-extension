@@ -2,8 +2,6 @@ import moment from 'moment'
 
 const _moment = moment
 
-console.log(_moment.langData('en')._relativeTime.s)
-
 _moment.updateLocale('en', {
   relativeTime: {
     future: "just now",

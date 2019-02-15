@@ -56,6 +56,7 @@ const enTranslation = {
   makeSureThatAfterUnpledging: 'Make sure that, after unpledging,',
   unpledgingDestroyGas: 'your GAS earned by pledging IOST will be destroyed.',
   unpledgingFreezeIOST: 'returned IOST will be "frozen" status during 72 hours.',
+  invalidLoginInfo: 'Invalid login information. Please check your ID and private key.',
 }
 
 const koTranslation = {
@@ -115,6 +116,7 @@ const koTranslation = {
   makeSureThatAfterUnpledging: '저당해제를 하고 나면,',
   unpledgingDestroyGas: '저당설정을 통해 얻어진 GAS는 소멸됩니다.',
   unpledgingFreezeIOST: '반환 된 IOST는 72시간 동안 "얼려진" 상태가 되어 사용할 수 없습니다.',
+  invalidLoginInfo: '올바르지 않은 로그인 정보입니다. 올바른 아이디와 개인 키를 입력해주세요.',
 }
 
 export default {

@@ -65,21 +65,22 @@ class TokenTransfer extends Component<Props> {
     const handler = new iost.pack.TxHandler(tx, iost.rpc)
 
     this.setState({ isSending: true })
+    let intervalID
     handler
       .onPending(async (res) => {
-        const intervalID = setInterval(async() => {
+        intervalID = setInterval(async() => {
           const tx = await iost.rpc.transaction.getTxByHash(res.hash)
         }, 1000)
       })
       .onSuccess(async (response) => {
-        this.setState({
-          isSending: false,
-        })
+        clearInterval(intervalID)
+        this.setState({ isSending: false })
         ui.openPopup({
           content: <TokenTransferSuccess tx={response} />
         })
       })
       .onFailed((err) => {
+        clearInterval(intervalID)
         if (typeof err === 'string') {
           this.setState({
             isSending: false,
@@ -95,7 +96,7 @@ class TokenTransfer extends Component<Props> {
         }
       })
       .send()
-      .listen(1000, 30)
+      .listen(1000, 60)
   }
 
   render() {

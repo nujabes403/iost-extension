@@ -38,6 +38,7 @@ const iost = {
       activeAccount: {
         id,
         encodedPrivateKey,
+        publicKey: kp.id,
       }
     })
 

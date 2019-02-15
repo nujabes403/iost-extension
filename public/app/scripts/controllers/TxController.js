@@ -54,7 +54,7 @@ TxController.prototype.processTx = function(txIdx) {
         })
       })
       .send()
-      .listen(1000, 30)
+      .listen(1000, 60)
   })
 
   this.txQueue.splice(txIdx, 1)

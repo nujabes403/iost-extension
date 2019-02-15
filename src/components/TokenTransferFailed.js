@@ -27,7 +27,7 @@ class TokenTransferFailed extends Component<Props> {
             {I18n.t('message')}: {tx.message} (status code: {tx.status_code})
           </p>
         )}
-        {Object.keys(tx.ram_usage).length !== 0 && (
+        {tx.ram_usage && Object.keys(tx.ram_usage).length !== 0 && (
           <p className="TokenTransferFailed__item">
             {I18n.t('ramUsage')}: {Object.values(tx.ram_usage).map(a => <p>{a}</p>)}
           </p>

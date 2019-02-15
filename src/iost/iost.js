@@ -1,4 +1,6 @@
+import * as userActions from 'actions/user'
 // const IOST = require('../../../iost.js')
+import store from '../store'
 const IOST = require('iost')
 const bs58 = require('bs58')
 
@@ -36,22 +38,49 @@ const iost = {
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
 
+    // Redux dispatch
+    store.dispatch(userActions.setUserInfo(id, kp.id))
+
     // CHROME send message
     chrome.runtime.sendMessage({
       action: 'LOGIN_SUCCESS',
       payload: {
         id,
         encodedPrivateKey,
+        publicKey: kp.id,
       }
     })
     return iost.account
   },
   logoutAccount: () => {
+    // Redux dispatch
+    store.dispatch(userActions.resetUserInfo())
+
     iost.account = new IOST.Account('empty')
     // CHROME send message
     chrome.runtime.sendMessage({
       action: 'LOGOUT_SUCCESS'
     })
+  },
+  isValidAccount: (accountInfo, publicKey) => {
+    if (!accountInfo || !accountInfo.permissions) {
+      return false
+    }
+
+    const permissions = accountInfo.permissions
+    let foundKey = false
+    Object
+      .keys(permissions)
+      .forEach((permissionName) => {
+        permissions[permissionName].items.forEach(({ id }) => {
+          if (id === publicKey) {
+            foundKey = true
+            return true
+          }
+        })
+      })
+
+    return foundKey
   },
   sendTransaction: (contractAddress, contractAction, args) => {
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
@@ -77,7 +106,7 @@ const iost = {
         fire.failed(err)
       })
       .send()
-      .listen(1000, 30)
+      .listen(1000, 60)
 
     return {
       onPending: (callback) => {

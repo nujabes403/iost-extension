@@ -29,7 +29,7 @@ class TokenTransferSuccess extends Component<Props> {
             {I18n.t('message')}: {tx.message}
           </p>
         )}
-        {Object.keys(tx.ram_usage).length !== 0 && (
+        {tx.ram_usage && Object.keys(tx.ram_usage).length !== 0 && (
           <p className="TokenTransferSuccess__item">
             {I18n.t('ramUsage')}: {Object.values(tx.ram_usage).map(a => <p>{a}</p>)}
           </p>
