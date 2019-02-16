@@ -21,7 +21,8 @@ const store = createStore(
 syncTranslationWithStore(store)
 store.dispatch(loadTranslations(translationObject))
 chrome.storage.sync.get(['locale'], (result) => {
-  store.dispatch(setLocale(result.locale || 'en'))
+  console.log(result)
+  store.dispatch(setLocale(result.locale || 'zh'))
 })
 
 export default store

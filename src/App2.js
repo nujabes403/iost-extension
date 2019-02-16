@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import Landing from 'components/Index'
 // import Index from 'components/Index'
-import { Login, AccountImport, AccountManage } from 'components'
+import { Header } from 'components'
+import Landing from 'components/Index'
+import Login from 'components/Login'
 import Account from 'components/Account'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -21,19 +22,9 @@ type Props = {
 class App extends Component<Props> {
   state = {
     isLoading: true,
-    currentLocation: '/AccountImport',
+    currentLocation: '/login',
   }
 
-  componentDidMount() {
-    chrome.storage.sync.get(['activeAccount'], (result) => {
-      const activeAccount = result && result.activeAccount
-      if (!activeAccount) return
-
-      const { id, encodedPrivateKey } = activeAccount
-      iost.loginAccount(id, encodedPrivateKey)
-      this.changeLocation('/account')
-    })
-  }
   changeLocation = (location) => {
     this.setState({
       currentLocation: location,
@@ -49,11 +40,19 @@ class App extends Component<Props> {
         return <Account changeLocation={this.changeLocation} />
       case '/setting':
         return <Settings changeLocation={this.changeLocation} />
-      case '/AccountImport':
-        return <AccountImport changeLocation={this.changeLocation} />
-      case '/AccountManage':
-        return <AccountManage changeLocation={this.changeLocation} />
     }
+  }
+
+  componentDidMount() {
+    chrome.storage.sync.get(['activeAccount'], (result) => {
+
+      const activeAccount = result && result.activeAccount
+      if (!activeAccount) return
+
+      const { id, encodedPrivateKey } = activeAccount
+      iost.loginAccount(id, encodedPrivateKey)
+      this.changeLocation('/account')
+    })
   }
 
   render() {
@@ -62,9 +61,11 @@ class App extends Component<Props> {
 
     return (
       <div className="App">
-        {this.renderComponentByLocation()}
-        {/*这个是新的全屏弹窗容器*/}
-        <Popup />
+        <Header changeLocation={this.changeLocation} />
+        <div className="App__content">
+          {this.renderComponentByLocation()}
+          <Popup />
+        </div>
       </div>
     )
   }

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
-import { Header } from 'components'
 
 import iost from 'iostJS/iost'
 import Button from 'components/Button'
@@ -22,7 +21,7 @@ class Account extends Component<Props> {
   logout = () => {
     const { changeLocation } = this.props
     iost.logoutAccount()
-    changeLocation('/AccountImport')
+    changeLocation('/login')
   }
 
   moveToSetting = () => {
@@ -33,7 +32,6 @@ class Account extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('accountManage')} setting={false} />
         <div className="Account">
           <div className="Account__header">
             <p className="Account__headerTitle">{I18n.t('account')}</p>

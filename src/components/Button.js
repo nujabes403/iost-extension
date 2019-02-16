@@ -10,9 +10,7 @@ type Props = {
 }
 
 const Button = (props) => (
-  <button {...props} className={cx('Button', props.className, {
-    'Button--blue': props.blue,
-  })}>
+  <button {...props} className={cx('Button', props.className, {'Button--blue': props.blue})}>
     {props.children}
     {props.isLoading && <LoadingImage />}
   </button>
