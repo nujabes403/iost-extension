@@ -21,10 +21,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       chrome.windows.create({
         url: 'askTx.html'
           + `?slotIdx=${slotIdx}`
+          + `&accountId=${iostController.account.getID()}`
           + `&tx=${encodeURIComponent(JSON.stringify(message.payload))}`,
         type: 'popup',
-        width: 400,
-        height: 300,
+        width: 500,
+        height: 620,
       })
       break
     case ACTION.TX_CONFIRM:

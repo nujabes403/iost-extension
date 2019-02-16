@@ -39,6 +39,10 @@ const callABI = ((actionId) => (...args) => {
   return handler
 })(0)
 
+const user = {
+
+}
+
 window.addEventListener('message', (e) => {
   if (e.source !== window) return
   const messageData = e.data && e.data.message
@@ -52,8 +56,17 @@ window.addEventListener('message', (e) => {
       fire.failed(messageData.failed)
     }
   }
+
+  // setTimeout(()=>{
+  //   user.name = '123'
+  // }, 5000)
+ 
 })
+
+
+
 
 module.exports = {
   callABI,
+  user
 }

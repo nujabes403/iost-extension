@@ -8,14 +8,14 @@ const AskPopupSummary = ({
   args = [],
 }) => (
   <div className="AskPopupSummary">
-    <p className="AskPopupSummary__description">
+    <div className="AskPopupSummary__description">
       You will call <span className="AskPopupSummary__item AskPopupSummary__item--abi">'{abi}'</span> action <br/>
       on contract <p className="AskPopupSummary__item AskPopupSummary__item--contractAddress">'{contractAddress}'</p>
       with following arguments:&nbsp;
       <span className="AskPopupSummary__item AskPopupSummary__item--args">
-        [{args.map(arg => <span> {arg} </span>)}]
+        [{args.map((arg,i) => <span key={i}> {arg} </span>)}]
       </span>
-    </p>
+    </div>
   </div>
 )
 

@@ -15,7 +15,7 @@ const AskPopupDetail = ({
     <label className="AskPopupDetail__label">action: </label>
     <span className="AskPopupDetail__abi">{abi}</span>
     <label className="AskPopupDetail__label">arguments: </label>
-    <span className="AskPopupDetail__args">{args.map(arg => <span>{arg}</span>)}</span>
+    <span className="AskPopupDetail__args">{args.map( (arg,i) => <span key={i}>{arg}</span>)}</span>
   </div>
 )
 

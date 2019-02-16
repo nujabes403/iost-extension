@@ -29,6 +29,15 @@ gulp.task('browserify', function () {
       .bundle()
     }))
     .pipe(gulp.dest('dist/app'))
+    
 })
 
+
+gulp.task('watch', function(){
+  gulp.watch(['./public/app/**/*.*'], gulp.series(['build']))
+});
+
 gulp.task('build', gulp.series(['browserify']))
+
+
+gulp.task('default', gulp.series('build', 'watch'));
