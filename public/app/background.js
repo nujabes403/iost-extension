@@ -7,6 +7,32 @@ const txController = new TxController()
 const networkController = new NetworkController()
 const iostController = IostController
 
+const state = {
+  unlock: false,
+  password: '',
+
+  setPassword(password){
+    this.password = password;
+    this.unlock = true
+  },
+
+  getPassword(){
+    return this.password
+  },
+  
+  getLockState(){
+    return this.unlock
+  },
+
+  lock(){
+    this.password = ''
+    this.unlock = false
+  }
+
+
+
+}
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
     case ACTION.TX_ASK:
@@ -48,6 +74,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
     case ACTION.SAVE_NEW_NETWORK:
       networkController.saveNewNetwork(message.payload.newNetworkURL)
+      break
+    case 'GET_UNLOCK_STATE': 
+      sendResponse(state.getLockState())
+      break
+    case 'SET_PASSWORD': 
+      state.setPassword(message.payload.password)
+      break
+    case 'GET_PASSWORD': 
+      sendResponse(state.getPassword())
       break
     default:
   }

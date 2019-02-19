@@ -14,21 +14,16 @@ const envPath = ENV_DIR + `${process.env.NODE_ENV}`.toLowerCase() + '.env'
 module.exports = {
   devtool: 'source-map',
   mode: 'development',
-  // entry: [
-  //   '@babel/polyfill',
-  //   'react-hot-loader/patch',
-  //   path.resolve(__dirname, 'src/index.js'),
-  //   'webpack-hot-middleware/client',
-  // ],
-  entry: {
-    main: ['@babel/polyfill', 'react-hot-loader/patch', path.resolve(__dirname, 'src/index.js'), 'webpack-hot-middleware/client'],
-    popup: ['@babel/polyfill', 'react-hot-loader/patch', path.resolve(__dirname, 'public/app/scripts/ui/popup-index.js'),  'webpack-hot-middleware/client'],
-  },
+  entry: [
+    '@babel/polyfill',
+    'react-hot-loader/patch',
+    path.resolve(__dirname, 'src/index.js'),
+    'webpack-hot-middleware/client',
+  ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    // filename: 'bundle-[hash:6].js',
-    filename: 'bundle-[name].js',
+    filename: 'bundle-[hash:6].js',
   },
   module: {
     rules: [
@@ -73,21 +68,9 @@ module.exports = {
     },
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: path.resolve(__dirname, 'public/index.html'),
-    //   inject: 'body',
-    // }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'public/index.html'),
       inject: 'body',
-      chunks: ['main'],
-      filename: 'index.html',
-    }),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public/askTx.html'),
-      inject: 'body',
-      chunks: ['popup'],
-      filename: 'askTx.html',
     }),
     extractCSS,
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

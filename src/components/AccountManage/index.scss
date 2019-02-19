@@ -1,0 +1,78 @@
+@import "colors.scss";
+
+.accountManage-box {
+  position: relative;
+  width: 100%;
+  padding-top: 40px;
+  height: 540px;
+  background-color: $gray;
+  text-align: center;
+  .account-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    width: 100%;
+    padding: 0 20px;
+    &:nth-child(2n+1) {
+      background-color: $white;
+    }
+    .left {
+      span {
+        display: inline-block;
+        height: 20px;
+        line-height: 20px;
+      }
+      .account-box {
+        text-align: left;
+        .account-title {
+          text-align: center;
+          width: 40px;
+          height: 20px;
+          line-height: 20px;
+          color: $white;
+          background-color: #E28A1E;
+          &.test {
+            background-color: $green;
+          }
+        }
+        .account-name {
+          margin-left: 15px;
+        }
+      }
+      .privateKey-box {
+        display: flex;
+        align-self: center;
+        text-align: left;
+        margin-top: 10px;
+        .privateKey-title {
+          text-align: center;
+          width: 40px;
+          height: 20px;
+          line-height: 20px;
+          color: $white;
+          background-color: $btn-gray;
+        }
+        .privateKey-name {
+          margin-left: 15px;
+          display: flex;
+          align-items: center;
+          .copy {
+            display: inline-block;
+            margin-left: 5px;
+            width: 15px;
+            height: 19px;
+            background-image: url("/static/images/copy.png");
+            background-size: cover;
+          }
+        }
+      }
+    }
+    .right {
+      width: 20px;
+      height: 22px;
+      background-image: url("/static/images/delete.png");
+      background-size: cover;
+    }
+  }
+}

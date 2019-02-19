@@ -11,10 +11,10 @@ type Props = {
 
 }
 
-//调用合约方法
+//contract method
 //chrome-extension://mjkppkibbpmmkokkhgjhlipgokonagep/askTx.html?slotIdx=0&tx=%5B%22ContractEf4ztxHFP4iUs6Xpomgb2nqfJN3D9K7dfp5H7pV7BVy4%22%2C%22hello%22%2C%5B%22123%22%5D%5D
 
-//发送交易
+//transfer
 // chrome-extension://mjkppkibbpmmkokkhgjhlipgokonagep/askTx.html?slotIdx=0&tx=%5B%22token.iost%22%2C%22transfer%22%2C%5B%22iost%22%2C%22testnetiost%22%2C%22testiost1%22%2C%221.000%22%2C%22%22%5D%5D
 
 class AskPopup extends Component<Props> {

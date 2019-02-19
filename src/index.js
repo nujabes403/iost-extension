@@ -9,6 +9,8 @@ import store from './store'
 
 import './index.scss'
 
+import 'utils';
+
 const history = syncHistoryWithStore(browserHistory, store)
 
 export const renderRoutes = (rootComponent) => (

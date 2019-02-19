@@ -6,9 +6,7 @@ import ui from 'utils/ui'
 
 import './Popup.scss'
 
-const Popup = ({
-  popup
- }) => {
+const Popup = ({ popup }) => {
   return popup && (
     <div className="Popup">
       <div className="Popup__content">

@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
-import Header from 'components/Header'
-import Landing from 'components/Landing'
-import Login from 'components/Login'
+import Landing from 'components/Index'
+// import Index from 'components/Index'
+import { Login, AccountImport, AccountManage } from 'components'
 import Account from 'components/Account'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -17,13 +17,44 @@ type Props = {
   isLoading: boolean,
   children: React.DOM,
 }
-
+// /var/www/iost-helloworld-dapp/dist
 class App extends Component<Props> {
   state = {
     isLoading: true,
+    // currentLocation: '/AccountImport',
     currentLocation: '/login',
+    // currentLocation: '/account',
   }
 
+  componentDidMount() {
+
+    chrome.storage.local.get(['password'],({ password }) => {
+      if(password){
+        chrome.runtime.sendMessage({
+          action: 'GET_UNLOCK_STATE',
+        },(res)=> {
+          if(res === false){
+            //解锁页面
+            // this.changeLocation('/AccountImport')
+          }else {
+            this.changeLocation('/AccountImport')
+            // chrome.storage.sync.get(['activeAccount'], (result) => {
+            //   const activeAccount = result && result.activeAccount
+            //   if (!activeAccount) return
+
+            //   const { id, encodedPrivateKey } = activeAccount
+            //   iost.loginAccount(id, encodedPrivateKey)
+            //   this.changeLocation('/account')
+            // })
+          }
+        })
+      }else {
+        this.changeLocation('/login')
+      }
+    })
+    
+    
+  }
   changeLocation = (location) => {
     this.setState({
       currentLocation: location,
@@ -39,19 +70,11 @@ class App extends Component<Props> {
         return <Account changeLocation={this.changeLocation} />
       case '/setting':
         return <Settings changeLocation={this.changeLocation} />
+      case '/AccountImport':
+        return <AccountImport changeLocation={this.changeLocation} />
+      case '/AccountManage':
+        return <AccountManage changeLocation={this.changeLocation} />
     }
-  }
-
-  componentDidMount() {
-    chrome.storage.sync.get(['activeAccount'], (result) => {
-
-      const activeAccount = result && result.activeAccount
-      if (!activeAccount) return
-
-      const { id, encodedPrivateKey } = activeAccount
-      iost.loginAccount(id, encodedPrivateKey)
-      this.changeLocation('/account')
-    })
   }
 
   render() {
@@ -60,11 +83,9 @@ class App extends Component<Props> {
 
     return (
       <div className="App">
-        <Header changeLocation={this.changeLocation} />
-        <div className="App__content">
-          {this.renderComponentByLocation()}
-          <Popup />
-        </div>
+        {this.renderComponentByLocation()}
+        {/*这个是新的全屏弹窗容器*/}
+        <Popup />
       </div>
     )
   }

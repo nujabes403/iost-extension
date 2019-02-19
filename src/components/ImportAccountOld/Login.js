@@ -3,7 +3,7 @@ import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
 import Button from 'components/Button'
-import Landing from 'components/Landing'
+import Landing from 'components/Index'
 import TokenBalance from 'components/TokenBalance'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
@@ -62,7 +62,7 @@ class Login extends Component<Props> {
 
   throwErrorMessage = () => {
     this.setState({
-      errorMessage: I18n.t('invalidLoginInfo')
+      errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
 

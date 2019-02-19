@@ -21,3 +21,8 @@ export const SELECT_TOKEN = 'SELECT_TOKEN'
 
 export const SET_USER_INFO = 'SET_USER_INFO'
 export const RESET_USER_INFO = 'RESET_USER_INFO'
+
+export const SET_ACCOUNTS = 'SET_ACCOUNTS'
+export const ADD_ACCOUNTS = 'ADD_ACCOUNTS'
+export const ADD_ACCOUNT = 'ADD_ACCOUNT'
+export const DEL_ACCOUNT = 'DEL_ACCOUNT'

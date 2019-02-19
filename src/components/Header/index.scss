@@ -1,0 +1,39 @@
+@import "colors.scss";
+
+.header-box {
+  width: 360px;
+  height: 60px;
+  position: relative;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .icon-back, .icon-setting {
+    display: inline-block;
+    background-size: cover;
+  }
+  .icon-back {
+    width: 15px;
+    height: 24px;
+    background-image: url("/static/images/arrow-left.png");
+  }
+  .icon-setting {
+    width: 30px;
+    height: 32px;
+    background-image: url("/static/images/setting.png");
+  }
+  .title {
+    font-size: 18px;
+    color: $title-text;
+  }
+  .add-account {
+    display: inline-block;
+    color: $blue;
+    border: 1px solid;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+  }
+}
