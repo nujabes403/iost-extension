@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { Header } from 'components'
 import classnames from 'classnames'
 import './index.scss'
+import ui from "utils/ui";
 
 const accountArr = [
   { id: 1, test: true, account: 'wwwmmmwwwmmm', privateKey: '********' },
@@ -10,15 +12,24 @@ const accountArr = [
 ]
 
 class AccountManage extends Component<Props> {
+  componentDidMount() {
+    console.log(this.props.locationList)
+  }
   moveTo = (location) => () => {
     const { changeLocation } = this.props
     changeLocation(location)
   }
 
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    changeLocation(locationList[locationList.length - 1])
+  }
+
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('accountManage')} onBack={this.moveTo('/accountSetting')} onAdd={this.moveTo('/accountAdd')} setting={false} />
+        <Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />
         <div className="accountManage-box">
           {
             accountArr.map((item) =>
@@ -46,4 +57,8 @@ class AccountManage extends Component<Props> {
   }
 }
 
-export default AccountManage
+const mapStateToProps = (state) => ({
+  locationList: state.ui.locationList,
+})
+
+export default connect(mapStateToProps)(AccountManage)

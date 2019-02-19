@@ -164,7 +164,7 @@ const zhTranslation = {
   memo: 'Memo',
   checkCreate: '检查账户是否创建成功',
   setting: '设置',
-  ChangePwd: '修改密码',
+  changePwd: '修改密码',
   approved: '通过验证',
   inputCurrentPwd: '输入当前密码',
   setNewPwd: '设置新密码(8位字符)',
@@ -175,6 +175,9 @@ const zhTranslation = {
   iostWallet: '关于iost钱包',
   unlockWallet: '解锁钱包',
   inputPwd: '输入密码',
+  china: '简体中文',
+  english: 'English',
+  japan: '日本语',
 
 
 }

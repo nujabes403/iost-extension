@@ -50,7 +50,7 @@ class Modal1 extends Component {
   }
 
   render(){
-    console.log(this.props)
+    // console.log(this.props)
     return (
       <Modal
         title="123"

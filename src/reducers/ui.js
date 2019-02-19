@@ -9,6 +9,9 @@ import {
   HIDE_OVERLAY,
   TOGGLE_OVERLAY,
   TOGGLE_MODAL,
+  SETTING_LOCATION,
+  DELETE_LOCATION,
+  CURRENT_LOCATION,
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -17,6 +20,8 @@ const initialState = {
   toast: null,
   isOverlayOn: false,
   isCloseModal: true,
+  locationList: [],
+  currentLocation: '',
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -73,6 +78,26 @@ const uiReducer = (state = initialState, action) => {
         ...state,
         isCloseModal: !state.isCloseModal,
       }
+    case SETTING_LOCATION: {
+      state.locationList.push(action.payload.location)
+      return {
+        ...state,
+        locationList: state.locationList,
+      }
+    }
+    case DELETE_LOCATION: {
+      state.locationList.pop()
+      return {
+        ...state,
+        locationList: state.locationList,
+      }
+    }
+    case CURRENT_LOCATION: {
+      return {
+        ...state,
+        currentLocation: action.payload.currentLocation,
+      }
+    }
     default:
       return state
   }

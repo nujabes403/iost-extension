@@ -30,20 +30,16 @@ class Account extends Component<Props> {
     changeLocation('/login')
   }
 
-  moveToSetting = () => {
-    const { changeLocation } = this.props
-    changeLocation('/setting')
-  }
-
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    ui.settingLocation(location)
     changeLocation(location)
   }
 
   render() {
     return (
       <Fragment>
-        <Header title="账户名" logo={true}/>
+        <Header title="账户名" onSetting={this.moveTo('/accountSetting')} logo={true}/>
         <div className="account-box">
           <TokenBalance />
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Landing from 'components/Index'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
   AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd, Modal,
-  Lock, AccountAdd
+  Lock, AccountAdd, ChangeLanguage
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -31,7 +31,6 @@ class App extends Component<Props> {
     // chrome.storage.sync.remove(['activeAccount'], function () {
     //   console.log('删除成功');
     // });
-    console.log(ui,1)
 
     chrome.storage.sync.get(['activeAccount'], (result) => {
       const activeAccount = result && result.activeAccount
@@ -79,6 +78,8 @@ class App extends Component<Props> {
         return <Lock changeLocation={this.changeLocation} />
       case '/accountAdd':
         return <AccountAdd changeLocation={this.changeLocation} />
+      case '/changeLanguage':
+        return <ChangeLanguage changeLocation={this.changeLocation} />
     }
   }
 
@@ -99,6 +100,7 @@ class App extends Component<Props> {
 
 const mapStateToProps = (state) => ({
   locale: state.i18n.locale,
+  currentLocation: state.ui.currentLocation,
 })
 
 export default connect(mapStateToProps)(App)

@@ -17,6 +17,7 @@ import AccountSetting from './AccountSetting';
 import ChangePwd from './ChangePwd';
 import Lock from './Lock';
 import AccountAdd from './AccountAdd';
+import ChangeLanguage from './ChangeLanguage';
 
 export {
   Header,
@@ -37,5 +38,6 @@ export {
   ChangePwd,
   Lock,
   AccountAdd,
+  ChangeLanguage,
 }
 
