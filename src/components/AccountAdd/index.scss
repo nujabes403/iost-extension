@@ -1,0 +1,20 @@
+@import "colors.scss";
+@import "mixins.scss";
+
+.landing-color {
+  background-color: $gray;
+}
+.accountAdd-box {
+  text-align: center;
+  background-color: $gray;
+  padding: 230px 0 30px;
+  .btn-accountCreate {
+    margin-bottom: 15px;
+  }
+  .btn-accountImport {
+    background-color: transparent;
+    color: black;
+    border: 1px solid #000000;
+
+  }
+}

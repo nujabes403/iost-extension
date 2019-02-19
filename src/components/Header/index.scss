@@ -8,14 +8,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .icon-back, .icon-setting {
+  .icon-back, .icon-logo, .icon-setting {
     display: inline-block;
     background-size: cover;
+    cursor: pointer;
   }
   .icon-back {
     width: 15px;
     height: 24px;
     background-image: url("/static/images/arrow-left.png");
+  }
+  .icon-logo {
+    width: 30px;
+    height: 34px;
+    background-image: url("/static/images/logo.png");
   }
   .icon-setting {
     width: 30px;
@@ -35,5 +41,6 @@
     text-align: center;
     line-height: 20px;
     font-size: 12px;
+    cursor: pointer;
   }
 }

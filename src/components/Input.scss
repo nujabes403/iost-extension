@@ -1,7 +1,13 @@
+@import "colors.scss";
+
 .Input {
   outline: 0;
   width: 300px;
   height: 50px;
   border: 1px solid #C4C4C4;
   border-radius: 6px;
+  ::-webkit-input-placeholder {
+    color: $input-text;
+    font-size: 16px;
+  }
 }

@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import Landing from 'components/Index'
-// import Index from 'components/Index'
-import { Login, AccountImport, AccountManage } from 'components'
-import Account from 'components/Account'
+import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
+  AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd, Modal,
+  Lock, AccountAdd
+} from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
 
@@ -13,6 +14,7 @@ import i18n from 'utils/i18n'
 
 import './App.scss'
 
+const { Modal1 } = Modal
 type Props = {
   isLoading: boolean,
   children: React.DOM,
@@ -21,10 +23,16 @@ type Props = {
 class App extends Component<Props> {
   state = {
     isLoading: true,
-    currentLocation: '/AccountImport',
+    currentLocation: '/accountImport',
   }
 
   componentDidMount() {
+    // chrome.storage.sync.clear();
+    // chrome.storage.sync.remove(['activeAccount'], function () {
+    //   console.log('删除成功');
+    // });
+    console.log(ui,1)
+
     chrome.storage.sync.get(['activeAccount'], (result) => {
       const activeAccount = result && result.activeAccount
       if (!activeAccount) return
@@ -49,10 +57,28 @@ class App extends Component<Props> {
         return <Account changeLocation={this.changeLocation} />
       case '/setting':
         return <Settings changeLocation={this.changeLocation} />
-      case '/AccountImport':
+      case '/accountImport':
         return <AccountImport changeLocation={this.changeLocation} />
-      case '/AccountManage':
+      case '/accountManage':
         return <AccountManage changeLocation={this.changeLocation} />
+      case '/tokenTransfer':
+        return <TokenTransfer changeLocation={this.changeLocation} />
+      case '/accountQRCode':
+        return <AccountQRCode changeLocation={this.changeLocation} />
+      case '/accountCreateStep1':
+        return <AccountCreateStep1 changeLocation={this.changeLocation} />
+      case '/accountCreateStep2':
+        return <AccountCreateStep2 changeLocation={this.changeLocation} />
+      case '/accountCreateStep3':
+        return <AccountCreateStep3 changeLocation={this.changeLocation} />
+      case '/accountSetting':
+        return <AccountSetting changeLocation={this.changeLocation} />
+      case '/changePwd':
+        return <ChangePwd changeLocation={this.changeLocation} />
+      case '/lock':
+        return <Lock changeLocation={this.changeLocation} />
+      case '/accountAdd':
+        return <AccountAdd changeLocation={this.changeLocation} />
     }
   }
 
@@ -65,6 +91,7 @@ class App extends Component<Props> {
         {this.renderComponentByLocation()}
         {/*这个是新的全屏弹窗容器*/}
         <Popup />
+        <Modal1 />
       </div>
     )
   }

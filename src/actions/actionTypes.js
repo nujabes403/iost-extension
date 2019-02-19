@@ -21,3 +21,8 @@ export const SELECT_TOKEN = 'SELECT_TOKEN'
 
 export const SET_USER_INFO = 'SET_USER_INFO'
 export const RESET_USER_INFO = 'RESET_USER_INFO'
+
+// 点击设置时，当前location
+export const SETTING_INFO = 'SETTING_INFO'
+// 关闭模态框
+export const TOGGLE_MODAL = 'TOGGLE_MODAL'

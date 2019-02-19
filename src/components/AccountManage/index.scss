@@ -23,7 +23,7 @@
         height: 20px;
         line-height: 20px;
       }
-      .account-box {
+      .account-name-box {
         text-align: left;
         .account-title {
           text-align: center;
@@ -73,6 +73,7 @@
       height: 22px;
       background-image: url("/static/images/delete.png");
       background-size: cover;
+      cursor: pointer;
     }
   }
 }

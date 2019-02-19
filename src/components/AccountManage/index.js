@@ -10,20 +10,21 @@ const accountArr = [
 ]
 
 class AccountManage extends Component<Props> {
-  state = {}
-
-  componentDidMount() {}
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
 
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('accountManage')} setting={false} />
+        <Header title={I18n.t('accountManage')} onBack={this.moveTo('/accountSetting')} onAdd={this.moveTo('/accountAdd')} setting={false} />
         <div className="accountManage-box">
           {
             accountArr.map((item) =>
               <div className="account-item" key={item.id}>
                 <div className="left">
-                  <div className="account-box">
+                  <div className="account-name-box">
                     <span className={classnames('account-title', item.test ? 'test' : '')}>{item.test ? I18n.t('test') : I18n.t('official')}</span>
                     <span className="account-name">{item.account}</span>
                   </div>

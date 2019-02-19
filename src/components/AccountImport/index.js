@@ -66,11 +66,16 @@ class AccountImport extends Component<Props> {
     })
   }
 
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
+
   render() {
     const { errorMessage } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('accountImport')} />
+        <Header title={I18n.t('accountImport')} onBack={this.moveTo('/login')} />
         <div className="accountImport-box">
           <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} />
           <Input

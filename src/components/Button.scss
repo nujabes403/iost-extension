@@ -21,6 +21,15 @@
     background-color: rgba($brand-black2, .9);
   }
 
+  &.btn-account {
+    width: 120px;
+    height: 50px;
+    background-color: $white;
+    color: #000000;
+    border: 1px solid;
+  }
+
+
   &--blue {
     color: $brand-blue;
     background-color: $white;

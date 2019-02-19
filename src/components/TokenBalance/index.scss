@@ -1,0 +1,39 @@
+@import "colors.scss";
+
+.TokenBalance-box {
+  text-align: center;
+  margin-bottom: 25px;
+  min-height: 169px;
+  .logo-box {
+    margin-top: 30px;
+    .logo {
+      width: 72px;
+    }
+  }
+  .TokenBalance-amount-box {
+    margin: 15px 0 10px;
+  }
+  .TokenBalance__amount {
+    font-size: 24px;
+    display: inline-block;
+  }
+  .TokenBalance__symbol {
+    display: inline-block;
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+  .TokenBalance__frozenBalance {
+    display: inline-block;
+    margin-left: 2px;
+    color: $frozen;
+    font-size: 14px;
+  }
+  .TokenBalance__resources {
+    font-size: 16px;
+    font-weight: 300;
+    .TokenBalance__ram {
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+}

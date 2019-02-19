@@ -27,42 +27,17 @@ class Index extends Component<Props> {
     })
   }
 
-  tryLogin = async () => {
-    const { account, privateKey } = this.state
-    const { changeLocation } = this.props
-
-    let publicKey
-    try {
-      publicKey = privateKeyToPublicKey(privateKey)
-    } catch (e) {
-      publicKey = ''
-    }
-
-    const invalidLoginInput = !account || !privateKey || !publicKey
-
-    if (invalidLoginInput) {
-      this.throwErrorMessage()
-      return
-    }
-
-    iost.rpc.blockchain.getAccountInfo(account)
-      .then((accountInfo) => {
-        if (!iost.isValidAccount(accountInfo, publicKey)) {
-          this.throwErrorMessage()
-          return
-        }
-
-        iost.loginAccount(account, privateKey)
-        changeLocation('/account')
-      })
-      .catch(this.throwErrorMessage)
-  }
-
   throwErrorMessage = () => {
     this.setState({
       errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
+
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
+
 
   render() {
     const { errorMessage } = this.state
@@ -86,8 +61,8 @@ class Index extends Component<Props> {
           />
           {!!errorMessage && <p className="Login__errorMessage">{errorMessage}</p>}
           <div className="line"></div>
-          <Button className="btn-accountCreate" onClick={this.tryLogin}>{I18n.t('accountCreate')}</Button>
-          <Button className="btn-accountImport"onClick={this.tryLogin}>{I18n.t('accountImport')}</Button>
+          <Button className="btn-accountCreate" onClick={this.moveTo('/accountCreateStep1')}>{I18n.t('accountCreate')}</Button>
+          <Button className="btn-accountImport" onClick={this.moveTo('/accountImport')}>{I18n.t('accountImport')}</Button>
         </div>
       </Fragment>
     )
