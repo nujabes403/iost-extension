@@ -26,3 +26,7 @@ export const SET_ACCOUNTS = 'SET_ACCOUNTS'
 export const ADD_ACCOUNTS = 'ADD_ACCOUNTS'
 export const ADD_ACCOUNT = 'ADD_ACCOUNT'
 export const DEL_ACCOUNT = 'DEL_ACCOUNT'
+// 点击设置时，当前location
+export const SETTING_INFO = 'SETTING_INFO'
+// 关闭模态框
+export const TOGGLE_MODAL = 'TOGGLE_MODAL'

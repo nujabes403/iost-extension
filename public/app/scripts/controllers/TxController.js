@@ -17,6 +17,9 @@ TxController.prototype.processTx = function(txIdx) {
   const actionId = txInfo.actionId
 
   const tx = iostController.iostInstance.callABI(...txObject)
+  if(iostController.network != 'http://api.iost.io'){
+    tx.setChainID(1023)
+  }
   tx.addApprove("*", "unlimited")
 
   if (txObject[1] === 'transfer') {

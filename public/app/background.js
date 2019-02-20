@@ -37,7 +37,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
     case ACTION.TX_ASK:
       if (iostController.account.getID() === 'empty')
-        throw Error('Account should be logged in to send a tx')
+        throw Error('Index should be logged in to send a tx')
       const totalTxLength = txController.addTx({
         tx: message.payload,
         actionId: message.actionId,
@@ -77,6 +77,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       break
     case 'GET_UNLOCK_STATE': 
       sendResponse(state.getLockState())
+      break
+    case 'SET_LOCK': 
+      state.lock()
       break
     case 'SET_PASSWORD': 
       state.setPassword(message.payload.password)

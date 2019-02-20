@@ -1,0 +1,91 @@
+@import "colors.scss";
+
+.modal-wrapper{
+  position: relative;
+  width: 644px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 14px;
+  .content-box{
+    line-height: 1.4;
+    .title, .subtitle{
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+  .icon-close{
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    cursor: pointer;
+    background-image: url('/static/images/icon-close.png');
+    background-size: cover;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-position: center center;
+    &:active{
+      opacity: 0.9;
+    }
+  }
+  p{
+    margin-bottom: 5px;
+    a{
+    }
+  }
+}
+
+.delete-wrapper {
+  background-color: $white;
+  height: 214px;
+  .delete-container {
+    width: 300px;
+  }
+}
+
+
+
+@media screen and (max-width:480px){
+  .modal-wrapper{
+    width: 100%;
+    max-width: 360px;
+    padding: 5px 8px 20px;
+    .content-box{
+      overflow: scroll;
+      max-height: calc(100vh - 230px);
+      width: 100%;
+      .title, .subtitle{
+        font-size: 16px;
+        text-align: center;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+    .icon-close{
+      right: -4px;
+      top: 0;
+    }
+  }
+
+
+
+
+  .incomeTips-wrapper {
+    height: 430px;
+    .incomeTips-container{
+      height: 370px;
+      padding: 0 20px 20px;
+      margin-top: 10px;
+    }
+  }
+
+}
+@media screen and (max-width:375px){
+  .modal-wrapper{
+    .content-box{
+      max-height: calc(100vh - 150px);
+    }
+  }
+}

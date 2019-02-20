@@ -2,17 +2,34 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 
 import Landing from 'components/Index'
-// import Index from 'components/Index'
-import { Login, AccountImport, AccountManage } from 'components'
-import Account from 'components/Account'
+import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
+  AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd, Modal,
+  Lock, AccountAdd
+} from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
 
 import iost from 'iostJS/iost'
 import i18n from 'utils/i18n'
+import utils from 'utils'
+
+import * as accountActions from 'actions/accounts'
 
 import './App.scss'
 
+const getPassword = () => new Promise((resolve, reject) => {
+  chrome.runtime.sendMessage({
+    action: 'GET_PASSWORD',
+  },(res)=> {
+    if(res != ''){
+      resolve(res)
+    }else {
+      reject('no password')
+    }
+  })
+})
+
+const { Modal1 } = Modal
 type Props = {
   isLoading: boolean,
   children: React.DOM,
@@ -26,8 +43,7 @@ class App extends Component<Props> {
     // currentLocation: '/account',
   }
 
-  componentDidMount() {
-
+  componentDidMount() { 
     chrome.storage.local.get(['password'],({ password }) => {
       if(password){
         chrome.runtime.sendMessage({
@@ -35,17 +51,35 @@ class App extends Component<Props> {
         },(res)=> {
           if(res === false){
             //解锁页面
-            // this.changeLocation('/AccountImport')
+            this.changeLocation('/lock')
           }else {
-            this.changeLocation('/AccountImport')
-            // chrome.storage.sync.get(['activeAccount'], (result) => {
-            //   const activeAccount = result && result.activeAccount
-            //   if (!activeAccount) return
-
-            //   const { id, encodedPrivateKey } = activeAccount
-            //   iost.loginAccount(id, encodedPrivateKey)
-            //   this.changeLocation('/account')
-            // })
+            chrome.storage.local.get(['accounts'], ({accounts}) => {
+              if (accounts && accounts.length){
+                this.props.dispatch(accountActions.setAccounts(accounts));
+                chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
+                  if (activeAccount) {
+                    const { id, encodedPrivateKey } = activeAccount
+                    iost.loginAccount(id, encodedPrivateKey)
+                    // this.changeLocation('/accountAdd')
+                    this.changeLocation('/account')
+                    // this.changeLocation('/accountManage')
+                  }else {
+                    const { name, privateKey } = accounts[0]
+                    chrome.runtime.sendMessage({
+                      action: 'GET_PASSWORD',
+                    },(res)=> {
+                      const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
+                      iost.loginAccount(name, encodedPrivateKey)
+                      this.changeLocation('/account')
+                    })
+                  }
+                })
+              }else {
+                this.changeLocation('/accountImport')
+              }
+            })
+            
+            
           }
         })
       }else {
@@ -70,10 +104,28 @@ class App extends Component<Props> {
         return <Account changeLocation={this.changeLocation} />
       case '/setting':
         return <Settings changeLocation={this.changeLocation} />
-      case '/AccountImport':
+      case '/accountImport':
         return <AccountImport changeLocation={this.changeLocation} />
-      case '/AccountManage':
+      case '/accountManage':
         return <AccountManage changeLocation={this.changeLocation} />
+      case '/tokenTransfer':
+        return <TokenTransfer changeLocation={this.changeLocation} />
+      case '/accountQRCode':
+        return <AccountQRCode changeLocation={this.changeLocation} />
+      case '/accountCreateStep1':
+        return <AccountCreateStep1 changeLocation={this.changeLocation} />
+      case '/accountCreateStep2':
+        return <AccountCreateStep2 changeLocation={this.changeLocation} />
+      case '/accountCreateStep3':
+        return <AccountCreateStep3 changeLocation={this.changeLocation} />
+      case '/accountSetting':
+        return <AccountSetting changeLocation={this.changeLocation} />
+      case '/changePwd':
+        return <ChangePwd changeLocation={this.changeLocation} />
+      case '/lock':
+        return <Lock changeLocation={this.changeLocation} />
+      case '/accountAdd':
+        return <AccountAdd changeLocation={this.changeLocation} />
     }
   }
 
@@ -86,6 +138,7 @@ class App extends Component<Props> {
         {this.renderComponentByLocation()}
         {/*这个是新的全屏弹窗容器*/}
         <Popup />
+        <Modal1 />
       </div>
     )
   }

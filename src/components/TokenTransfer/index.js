@@ -4,14 +4,16 @@ import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
+import { Header } from 'components'
 import Input from 'components/Input'
 import Button from 'components/Button'
-import TokenBalance from 'components/TokenBalance'
+// import TokenBalance from 'components/TokenBalance'
 import TokenTransferSuccess from 'components/TokenTransferSuccess'
 import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
 
-import './TokenTransfer.scss'
+
+import './index.scss'
 
 const defaultConfig = {
   gasRatio: 1,
@@ -25,7 +27,7 @@ type Props = {
 
 }
 
-class TokenTransfer extends Component<Props> {
+class Index extends Component<Props> {
   state = {
     to: '',
     amount: '',
@@ -33,6 +35,8 @@ class TokenTransfer extends Component<Props> {
     iGASPrice: defaultConfig.gasRatio,
     iGASLimit: defaultConfig.gasLimit,
     errorMessage: '',
+    isShowing: false, // 是否显示多余资源输入框
+
   }
 
   handleChange = (e) => {
@@ -99,64 +103,83 @@ class TokenTransfer extends Component<Props> {
       .listen(1000, 60)
   }
 
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
+
+  toggleMenu = () => {
+    this.setState({
+      isShowing: !this.state.isShowing,
+    })
+  }
+
   render() {
-    const { isSending, iGASPrice, iGASLimit, errorMessage } = this.state
+    const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing } = this.state
     const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
-        <TokenBalance />
-        <div className={cx('TokenTransfer', className)}>
-          <header className="TokenTransfer__title">
-            {I18n.t('sendToken', { token: selectedTokenSymbol })}
-          </header>
-          <label className="TokenTransfer__InputLabel">
-            {I18n.t('transactionFrom')}:
-          </label>
+        <Header title={I18n.t('transfer')} onBack={this.moveTo('/account')} />
+        <div className="tokenTransfer-box">
+          <div className="transferAmount-box">
+            <span className="transferAmount">{I18n.t('transferAmount')}</span>
+            <span className="balance">{I18n.t('balance', { num: 999, token: selectedTokenSymbol })}</span>
+          </div>
           <Input
-            className="TokenTransfer__Input"
-            value={iost.account.getID()}
+            name="amount"
+            onChange={this.handleChange}
+            placeholder={I18n.t('enterAmount')}
+            className="input"
           />
-          <label className="TokenTransfer__InputLabel">
-            {I18n.t('transactionTo')}:
+          <label className="label">
+            {I18n.t('addressCollection')}
           </label>
           <Input
             name="to"
             onChange={this.handleChange}
-            className="TokenTransfer__Input"
+            placeholder={I18n.t('address')}
+            className="input"
           />
-          <label className="TokenTransfer__InputLabel">
-            {I18n.t('transactionAmount')}:
+          <label className="label">
+            {I18n.t('remarks')}
           </label>
           <Input
-            name="amount"
+            name=""
             onChange={this.handleChange}
-            className="TokenTransfer__Input"
+            placeholder={I18n.t('optional')}
+            className="input"
           />
-          <label className="TokenTransfer__InputLabel">
-            {I18n.t('transactioniGasPrice')}:
-          </label>
-          <Input
-            name="iGASPrice"
-            value={iGASPrice}
-            onChange={this.handleChange}
-            className="TokenTransfer__Input"
-          />
-          <label className="TokenTransfer__InputLabel">
-            {I18n.t('transactioniGasLimit')}:
-          </label>
-          <Input
-            name="iGASLimit"
-            value={iGASLimit}
-            onChange={this.handleChange}
-            className="TokenTransfer__Input"
-          />
+
+          <div className="transferAmount-box">
+            <span className="transferAmount">{I18n.t('resourceCost')}</span>
+            <span className="iGAS-price" onClick={this.toggleMenu}>{iGASPrice} {I18n.t('iGAS')} <i /></span>
+          </div>
+          {
+            isShowing && (
+              <div>
+                <Input
+                  name="iGASPrice"
+                  value={iGASPrice}
+                  onChange={this.handleChange}
+                  className="input"
+                />
+                <Input
+                  name="iGASLimit"
+                  value={iGASLimit}
+                  onChange={this.handleChange}
+                  className={cx('input', 'iGASLimit')}
+                />
+              </div>
+            )
+          }
           <Button
-            className="TokenTransfer__sendButton"
+            className="btn-submit"
             onClick={this.transfer}
             isLoading={isSending}
           >
-            {I18n.t('transactionSend')}
+            {I18n.t('submit')}
           </Button>
+          <p className="transferTips">{I18n.t('transferTips')}</p>
           <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>
       </Fragment>
@@ -168,4 +191,4 @@ const mapStateToProps = (state) => ({
   selectedTokenSymbol: state.token.selectedTokenSymbol,
 })
 
-export default connect(mapStateToProps)(TokenTransfer)
+export default connect(mapStateToProps)(Index)

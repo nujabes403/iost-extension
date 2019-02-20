@@ -1,0 +1,22 @@
+@import "colors.scss";
+
+.accountQRCode-box {
+  text-align: center;
+  background-color: $gray;
+  height: 540px;
+  padding: 40px 30px 0;
+  .qrTitle {
+    font-size: 20px;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+  .name {
+    font-size: 20px;
+    color: #333333;
+    margin: 25px 0 10px;
+  }
+  .receiptTips {
+    margin-top: 10px;
+    color: $title-text;
+  }
+}

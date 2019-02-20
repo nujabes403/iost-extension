@@ -1,0 +1,21 @@
+@import "colors.scss";
+@import "mixins.scss";
+
+.lock-box {
+  height: 175px;
+  margin: 210px auto 0;
+  text-align: center;
+  background-color: $gray;
+  padding-top: 30px;
+  .input-password {
+    padding: 0 15px;
+    margin-bottom: 15px;
+  }
+}
+
+.lock-errorMessage {
+  font-size: 10px;
+  color: $brand-red;
+  margin: 4px;
+  text-align: left;
+}

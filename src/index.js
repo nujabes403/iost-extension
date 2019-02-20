@@ -7,6 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import App from './App'
 import store from './store'
 
+import './styles/dialog.css';
 import './index.scss'
 
 import 'utils';

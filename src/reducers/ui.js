@@ -8,6 +8,7 @@ import {
   SHOW_OVERLAY,
   HIDE_OVERLAY,
   TOGGLE_OVERLAY,
+  TOGGLE_MODAL,
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   popup: null,
   toast: null,
   isOverlayOn: false,
+  isCloseModal: true,
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -65,6 +67,11 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         isOverlayOn: !state.isOverlayOn,
+      }
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        isCloseModal: !state.isCloseModal,
       }
     default:
       return state

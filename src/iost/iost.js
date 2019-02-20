@@ -10,7 +10,8 @@ const DEFAULT_IOST_CONFIG = {
   delay: 0,
 }
 
-const IOST_NODE_URL = 'http://localhost:30001'
+// const IOST_NODE_URL = 'http://localhost:30001'
+const IOST_NODE_URL = 'http://api.iost.io'
 const IOST_PROVIDER = new IOST.HTTPProvider(IOST_NODE_URL)
 
 const iost = {

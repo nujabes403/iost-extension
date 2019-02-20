@@ -99,6 +99,12 @@ class Index extends Component<Props> {
     })
   }
 
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
+
+
   render() {
     const { password, repassword, errorMessage } = this.state
     return (

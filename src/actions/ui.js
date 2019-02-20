@@ -8,6 +8,8 @@ import {
   SHOW_OVERLAY,
   HIDE_OVERLAY,
   TOGGLE_OVERLAY,
+  SETTING_INFO,
+  TOGGLE_MODAL,
 } from 'actions/actionTypes'
 
 /**
@@ -84,4 +86,9 @@ export const hideOverlay = () => ({
 
 export const toggleOverlay = () => ({
   type: TOGGLE_OVERLAY,
+})
+
+
+export const toggleModal = () => ({
+  type: TOGGLE_MODAL,
 })

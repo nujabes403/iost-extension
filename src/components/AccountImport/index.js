@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
-
+import { connect } from 'react-redux'
 import Input from 'components/Input'
 import { Header } from 'components'
 import Button from 'components/Button'
@@ -8,6 +8,8 @@ import NetworkSelector from 'components/NetworkSelector'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils'
+
+import * as accountActions from 'actions/accounts'
 
 import './index.scss'
 
@@ -77,7 +79,7 @@ class AccountImport extends Component<Props> {
         return prev
       },[])
       chrome.storage.local.set({accounts: accounts})
-
+      this.props.dispatch(accountActions.setAccounts(accounts));
       iost.rpc.blockchain.getAccountInfo(accounts[0].name)
           .then((accountInfo) => {
             if (!iost.isValidAccount(accountInfo, publicKey)) {
@@ -86,7 +88,7 @@ class AccountImport extends Component<Props> {
             }
 
             iost.loginAccount(accounts[0].name, privateKey)
-            changeLocation('/account')
+            changeLocation('/accountManage')
           })
           .catch(this.throwErrorMessage)
     } catch (e) {
@@ -111,11 +113,16 @@ class AccountImport extends Component<Props> {
     })
   }
 
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
+  }
+
   render() {
     const { errorMessage } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('accountImport')} />
+        <Header title={I18n.t('accountImport')} onBack={this.moveTo('/login')} />
         <div className="accountImport-box">
           <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} />
           {/*
@@ -131,4 +138,8 @@ class AccountImport extends Component<Props> {
   }
 }
 
-export default AccountImport
+const mapStateToProps = (state) => ({
+  accounts: state.accounts.accounts,
+})
+
+export default connect(mapStateToProps)(AccountImport)

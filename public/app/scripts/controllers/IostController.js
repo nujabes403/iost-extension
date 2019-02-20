@@ -15,12 +15,13 @@ const iost = {
   iost: new IOST.IOST(DEFAULT_IOST_CONFIG, IOST_PROVIDER),
   rpc: new IOST.RPC(IOST_PROVIDER),
   account: new IOST.Account('empty'),
+  network: IOST_NODE_URL,
   // network
   changeNetwork: async (url) => {
     const newNetworkProvider = new IOST.HTTPProvider(url)
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
-    
+    iost.network = url
     // Save last network you used in extension storage.
     chrome.storage.sync.set({
       activeNetwork: url

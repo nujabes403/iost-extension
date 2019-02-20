@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Header } from 'components'
 import Landing from 'components/Index'
 import Login from 'components/Login'
-import Account from 'components/Account'
+import Account from 'components/Index'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
 
