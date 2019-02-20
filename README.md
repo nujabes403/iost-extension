@@ -20,3 +20,6 @@ Because it adds functionality to the browser, IOST Extension requires the permis
 4. Go to [chrome://extensions/](chrome://extensions/)
 5. Turn on `developer mode` at the top right corner
 6. Drag your `/dist` folder which generated from step 3 to the page.
+
+### How to use for dapp?
+Here is a dapp sample. [iost-helloworld-dapp](https://github.com/lucusfly/iost-helloworld-dapp)
