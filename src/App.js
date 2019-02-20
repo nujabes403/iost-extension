@@ -29,7 +29,6 @@ const getPassword = () => new Promise((resolve, reject) => {
   })
 })
 
-const { Modal1 } = Modal
 type Props = {
   isLoading: boolean,
   children: React.DOM,
