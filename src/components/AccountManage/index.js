@@ -62,18 +62,11 @@ class AccountManage extends Component<Props> {
   }
 }
 
-<<<<<<< HEAD
 
 const mapStateToProps = (state) => ({
   accounts: state.accounts.accounts,
-})
-
-export default connect(mapStateToProps)(AccountManage)
-
-=======
-const mapStateToProps = (state) => ({
   locationList: state.ui.locationList,
 })
 
 export default connect(mapStateToProps)(AccountManage)
->>>>>>> d7760dd73d0ab62b9b4353de27ba88c1d97370cd
+

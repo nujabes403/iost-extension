@@ -2,11 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import Input from 'components/Input'
 import Button from 'components/Button'
-<<<<<<< HEAD
 import { Landing, Header } from 'components'
-=======
-import { Header, Landing } from 'components'
->>>>>>> d7760dd73d0ab62b9b4353de27ba88c1d97370cd
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 
