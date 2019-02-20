@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
@@ -61,4 +62,8 @@ class AccountCreateStep1 extends Component<Props> {
   }
 }
 
-export default AccountCreateStep1
+const mapStateToProps = (state) => ({
+  locationList: state.ui.locationList,
+})
+
+export default connect(mapStateToProps)(AccountCreateStep1)

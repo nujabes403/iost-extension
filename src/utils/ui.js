@@ -8,7 +8,6 @@ import {
   toggleModal,
   settingLocation,
   deleteLocation,
-  changeLocation,
 } from 'actions/ui'
 import store from '../store'
 
@@ -22,7 +21,6 @@ export const ui = {
   toggleModal: () => store.dispatch(toggleModal()),
   settingLocation: (location) => store.dispatch(settingLocation(location)),
   deleteLocation: () => store.dispatch(deleteLocation()),
-  changeLocation: (location) => store.dispatch(changeLocation(location)),
 }
 
 window.ui = ui

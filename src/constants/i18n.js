@@ -123,6 +123,7 @@ const zhTranslation = {
   accountCreate: '创建账号',
   accountImport: '导入账号',
   accountManage: '账号管理',
+  accountAdd: '添加账号',
   submit: '提交',
   addAccount: '添加',
   test: '测试',
@@ -178,6 +179,11 @@ const zhTranslation = {
   china: '简体中文',
   english: 'English',
   japan: '日本语',
+  confirmDelWhether: '是否确认删除？',
+  confirmDelTip: '删除账号前请确定已导出私钥，否则删除后将无法恢复账号！？',
+  confirmDel: '确认',
+  nodeVoting: '参与节点投票',
+  userAgreement: '用户协议',
 
 
 }

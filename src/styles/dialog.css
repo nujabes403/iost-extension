@@ -154,12 +154,6 @@
             transform: scale(0, 0);
   }
 }
-@media (min-width: 768px) {
-  .rc-dialog {
-    /* width: 600px; */
-    margin: 30px auto;
-  }
-}
 .rc-dialog-mask {
   position: fixed;
   top: 0;
@@ -241,12 +235,5 @@
   }
   100% {
     opacity: 0;
-  }
-}
-
-
-@media screen and (max-width:480px) {
-  .rc-dialog-body {
-    padding: 20px 0;
   }
 }

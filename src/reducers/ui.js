@@ -19,9 +19,8 @@ const initialState = {
   popup: null,
   toast: null,
   isOverlayOn: false,
-  isCloseModal: true,
+  isShowModal: false,
   locationList: [],
-  currentLocation: '',
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -76,7 +75,7 @@ const uiReducer = (state = initialState, action) => {
     case TOGGLE_MODAL:
       return {
         ...state,
-        isCloseModal: !state.isCloseModal,
+        isShowModal: !state.isShowModal,
       }
     case SETTING_LOCATION: {
       state.locationList.push(action.payload.location)
@@ -86,16 +85,12 @@ const uiReducer = (state = initialState, action) => {
       }
     }
     case DELETE_LOCATION: {
-      state.locationList.pop()
+      if (state.locationList.length > 1) {
+        state.locationList.pop()
+      }
       return {
         ...state,
         locationList: state.locationList,
-      }
-    }
-    case CURRENT_LOCATION: {
-      return {
-        ...state,
-        currentLocation: action.payload.currentLocation,
       }
     }
     default:

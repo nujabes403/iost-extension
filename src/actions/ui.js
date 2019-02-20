@@ -106,10 +106,3 @@ export const settingLocation = (location) => ({
 export const deleteLocation = () => ({
   type: DELETE_LOCATION,
 })
-
-export const changeLocation = (currentLocation) => ({
-  type: CURRENT_LOCATION,
-  payload: {
-    currentLocation,
-  },
-})

@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
-import { Header } from 'components'
+import { Header, Modal } from 'components'
 import classnames from 'classnames'
+import ui from 'utils/ui';
 import './index.scss'
-import ui from "utils/ui";
 
 const accountArr = [
   { id: 1, test: true, account: 'wwwmmmwwwmmm', privateKey: '********' },
   { id: 2, test: false, account: 'gicinbigien', privateKey: '********' },
 ]
+const { Modal1 } = Modal
+
 
 class AccountManage extends Component<Props> {
   componentDidMount() {
@@ -26,6 +28,9 @@ class AccountManage extends Component<Props> {
     changeLocation(locationList[locationList.length - 1])
   }
 
+  deleteAccount = () => {
+    ui.toggleModal()
+  }
   render() {
     return (
       <Fragment>
@@ -47,11 +52,12 @@ class AccountManage extends Component<Props> {
                     </span>
                   </div>
                 </div>
-                <i className="right" />
+                <i className="right" onClick={this.deleteAccount} />
               </div>
             )
           }
         </div>
+        <Modal1 />
       </Fragment>
     )
   }

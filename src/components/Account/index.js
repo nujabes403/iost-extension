@@ -5,7 +5,6 @@ import cx from 'classnames'
 import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
-import TokenSelector from 'components/TokenSelector'
 import ui from 'utils/ui'
 import './index.scss'
 

@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 
 import { Header } from 'components'
+import ui from 'utils/ui';
 import './index.scss'
-import Modal from "components/Modal";
-import ui from "utils/ui";
 
 const settingList = [
   { id: 1, name: 'accountManage' },
@@ -29,10 +28,17 @@ class AccountSetting extends Component<Props> {
     changeLocation(location)
   }
 
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    console.log(locationList)
+    changeLocation(locationList[locationList.length - 1])
+  }
+
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('setting')} onBack={this.moveTo('/login')} hasSetting={false} />
+        <Header title={I18n.t('setting')} onBack={this.backTo} hasSetting={false} />
         <div className="accountSetting-box">
           <ul>
             {

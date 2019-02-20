@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 
 import Landing from 'components/Index'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
-  AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd, Modal,
-  Lock, AccountAdd, ChangeLanguage
+  AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
+  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -14,7 +14,6 @@ import i18n from 'utils/i18n'
 
 import './App.scss'
 
-const { Modal1 } = Modal
 type Props = {
   isLoading: boolean,
   children: React.DOM,
@@ -80,19 +79,19 @@ class App extends Component<Props> {
         return <AccountAdd changeLocation={this.changeLocation} />
       case '/changeLanguage':
         return <ChangeLanguage changeLocation={this.changeLocation} />
+      case '/iostWallet':
+        return <IostWallet changeLocation={this.changeLocation} />
+      case '/userAgreement':
+        return <UserAgreement changeLocation={this.changeLocation} />
     }
   }
 
   render() {
-    const { currentLocation } = this.state
-    const { children, ui } = this.props
-
     return (
       <div className="App">
         {this.renderComponentByLocation()}
         {/*这个是新的全屏弹窗容器*/}
         <Popup />
-        <Modal1 />
       </div>
     )
   }
@@ -100,7 +99,6 @@ class App extends Component<Props> {
 
 const mapStateToProps = (state) => ({
   locale: state.i18n.locale,
-  currentLocation: state.ui.currentLocation,
 })
 
 export default connect(mapStateToProps)(App)

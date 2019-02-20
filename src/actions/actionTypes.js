@@ -30,5 +30,3 @@ export const TOGGLE_MODAL = 'TOGGLE_MODAL'
 export const SETTING_LOCATION = 'SETTING_LOCATION'
 // 删除上次跳转的location
 export const DELETE_LOCATION = 'DELETE_LOCATION'
-// 当前location
-export const CURRENT_LOCATION = 'CURRENT_LOCATION'
