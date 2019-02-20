@@ -37,7 +37,7 @@ const getAccounts = () => new Promise((resolve, reject) => {
 
 class AccountImport extends Component<Props> {
   state = {
-    privateKey: '5w39KtYEUHTPnqJNxerBxmWHvF6fgfbGenHR2rmKe5wcUEaM8tWV9K3UACnpBrBQtzhB3cSKD8FeriGojJku4JsJ',
+    privateKey: '',
     errorMessage: '',
   }
 
