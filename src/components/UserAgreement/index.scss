@@ -1,0 +1,13 @@
+@import "colors.scss";
+
+.userAgreement-box {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  background-color: $gray;
+  .userAgreement-wrapper {
+    margin-top: 10px;
+    background-color: $white;
+  }
+
+}

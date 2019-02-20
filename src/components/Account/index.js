@@ -5,7 +5,6 @@ import cx from 'classnames'
 import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
-import TokenSelector from 'components/TokenSelector'
 import ui from 'utils/ui'
 import './index.scss'
 
@@ -30,20 +29,16 @@ class Account extends Component<Props> {
     changeLocation('/login')
   }
 
-  moveToSetting = () => {
-    const { changeLocation } = this.props
-    changeLocation('/accountSetting')
-  }
-
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    ui.settingLocation(location)
     changeLocation(location)
   }
 
   render() {
     return (
       <Fragment>
-        <Header title="账户名" logo={true} onSetting={this.moveToSetting}/>
+        <Header title="账户名" onSetting={this.moveTo('/accountSetting')} logo={true}/>
         <div className="account-box">
           <TokenBalance />
 

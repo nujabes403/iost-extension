@@ -5,6 +5,8 @@ import { I18n } from 'react-redux-i18n'
 import Dialog from 'rc-dialog'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import cx from 'classnames'
+import Button from 'components/Button'
+import ui from 'utils/ui';
 import './index.scss'
 
 class Modal extends Component {
@@ -46,21 +48,26 @@ class Modal1 extends Component {
   }
 
   onCloseModal = () => {
-    // this.store.app.setVisible('visible10', false)
+    ui.toggleModal()
   }
 
+  confirmDelete = () => {
+
+  }
   render(){
-    console.log(this.props)
+    // console.log(this.props)
+    const { isShowModal } = this.props
     return (
       <Modal
-        title="123"
+        title={I18n.t('confirmDelWhether')}
         {...this.props}
-        visible={false}
+        visible={isShowModal}
         onClose={this.onCloseModal}
         DialogClass='delete-wrapper'
       >
         <div className="delete-container">
-
+          <p className="confirmDelTip">{I18n.t('confirmDelTip')}</p>
+          <Button className="btn-confirm" onClick={this.confirmDelete}>{I18n.t('confirmDel')}</Button>
         </div>
       </Modal>
     )
@@ -68,7 +75,7 @@ class Modal1 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isCloseModal: state.ui.isCloseModal,
+  isShowModal: state.ui.isShowModal,
 })
 
 Modal.Modal1 = connect(mapStateToProps)(Modal1)

@@ -17,6 +17,9 @@ import AccountSetting from './AccountSetting';
 import ChangePwd from './ChangePwd';
 import Lock from './Lock';
 import AccountAdd from './AccountAdd';
+import ChangeLanguage from './ChangeLanguage';
+import IostWallet from './IostWallet';
+import UserAgreement from './UserAgreement';
 
 export {
   Header,
@@ -37,5 +40,8 @@ export {
   ChangePwd,
   Lock,
   AccountAdd,
+  ChangeLanguage,
+  IostWallet,
+  UserAgreement,
 }
 

@@ -9,6 +9,9 @@ import {
   HIDE_OVERLAY,
   TOGGLE_OVERLAY,
   TOGGLE_MODAL,
+  SETTING_LOCATION,
+  DELETE_LOCATION,
+  CURRENT_LOCATION,
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -16,7 +19,8 @@ const initialState = {
   popup: null,
   toast: null,
   isOverlayOn: false,
-  isCloseModal: true,
+  isShowModal: false,
+  locationList: [],
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -71,8 +75,24 @@ const uiReducer = (state = initialState, action) => {
     case TOGGLE_MODAL:
       return {
         ...state,
-        isCloseModal: !state.isCloseModal,
+        isShowModal: !state.isShowModal,
       }
+    case SETTING_LOCATION: {
+      state.locationList.push(action.payload.location)
+      return {
+        ...state,
+        locationList: state.locationList,
+      }
+    }
+    case DELETE_LOCATION: {
+      if (state.locationList.length > 1) {
+        state.locationList.pop()
+      }
+      return {
+        ...state,
+        locationList: state.locationList,
+      }
+    }
     default:
       return state
   }

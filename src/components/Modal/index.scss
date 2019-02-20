@@ -8,17 +8,18 @@
   font-size: 14px;
   .content-box{
     line-height: 1.4;
-    .title, .subtitle{
+    .title {
       font-size: 16px;
       text-align: center;
       font-weight: bold;
+      color: #333333;
       margin: 0;
     }
   }
   .icon-close{
     position: absolute;
-    right: 18px;
-    top: 18px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
     background-image: url('/static/images/icon-close.png');
     background-size: cover;
@@ -40,52 +41,22 @@
 .delete-wrapper {
   background-color: $white;
   height: 214px;
+  border-radius: 6px;
   .delete-container {
     width: 300px;
-  }
-}
-
-
-
-@media screen and (max-width:480px){
-  .modal-wrapper{
-    width: 100%;
-    max-width: 360px;
-    padding: 5px 8px 20px;
-    .content-box{
-      overflow: scroll;
-      max-height: calc(100vh - 230px);
-      width: 100%;
-      .title, .subtitle{
-        font-size: 16px;
-        text-align: center;
-        font-weight: bold;
-        margin: 0;
-      }
+    padding: 18px 20px 0;
+    color: #333333;
+    .confirmDelTip {
+      font-size: 13px;
+      font-weight: 300;
     }
-    .icon-close{
-      right: -4px;
-      top: 0;
-    }
-  }
-
-
-
-
-  .incomeTips-wrapper {
-    height: 430px;
-    .incomeTips-container{
-      height: 370px;
-      padding: 0 20px 20px;
-      margin-top: 10px;
-    }
-  }
-
-}
-@media screen and (max-width:375px){
-  .modal-wrapper{
-    .content-box{
-      max-height: calc(100vh - 150px);
+    .btn-confirm {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 250px;
     }
   }
 }

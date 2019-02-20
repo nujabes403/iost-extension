@@ -6,6 +6,8 @@ import {
   showToast,
   hideToast,
   toggleModal,
+  settingLocation,
+  deleteLocation,
 } from 'actions/ui'
 import store from '../store'
 
@@ -17,6 +19,8 @@ export const ui = {
   showToast: (toast) => store.dispatch(showToast(toast)),
   hideToast: () => store.dispatch(hideToast()),
   toggleModal: () => store.dispatch(toggleModal()),
+  settingLocation: (location) => store.dispatch(settingLocation(location)),
+  deleteLocation: () => store.dispatch(deleteLocation()),
 }
 
 window.ui = ui

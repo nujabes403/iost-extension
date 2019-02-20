@@ -10,6 +10,9 @@ import {
   TOGGLE_OVERLAY,
   SETTING_INFO,
   TOGGLE_MODAL,
+  SETTING_LOCATION,
+  DELETE_LOCATION,
+  CURRENT_LOCATION,
 } from 'actions/actionTypes'
 
 /**
@@ -91,4 +94,15 @@ export const toggleOverlay = () => ({
 
 export const toggleModal = () => ({
   type: TOGGLE_MODAL,
+})
+
+export const settingLocation = (location) => ({
+  type: SETTING_LOCATION,
+  payload: {
+    location,
+  },
+})
+
+export const deleteLocation = () => ({
+  type: DELETE_LOCATION,
 })

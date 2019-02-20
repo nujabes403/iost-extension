@@ -1,27 +1,39 @@
 import React, { Component, Fragment } from 'react'
-import { I18n } from 'react-redux-i18n'
-import { Header } from 'components'
-import classnames from 'classnames'
 import { connect } from 'react-redux'
+import { I18n } from 'react-redux-i18n'
+import { Header, Modal } from 'components'
+import classnames from 'classnames'
 import * as accountActions from 'actions/accounts'
+import ui from 'utils/ui';
 import './index.scss'
 
-class AccountManage extends Component<Props> {
 
+const { Modal1 } = Modal
+
+
+class AccountManage extends Component<Props> {
   componentDidMount() {
-   
+    console.log(this.props.locationList)
   }
-  
   moveTo = (location) => () => {
     const { changeLocation } = this.props
     changeLocation(location)
   }
 
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    changeLocation(locationList[locationList.length - 1])
+  }
+
+  deleteAccount = () => {
+    ui.toggleModal()
+  }
   render() {
     const { accounts } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('accountManage')} onBack={this.moveTo('/accountSetting')} onAdd={this.moveTo('/accountAdd')} setting={false} />
+        <Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />
         <div className="accountManage-box">
           {
             accounts.map((item) =>
@@ -39,16 +51,18 @@ class AccountManage extends Component<Props> {
                     </span>
                   </div>
                 </div>
-                <i className="right" />
+                <i className="right" onClick={this.deleteAccount} />
               </div>
             )
           }
         </div>
+        <Modal1 />
       </Fragment>
     )
   }
 }
 
+<<<<<<< HEAD
 
 const mapStateToProps = (state) => ({
   accounts: state.accounts.accounts,
@@ -56,3 +70,10 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps)(AccountManage)
 
+=======
+const mapStateToProps = (state) => ({
+  locationList: state.ui.locationList,
+})
+
+export default connect(mapStateToProps)(AccountManage)
+>>>>>>> d7760dd73d0ab62b9b4353de27ba88c1d97370cd
