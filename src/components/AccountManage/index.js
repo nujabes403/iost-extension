@@ -14,32 +14,40 @@ const { Modal1 } = Modal
 
 class AccountManage extends Component<Props> {
   componentDidMount() {
+    ui.settingLocation('/accountManage')
     console.log(this.props.locationList)
   }
-
-
   onCopy = () => {
     Toast.html(I18n.t('copySuccess'))
   }
 
-  deleteAccount = (item) => () => {
-    this.delItem = item
-    ui.toggleModal()
-  }
-  backTo = () => {
-    const { changeLocation, locationList } = this.props
-    ui.deleteLocation()
-    changeLocation(locationList[locationList.length - 1])
-  }
   moveTo = (location) => () => {
     const { changeLocation } = this.props
     changeLocation(location)
+  }
+
+  // 第一次导入账号后，点击返回会直接到主页account页面，
+  // 正常情况下，从设置页进入，也就返回设置页。
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    const currentLocation = locationList[locationList.length - 1]
+    if (currentLocation == '/accountImport') {
+      changeLocation('/account')
+    } else {
+      changeLocation('/accountSetting')
+    }
   }
 
   onDelete = () => {
     const accounts = this.props.accounts.filter(item => `${item.name}_${item.network}` != `${this.delItem.name}_${this.delItem.network}`)
     chrome.storage.local.set({accounts: accounts})
     this.props.dispatch(accountActions.setAccounts(accounts))
+    ui.toggleModal()
+  }
+
+  deleteAccount = (item) => () => {
+    this.delItem = item
     ui.toggleModal()
   }
 
@@ -72,7 +80,7 @@ class AccountManage extends Component<Props> {
             )
           }
         </div>
-        <Modal1 onDelete={this.onDelete}/>
+        <Modal1 onDelete={this.onDelete} />
       </Fragment>
     )
   }

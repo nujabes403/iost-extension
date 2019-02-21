@@ -79,15 +79,16 @@ const uiReducer = (state = initialState, action) => {
       }
     case SETTING_LOCATION: {
       state.locationList.push(action.payload.location)
+      if (state.locationList.length > 5) {
+        state.locationList.shift()
+      }
       return {
         ...state,
         locationList: state.locationList,
       }
     }
     case DELETE_LOCATION: {
-      if (state.locationList.length > 1) {
-        state.locationList.pop()
-      }
+      state.locationList.pop()
       return {
         ...state,
         locationList: state.locationList,

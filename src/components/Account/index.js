@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
-import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
@@ -11,8 +10,6 @@ import ui from 'utils/ui'
 import * as accountActions from 'actions/accounts';
 import utils from 'utils';
 import './index.scss'
-import * as accountActions from 'actions/accounts'
-import utils from 'utils'
 
 const dealList = [
   {id: 1, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 0, account: -233 },
@@ -100,7 +97,7 @@ class Account extends Component<Props> {
       action: 'GET_PASSWORD',
     },(res)=> {
       const encodedPrivateKey = utils.aesDecrypt(privateKey, res)
-      console.log('encodedPrivateKey', encodedPrivateKey)
+      // console.log('encodedPrivateKey', encodedPrivateKey)
       iost.loginAccount(name, encodedPrivateKey)
       this.moveTo('/account')()
     })

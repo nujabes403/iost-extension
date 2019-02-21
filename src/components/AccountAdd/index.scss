@@ -11,9 +11,15 @@
   padding: 200px 0 30px;
   .btn-accountCreate {
     margin-bottom: 15px;
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $gray;
+      color: $input-text;
+      border: 1px solid #999999;
+    }
   }
   .btn-accountImport {
-    background-color: transparent;
+    background-color: $white;
     color: black;
     border: 1px solid #000000;
 

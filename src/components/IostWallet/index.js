@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 
 import { Header } from 'components'
+import ui from 'utils/ui';
 import './index.scss'
 
 const settingList = [
@@ -20,6 +21,7 @@ class IostWallet extends Component<Props> {
 
   moveItem = (location) => () => {
     if (location == 'userAgreement') {
+      ui.settingLocation(`/${location}`)
       this.moveTo(`/${location}`)()
     } else if (location == 'nodeVoting') {
       console.log('超链接到用户投票页')

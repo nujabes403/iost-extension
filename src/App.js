@@ -50,11 +50,11 @@ class App extends Component<Props> {
             this.changeLocation('/lock')
           }else {
             chrome.storage.local.get(['accounts'], ({accounts}) => {
-              console.log('账号列表', accounts)
+              // console.log('账号列表', accounts)
               if (accounts && accounts.length){
                 this.props.dispatch(accountActions.setAccounts(accounts));
                 chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
-                  console.log('当前账号', activeAccount)
+                  // console.log('当前账号', activeAccount)
                   if (activeAccount) {
                     const { id, encodedPrivateKey } = activeAccount
                     iost.loginAccount(id, encodedPrivateKey)

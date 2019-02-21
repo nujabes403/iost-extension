@@ -6,6 +6,7 @@ import { Landing, Toast } from 'components'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
+import ui from 'utils/ui';
 
 import './index.scss'
 
@@ -21,6 +22,9 @@ class Login extends Component<Props> {
     privateKey: '',
     isChecked: true,
     errorMessage: '',
+  }
+  componentDidMount() {
+    ui.settingLocation('/login')
   }
 
   handleChange = (e) => {
@@ -64,6 +68,7 @@ class Login extends Component<Props> {
           password
         }
       })
+      ui.settingLocation('/accountImport')
       this.props.changeLocation('/accountImport')
     }
   }
@@ -107,6 +112,7 @@ class Login extends Component<Props> {
 
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    ui.settingLocation(location)
     changeLocation(location)
   }
 

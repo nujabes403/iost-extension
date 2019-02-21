@@ -15,8 +15,12 @@ type Props = {
 }
 
 class AccountAdd extends Component<Props> {
+  componentDidMount() {
+    ui.settingLocation('/accountAdd')
+  }
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    ui.settingLocation(location)
     changeLocation(location)
   }
 
@@ -26,7 +30,7 @@ class AccountAdd extends Component<Props> {
         <Header title={I18n.t('accountAdd')} onBack={this.moveTo('/accountManage')} hasSetting={false} />
         <Landing className="landing-color" />
         <div className="accountAdd-box">
-          <Button className="btn-accountCreate" onClick={this.moveTo('/accountCreateStep1')}>{I18n.t('accountCreate')}</Button>
+          <Button className="btn-accountCreate" onClick={this.moveTo('/accountCreateStep1')} disabled={true}>{I18n.t('accountCreate')}</Button>
           <Button className="btn-accountImport" onClick={this.moveTo('/accountImport')}>{I18n.t('accountImport')}</Button>
         </div>
       </Fragment>
