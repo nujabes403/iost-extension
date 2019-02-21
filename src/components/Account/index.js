@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
 
@@ -6,6 +7,8 @@ import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
 import ui from 'utils/ui'
+import * as accountActions from 'actions/accounts';
+import utils from 'utils';
 import './index.scss'
 
 const dealList = [
@@ -17,16 +20,34 @@ const dealList = [
   {id: 6, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 2, account: -233 }
 ]
 
+const accountName = {
+  name: 'testnetiost',
+  network: 'MAINNET',
+}
 
 type Props = {
 
 }
 
 class Account extends Component<Props> {
-  logout = () => {
-    const { changeLocation } = this.props
-    iost.logoutAccount()
-    changeLocation('/login')
+  state = {
+    isShowAccountList: false,
+    currentAccount: {},
+  }
+  componentDidMount() {
+    const { accounts } = this.props
+    let ac = null
+    chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
+      if (activeAccount) {
+        ac = activeAccount
+      } else {
+        ac = accounts[0]
+      }
+      console.log('ac', ac)
+      this.setState({
+        currentAccount: ac,
+      })
+    })
   }
 
   moveTo = (location) => () => {
@@ -35,11 +56,67 @@ class Account extends Component<Props> {
     changeLocation(location)
   }
 
+  toggleAccountList = () => {
+    this.setState({
+      isShowAccountList: !this.state.isShowAccountList,
+    })
+  }
+
+  chooseAccount = (account) => () => {
+    const { accounts } = this.props
+
+    const { name, privateKey, publicKey, network } = account
+
+    chrome.runtime.sendMessage({
+      action: 'GET_PASSWORD',
+    },(res)=> {
+      const encodedPrivateKey = utils.aesDecrypt(privateKey, res)
+      console.log('encodedPrivateKey', encodedPrivateKey)
+      iost.loginAccount(name, encodedPrivateKey)
+      this.moveTo('/account')()
+    })
+
+    const ac = {}
+    ac.id = name
+    ac.publicKey = publicKey
+    ac.encodedPrivateKey = privateKey
+
+    this.setState({
+      currentAccount: account,
+    })
+    chrome.storage.sync.set({ 'activeAccount': account }, () => {
+      console.log('切换账号')
+      this.toggleAccountList()
+    })
+  }
+
   render() {
+    const { isShowAccountList, currentAccount } = this.state
+    const { accounts } = this.props
+    const isCurrentAccount = true
     return (
       <Fragment>
-        <Header title="账户名" onSetting={this.moveTo('/accountSetting')} logo={true}/>
+        <Header onSetting={this.moveTo('/accountSetting')} logo={true}>
+          <div className="account-currentName-box">
+            <i className={cx('circle', currentAccount.network != 'MAINNET' ? 'test' : '')} />
+            <span className="account-name">{currentAccount.id}</span>
+            <i className={cx('arrow', accounts.length != 1 ? 'arrow-hide' : (isShowAccountList ? 'arrow-down' : 'arrow-right'))}
+               onClick={this.toggleAccountList} />
+          </div>
+        </Header>
         <div className="account-box">
+          <div className={cx('nameList-box', isShowAccountList ? 'show' : '')}>
+            <ul className="accountName-list">
+              {
+                accounts.map((item) =>
+                  <li key={item.name + '_' + item.network} onClick={this.chooseAccount(item)}>
+                    <i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />
+                    <span className="account-name">{item.name}</span>
+                    <i className={cx('check', isCurrentAccount ? 'checked' : '')} />
+                  </li>)
+              }
+            </ul>
+          </div>
           <TokenBalance />
 
           <div className="btn-box">
@@ -90,4 +167,9 @@ class Account extends Component<Props> {
   }
 }
 
-export default Account
+const mapStateToProps = (state) => ({
+  accounts: state.accounts.accounts,
+  locationList: state.ui.locationList,
+})
+
+export default connect(mapStateToProps)(Account)

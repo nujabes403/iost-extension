@@ -38,7 +38,7 @@ class AccountSetting extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('setting')} onBack={this.backTo} hasSetting={false} />
+        <Header title={I18n.t('setting')} onBack={this.moveTo('/account')} hasSetting={false} />
         <div className="accountSetting-box">
           <ul>
             {

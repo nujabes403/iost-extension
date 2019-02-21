@@ -35,35 +35,9 @@ class UserAgreement extends Component<Props> {
         <div className="userAgreement-box">
           <div className="userAgreement-wrapper">
             <ul>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
-              <li>1</li>
+              {
+                [...Array(40).keys()].map((item, index) => <li key={index}>{item}</li>)
+              }
             </ul>
           </div>
         </div>

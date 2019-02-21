@@ -1,11 +1,119 @@
 @import "colors.scss";
 
+.account-currentName-box {
+  .circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E28A1E;
+    margin-right: 8px;
+    &.test {
+      background-color: $green;
+    }
+  }
+  .account-name {
+    font-size: 14px;
+    flex: 1;
+  }
+  .arrow {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 8px;
+    cursor: pointer;
+    &.arrow-hide {
+      display: none;
+    }
+    &:before {
+      position: absolute;
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1px solid #999999;
+    }
+    &.arrow-down {
+      margin-left: 8px;
+      &:before {
+        transform: translateY(-4px) rotateZ(45deg);
+        border-top-color: transparent;
+        border-left-color: transparent;
+      }
+    }
+
+    &.arrow-right {
+      margin-left: 5px;
+      &:before {
+        transform: translateY(-1px) rotateZ(45deg);
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+      }
+    }
+  }
+}
+
 .account-box {
+  position: relative;
   text-align: center;
   background-color: $gray;
   height: 540px;
   padding: 0 30px;
   overflow: hidden;
+  .nameList-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 220px;
+    border-radius: 6px;
+    background-color: $gray;
+    overflow: hidden;
+    height: 0;
+    border: none;
+    transition: height 2s;
+    &.show {
+      height: auto;
+      border: 1px solid #C4C4C4;
+    }
+    .accountName-list {
+      li {
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding: 0 25px;
+        cursor: pointer;
+        &:hover {
+          background-color: $white;
+        }
+        .circle {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #E28A1E;
+          &.test {
+            background-color: $green;
+          }
+        }
+        .account-name {
+          font-size: 14px;
+          flex: 1;
+
+        }
+        .check {
+          display: inline-block;
+          width: 10px;
+          height: 8px;
+          &.checked {
+            background-image: url("/static/images/icon-nameChecked.png");
+            background-size: cover;
+          }
+        }
+      }
+
+    }
+  }
+
   .btn-box {
     .btn-receipt {
       margin-left: 20px;

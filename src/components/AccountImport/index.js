@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import { connect } from 'react-redux'
-import Input from 'components/Input'
 import { Header } from 'components'
 import Button from 'components/Button'
 import NetworkSelector from 'components/NetworkSelector'
@@ -94,10 +93,6 @@ class AccountImport extends Component<Props> {
     } catch (e) {
       console.log(e)
     }
-
-
- 
-
   }
 
   handleChange = (e) => {

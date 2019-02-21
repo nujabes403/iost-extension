@@ -185,6 +185,14 @@ const zhTranslation = {
   confirmDel: '确认',
   nodeVoting: '参与节点投票',
   userAgreement: '用户协议',
+  userAgreementTip1: '使用本插件即表示同意',
+  userAgreementTip2: '用户使用协议',
+  userAgreementTip3: '请同意用户协议',
+  passwordTip1: '密码长度不得小于8位！',
+  passwordTip2: '密码组合至少包含字母和数字！',
+  passwordTip3: '2次密码不一致！',
+  passwordTip4: '密码错误，请重试！',
+  copySuccess: '复制成功！',
 
 
 }

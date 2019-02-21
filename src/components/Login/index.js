@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import Input from 'components/Input'
 import Button from 'components/Button'
-import { Landing } from 'components'
+import { Landing, Toast } from 'components'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
@@ -13,14 +13,14 @@ type Props = {
 
 }
 
-class Index extends Component<Props> {
+class Login extends Component<Props> {
   state = {
     password: '',
     repassword: '',
-    errorMessage: '',
-
     account: '',
     privateKey: '',
+    isChecked: true,
+    errorMessage: '',
   }
 
   handleChange = (e) => {
@@ -33,21 +33,28 @@ class Index extends Component<Props> {
   onCheckPassword = () => {
     const { password, repassword } = this.state
     if(password == null || password.length < 8){
+      Toast.html(I18n.t('passwordTip1'))
       return false;
     }
     const reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
-    if (!reg.test(password)){
+    if (!reg.test(password)) {
+      Toast.html(I18n.t('passwordTip2'))
       return false;
     }
-    if(password != repassword){
+    if (password != repassword) {
+      Toast.html(I18n.t('passwordTip3'))
       return false;
     }
     return true
   }
 
   onImport = () => {
-    const { password } = this.state
-    if(this.onCheckPassword()){
+    const { password, isChecked } = this.state
+    if (!isChecked) {
+      Toast.html(I18n.t('userAgreementTip3'))
+      return
+    }
+    if (this.onCheckPassword()) {
       // save password
       const en_password = utils.aesEncrypt('account', password)
       chrome.storage.local.set({password: en_password})
@@ -57,9 +64,8 @@ class Index extends Component<Props> {
           password
         }
       })
-      this.props.changeLocation('/AccountImport')
+      this.props.changeLocation('/accountImport')
     }
-    
   }
 
   tryLogin = async () => {
@@ -104,13 +110,18 @@ class Index extends Component<Props> {
     changeLocation(location)
   }
 
+  toggleChecked = () => {
+    this.setState({
+      isChecked: !this.state.isChecked,
+    })
+  }
 
   render() {
-    const { password, repassword, errorMessage } = this.state
+    const { password, repassword, isChecked, errorMessage } = this.state
     return (
       <Fragment>
         <Landing />
-        <div className="Login">
+        <div className="login-box">
           <Input
             name="password"
             type="password"
@@ -127,14 +138,18 @@ class Index extends Component<Props> {
             onChange={this.handleChange}
             placeholder={I18n.t('repeatPassword')}
           />
-          {!!errorMessage && <p className="Login__errorMessage">{errorMessage}</p>}
+          {!!errorMessage && <p className="login-errorMessage">{errorMessage}</p>}
           <div className="line"></div>
-          <Button className="btn-accountCreate" onClick={this.tryLogin}>{I18n.t('accountCreate')}</Button>
+          <Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('accountCreate')}</Button>
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('accountImport')}</Button>
+          <div className="radio-box">
+            <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
+            <span>{I18n.t('userAgreementTip1')}<a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('userAgreementTip2')}</a></span>
+          </div>
         </div>
       </Fragment>
     )
   }
 }
 
-export default Index
+export default Login

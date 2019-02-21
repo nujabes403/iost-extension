@@ -40,12 +40,12 @@
           margin-left: 15px;
         }
       }
-      .privateKey-box {
+      .publicKey-box {
         display: flex;
         align-self: center;
         text-align: left;
         margin-top: 10px;
-        .privateKey-title {
+        .publicKey-title {
           text-align: center;
           width: 40px;
           height: 20px;
@@ -53,7 +53,7 @@
           color: $white;
           background-color: $btn-gray;
         }
-        .privateKey-name {
+        .publicKey-name {
           margin-left: 15px;
           display: flex;
           align-items: center;
@@ -64,6 +64,7 @@
             height: 19px;
             background-image: url("/static/images/copy.png");
             background-size: cover;
+            cursor: pointer;
           }
         }
       }

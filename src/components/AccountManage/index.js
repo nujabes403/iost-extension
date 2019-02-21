@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
-import { Header, Modal } from 'components'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { Header, Modal, Toast } from 'components'
 import classnames from 'classnames'
 import * as accountActions from 'actions/accounts'
 import ui from 'utils/ui';
@@ -15,19 +16,23 @@ class AccountManage extends Component<Props> {
   componentDidMount() {
     console.log(this.props.locationList)
   }
-  moveTo = (location) => () => {
-    const { changeLocation } = this.props
-    changeLocation(location)
+
+
+  onCopy = () => {
+    Toast.html(I18n.t('copySuccess'))
   }
 
+  deleteAccount = () => {
+    ui.toggleModal()
+  }
   backTo = () => {
     const { changeLocation, locationList } = this.props
     ui.deleteLocation()
     changeLocation(locationList[locationList.length - 1])
   }
-
-  deleteAccount = () => {
-    ui.toggleModal()
+  moveTo = (location) => () => {
+    const { changeLocation } = this.props
+    changeLocation(location)
   }
   render() {
     const { accounts } = this.props
@@ -43,11 +48,13 @@ class AccountManage extends Component<Props> {
                     <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('test') : I18n.t('official')}</span>
                     <span className="account-name">{item.name}</span>
                   </div>
-                  <div className="privateKey-box">
-                    <span className="privateKey-title">{I18n.t('publicKey')}</span>
-                    <span className="privateKey-name">
+                  <div className="publicKey-box">
+                    <span className="publicKey-title">{I18n.t('publicKey')}</span>
+                    <span className="publicKey-name">
                       <span>********</span>
-                      <i className="copy" />
+                      <CopyToClipboard onCopy={this.onCopy} text={item.publicKey}>
+                        <i className="copy" />
+                      </CopyToClipboard>
                     </span>
                   </div>
                 </div>
