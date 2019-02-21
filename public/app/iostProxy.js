@@ -67,6 +67,5 @@ window.addEventListener('message', (e) => {
 
 
 module.exports = {
-  callABI,
-  user
+  callABI
 }

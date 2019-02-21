@@ -26,9 +26,18 @@ class AccountManage extends Component<Props> {
     changeLocation(locationList[locationList.length - 1])
   }
 
-  deleteAccount = () => {
+  deleteAccount = (item) => () => {
+    this.delItem = item
     ui.toggleModal()
   }
+
+  onDelete = () => {
+    const accounts = this.props.accounts.filter(item => `${item.name}_${item.network}` != `${this.delItem.name}_${this.delItem.network}`)
+    chrome.storage.local.set({accounts: accounts})
+    this.props.dispatch(accountActions.setAccounts(accounts))
+    ui.toggleModal()
+  }
+
   render() {
     const { accounts } = this.props
     return (
@@ -51,12 +60,12 @@ class AccountManage extends Component<Props> {
                     </span>
                   </div>
                 </div>
-                <i className="right" onClick={this.deleteAccount} />
+                <i className="right" onClick={this.deleteAccount(item)} />
               </div>
             )
           }
         </div>
-        <Modal1 />
+        <Modal1 onDelete={this.onDelete}/>
       </Fragment>
     )
   }

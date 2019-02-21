@@ -48,9 +48,11 @@ class AccountImport extends Component<Props> {
     let publicKey, accounts = []
     try {
       publicKey = privateKeyToPublicKey(privateKey)
-      accounts = await publickKeyToAccount(publicKey)
+      let accounts1 = await publickKeyToAccount(publicKey, true)
+      let accounts2 = await publickKeyToAccount(publicKey, false)
+      
       const password = await getPassword()
-      accounts = accounts.map(item => {
+      accounts1 = accounts1.map(item => {
         return {
           name: item.account_info.name,
           network: 'MAINNET',
@@ -58,6 +60,15 @@ class AccountImport extends Component<Props> {
           publicKey: publicKey,
         }
       })
+      accounts2 = accounts2.map(item => {
+        return {
+          name: item.account_info.name,
+          network: 'TESTNET',
+          privateKey: utils.aesEncrypt(privateKey, password),
+          publicKey: publicKey,
+        }
+      })
+      accounts = accounts1.concat(accounts2)
     } catch (e) {
       publicKey = ''
     }

@@ -52,7 +52,7 @@ class Modal1 extends Component {
   }
 
   confirmDelete = () => {
-
+    this.props.onDelete()
   }
   render(){
     // console.log(this.props)

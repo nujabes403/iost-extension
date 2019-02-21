@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
+import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
@@ -7,6 +8,8 @@ import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
 import ui from 'utils/ui'
 import './index.scss'
+import * as accountActions from 'actions/accounts'
+import utils from 'utils'
 
 const dealList = [
   {id: 1, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 0, account: -233 },
@@ -23,6 +26,42 @@ type Props = {
 }
 
 class Account extends Component<Props> {
+  state = {
+    loading: true
+  }
+
+  componentDidMount() {
+    chrome.storage.local.get(['accounts'], ({accounts}) => {
+      if (accounts && accounts.length){
+        this.props.dispatch(accountActions.setAccounts(accounts));
+        chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
+          if (activeAccount) {
+            const { id, encodedPrivateKey } = activeAccount
+            iost.loginAccount(id, encodedPrivateKey)
+            // this.props.changeLocation('/accountAdd')
+            this.setState({
+              loading: false
+            })
+            // this.props.changeLocation('/accountManage')
+          }else {
+            const { name, privateKey } = accounts[0]
+            chrome.runtime.sendMessage({
+              action: 'GET_PASSWORD',
+            },(res)=> {
+              const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
+              iost.loginAccount(name, encodedPrivateKey)
+              this.setState({
+                loading: false
+              })
+            })
+          }
+        })
+      }else {
+        this.changeLocation('/accountImport')
+      }
+    })
+  }
+
   logout = () => {
     const { changeLocation } = this.props
     iost.logoutAccount()
@@ -36,6 +75,8 @@ class Account extends Component<Props> {
   }
 
   render() {
+    const { loading } = this.state
+    if(loading) return <div></div>
     return (
       <Fragment>
         <Header title="账户名" onSetting={this.moveTo('/accountSetting')} logo={true}/>
@@ -90,4 +131,10 @@ class Account extends Component<Props> {
   }
 }
 
-export default Account
+
+
+const mapStateToProps = (state) => ({
+  locale: state.i18n.locale,
+})
+
+export default connect(mapStateToProps)(Account)

@@ -13,6 +13,7 @@
   }
   .dealRecord-box {
     margin-top: 25px;
+    display: none;
     .title-box {
       display: flex;
       align-items: center;
@@ -28,6 +29,7 @@
       }
     }
     .list-box {
+      
       font-size: 14px;
       overflow: scroll;
       height: 203px;
