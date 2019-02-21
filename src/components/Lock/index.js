@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import Input from 'components/Input'
 import Button from 'components/Button'
-import { Landing } from 'components'
+import { Landing, Toast } from 'components'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
@@ -65,13 +65,13 @@ class Lock extends Component<Props> {
       })
       chrome.storage.local.get(['accounts'], ({accounts}) => {
         if(accounts.length){
-
           this.moveTo('/account')()
         }else {
           this.moveTo('/AccountImport')()
         }
       })      
     } catch (err) {
+      Toast.html(I18n.t('passwordTip4'))
       throw new Error('invalid password')
     }
   }

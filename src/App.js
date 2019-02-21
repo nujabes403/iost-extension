@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-
-import Landing from 'components/Index'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
   AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
   Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement
@@ -10,11 +8,8 @@ import Settings from 'components/Settings'
 import Popup from 'components/Popup'
 
 import iost from 'iostJS/iost'
-import i18n from 'utils/i18n'
 import utils from 'utils'
-
 import * as accountActions from 'actions/accounts'
-
 import './App.scss'
 
 const getPassword = () => new Promise((resolve, reject) => {
@@ -37,12 +32,14 @@ type Props = {
 class App extends Component<Props> {
   state = {
     isLoading: true,
-    // currentLocation: '/AccountImport',
     currentLocation: '/login',
     // currentLocation: '/account',
   }
 
-  componentDidMount() { 
+  componentDidMount() {
+    // chrome.storage.local.remove(['password'],({ password }) => {
+    //   console.log(password)
+    // })
     chrome.storage.local.get(['password'],({ password }) => {
       if(password){
         chrome.runtime.sendMessage({
@@ -53,9 +50,11 @@ class App extends Component<Props> {
             this.changeLocation('/lock')
           }else {
             chrome.storage.local.get(['accounts'], ({accounts}) => {
+              console.log('账号列表', accounts)
               if (accounts && accounts.length){
                 this.props.dispatch(accountActions.setAccounts(accounts));
                 chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
+                  console.log('当前账号', activeAccount)
                   if (activeAccount) {
                     const { id, encodedPrivateKey } = activeAccount
                     iost.loginAccount(id, encodedPrivateKey)
@@ -77,16 +76,12 @@ class App extends Component<Props> {
                 this.changeLocation('/accountImport')
               }
             })
-            
-            
           }
         })
       }else {
         this.changeLocation('/login')
       }
     })
-    
-    
   }
   changeLocation = (location) => {
     this.setState({

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { I18n } from 'react-redux-i18n'
 import Notification from 'rc-notification'
 import classnames from 'classnames'
-import style from './index.scss'
+import './index.scss'
 
 let prefixCls = 'toast'
 

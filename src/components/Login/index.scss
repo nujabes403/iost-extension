@@ -1,9 +1,9 @@
 @import "colors.scss";
 @import "mixins.scss";
 
-.Login {
+.login-box {
   width: 320px;
-  margin: 80px auto 0;
+  margin: 70px auto 0;
   text-align: center;
   //font-family: 'Montserrat';
   .input-password {
@@ -18,21 +18,51 @@
     background-color: #979797;
     margin: 5px 0 20px;
   }
+
+  .login-errorMessage {
+    font-size: 10px;
+    color: $brand-red;
+    margin: 4px;
+    text-align: left;
+  }
+
   .btn-accountCreate {
     margin-bottom: 15px;
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $gray;
+      color: $input-text;
+    }
   }
   .btn-accountImport {
     background-color: transparent;
     color: black;
     border: 1px solid #000000;
-
   }
-}
+  .radio-box {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 0 10px;
+    > i {
+      display: inline-block;
+      margin-right: 5px;
+      width: 14px;
+      height: 14px;
+      background-size: cover;
+      border: 1px solid blue;
+      border-radius: 3px;
+      background-image: url("/static/images/icon-checked.png");
+      cursor: pointer;
+      &.noChecked {
+        background-image: none;
+      }
+    }
+    > span {
+      color: $input-text;
+      a {
 
-
-.Login__errorMessage {
-  font-size: 10px;
-  color: $brand-red;
-  margin: 4px;
-  text-align: left;
+      }
+    }
+  }
 }
