@@ -7,7 +7,7 @@ import NetworkSelector from 'components/NetworkSelector'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils'
-
+import ui from 'utils/ui';
 import * as accountActions from 'actions/accounts'
 
 import './index.scss'
@@ -35,6 +35,9 @@ const getAccounts = () => new Promise((resolve, reject) => {
 })
 
 class AccountImport extends Component<Props> {
+  componentDidMount() {
+    console.log(this.props.locationList)
+  }
   state = {
     privateKey: '',
     errorMessage: '',
@@ -69,6 +72,7 @@ class AccountImport extends Component<Props> {
       })
       accounts = accounts1.concat(accounts2)
     } catch (e) {
+      console.log(e)
       publicKey = ''
     }
 
@@ -122,16 +126,18 @@ class AccountImport extends Component<Props> {
     })
   }
 
-  moveTo = (location) => () => {
-    const { changeLocation } = this.props
-    changeLocation(location)
+  // 首次登陆页，或添加账号页
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    changeLocation(locationList[locationList.length - 1])
   }
 
   render() {
     const { errorMessage } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('accountImport')} onBack={this.moveTo('/login')} />
+        <Header title={I18n.t('accountImport')} onBack={this.backTo} hasSetting={false} />
         <div className="accountImport-box">
           <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} />
           {/*
@@ -149,6 +155,7 @@ class AccountImport extends Component<Props> {
 
 const mapStateToProps = (state) => ({
   accounts: state.accounts.accounts,
+  locationList: state.ui.locationList,
 })
 
 export default connect(mapStateToProps)(AccountImport)

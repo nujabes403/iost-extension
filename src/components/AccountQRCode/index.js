@@ -25,7 +25,7 @@ class AccountQRCode extends Component<Props> {
     const value = iost.account.getID()
     return (
       <Fragment>
-        <Header title={I18n.t('receipt')} onBack={this.moveTo('/account')} />
+        <Header title={I18n.t('receipt')} onBack={this.moveTo('/account')} hasSetting={false}/>
         <div className="accountQRCode-box">
           <p className="qrTitle">{I18n.t('qrTitle')}</p>
           <QRCode value={value} />

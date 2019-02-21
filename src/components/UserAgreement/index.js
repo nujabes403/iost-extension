@@ -11,23 +11,11 @@ type Props = {
 }
 
 class UserAgreement extends Component<Props> {
-  componentDidMount() {
-    console.log(this.props.locationList)
-  }
-
-  moveTo = (location) => () => {
-    const { changeLocation } = this.props
-    ui.settingLocation(location)
-    changeLocation(location)
-  }
-
   backTo = () => {
     const { changeLocation, locationList } = this.props
     ui.deleteLocation()
-    console.log(locationList)
     changeLocation(locationList[locationList.length - 1])
   }
-
   render() {
     return (
       <Fragment>

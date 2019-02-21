@@ -158,7 +158,7 @@ class Index extends Component<Props> {
     const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('transfer')} onBack={this.moveTo('/account')} />
+        <Header title={I18n.t('transfer')} onBack={this.moveTo('/account')} hasSetting={false} />
         <div className="tokenTransfer-box">
           <div className="transferAmount-box">
             <span className="transferAmount">{I18n.t('transferAmount')}</span>

@@ -50,7 +50,7 @@ class App extends Component<Props> {
             this.changeLocation('/lock')
           }else {
             chrome.storage.local.get(['accounts'], ({accounts}) => {
-              console.log('账号列表', accounts)
+              // console.log('账号列表', accounts)
               if (accounts && accounts.length){
                 this.props.dispatch(accountActions.setAccounts(accounts));
                 chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {

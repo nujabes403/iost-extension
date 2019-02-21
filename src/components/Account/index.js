@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
-import { connect } from 'react-redux'
 import cx from 'classnames'
 
 import iost from 'iostJS/iost'
