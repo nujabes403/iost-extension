@@ -23,3 +23,7 @@ Because it adds functionality to the browser, IOST Extension requires the permis
 
 ### How to use for dapp?
 Here is a dapp sample. [iost-helloworld-dapp](https://github.com/lucusfly/iost-helloworld-dapp)
+
+### Community
+
+Please join our [telegram group](https://t.me/IOSTWallet) for more info.
