@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
-
+import { connect } from 'react-redux'
 import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
