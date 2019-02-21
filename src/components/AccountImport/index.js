@@ -98,7 +98,10 @@ class AccountImport extends Component<Props> {
             }
 
             iost.loginAccount(accounts[0].name, privateKey)
-            changeLocation('/accountManage')
+            console.log(accounts[0])
+            chrome.storage.local.set({ activeAccount: accounts[0] },() => {
+              changeLocation('/accountManage')
+            })
           })
           .catch(this.throwErrorMessage)
     } catch (e) {

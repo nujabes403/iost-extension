@@ -31,7 +31,7 @@ class NetworkSelector extends Component<Props> {
 
   componentDidMount() {
     // Network list
-    chrome.storage.sync.get(['networkList'], (result) => {
+    chrome.storage.local.get(['networkList'], (result) => {
       const networkList = result && result.networkList
       if (!networkList) return
 
@@ -41,7 +41,7 @@ class NetworkSelector extends Component<Props> {
     })
 
     // Active network
-    chrome.storage.sync.get(['activeNetwork'], (result) => {
+    chrome.storage.local.get(['activeNetwork'], (result) => {
       const activeNetwork = result && result.activeNetwork
 
       if (!activeNetwork) {

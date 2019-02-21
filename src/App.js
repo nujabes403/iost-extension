@@ -53,24 +53,21 @@ class App extends Component<Props> {
               console.log('账号列表', accounts)
               if (accounts && accounts.length){
                 this.props.dispatch(accountActions.setAccounts(accounts));
-                chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
+                chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
                   console.log('当前账号', activeAccount)
-                  if (activeAccount) {
-                    const { id, encodedPrivateKey } = activeAccount
-                    iost.loginAccount(id, encodedPrivateKey)
-                    // this.changeLocation('/accountAdd')
-                    this.changeLocation('/account')
-                    // this.changeLocation('/accountManage')
-                  }else {
-                    const { name, privateKey } = accounts[0]
-                    chrome.runtime.sendMessage({
-                      action: 'GET_PASSWORD',
-                    },(res)=> {
-                      const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-                      iost.loginAccount(name, encodedPrivateKey)
+                  const account = activeAccount || accounts[0]
+                  const { name, privateKey } = account
+                  chrome.runtime.sendMessage({
+                    action: 'GET_PASSWORD',
+                  },(res)=> {
+                    const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
+                    const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+                    iost.changeNetwork(url)
+                    iost.loginAccount(name, encodedPrivateKey)
+                    chrome.storage.local.set({ activeAccount: account },() => {
                       this.changeLocation('/account')
                     })
-                  }
+                  })
                 })
               }else {
                 this.changeLocation('/accountImport')

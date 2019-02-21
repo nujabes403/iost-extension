@@ -8,6 +8,7 @@ import { Header } from 'components'
 import Input from 'components/Input'
 import Button from 'components/Button'
 // import TokenBalance from 'components/TokenBalance'
+import { GET_TOKEN_BALANCE_INTERVAL } from 'constants/token'
 import TokenTransferSuccess from 'components/TokenTransferSuccess'
 import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
@@ -30,13 +31,47 @@ type Props = {
 class Index extends Component<Props> {
   state = {
     to: '',
-    amount: '',
+    amount: 0,
     isSending: false,
     iGASPrice: defaultConfig.gasRatio,
     iGASLimit: defaultConfig.gasLimit,
     errorMessage: '',
     isShowing: false, // 是否显示多余资源输入框
 
+  }
+
+  componentDidMount() {
+    this.intervalID = setInterval(() => {
+      this.getTokenBalance()
+      this.getResourceBalance()
+    }, GET_TOKEN_BALANCE_INTERVAL)
+  }
+
+  getTokenBalance = async () => {
+    const { selectedTokenSymbol } = this.props
+    const { balance, frozen_balances } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)
+
+    let frozenAmount = 0
+
+    if (frozen_balances && frozen_balances.length !== 0) {
+      frozenAmount = frozen_balances.reduce((acc, cur) => (acc += cur.amount, acc), 0)
+    }
+
+    this.setState({
+      balance: balance,
+      frozenAmount,
+      isLoading: false,
+    })
+  }
+
+  getResourceBalance = async () => {
+    const accountInfo = await iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+    this.setState({
+      accountInfo,
+      gas: accountInfo.gas_info && accountInfo.gas_info.current_total,
+      ram: accountInfo.ram_info && accountInfo.ram_info.available,
+      isLoading: false,
+    })
   }
 
   handleChange = (e) => {
@@ -50,8 +85,12 @@ class Index extends Component<Props> {
     const { to, amount, iGASPrice, iGASLimit } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
+  
     // 1. Create transfer tx
     const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
+    if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
+      tx.setChainID(1023)
+    }
     tx.addAction(
       'token.iost',
       'transfer',
@@ -115,7 +154,7 @@ class Index extends Component<Props> {
   }
 
   render() {
-    const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing } = this.state
+    const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing, balance } = this.state
     const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
@@ -123,7 +162,7 @@ class Index extends Component<Props> {
         <div className="tokenTransfer-box">
           <div className="transferAmount-box">
             <span className="transferAmount">{I18n.t('transferAmount')}</span>
-            <span className="balance">{I18n.t('balance', { num: 999, token: selectedTokenSymbol })}</span>
+            <span className="balance">{I18n.t('balance', { num: balance, token: selectedTokenSymbol })}</span>
           </div>
           <Input
             name="amount"

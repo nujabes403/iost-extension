@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import { connect } from 'react-redux'
 import cx from 'classnames'
@@ -11,8 +10,6 @@ import ui from 'utils/ui'
 import * as accountActions from 'actions/accounts';
 import utils from 'utils';
 import './index.scss'
-import * as accountActions from 'actions/accounts'
-import utils from 'utils'
 
 const dealList = [
   {id: 1, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 0, account: -233 },
@@ -43,29 +40,21 @@ class Account extends Component<Props> {
     chrome.storage.local.get(['accounts'], ({accounts}) => {
       if (accounts && accounts.length){
         this.props.dispatch(accountActions.setAccounts(accounts));
-        chrome.storage.sync.get(['activeAccount'], ({activeAccount}) => {
-          if (activeAccount) {
-            const { id, encodedPrivateKey } = activeAccount
-            iost.loginAccount(id, encodedPrivateKey)
-            // this.props.changeLocation('/accountAdd')
+        chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
+          const account = activeAccount || accounts[0]
+          const { name, privateKey } = activeAccount
+          chrome.runtime.sendMessage({
+            action: 'GET_PASSWORD',
+          },(res)=> {
+            const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
+            iost.loginAccount(name, encodedPrivateKey)
+            chrome.storage.local.set({ activeAccount: account })
             this.setState({
               loading: false,
-              currentAccount: activeAccount,
+              currentAccount: account,
             })
-            // this.props.changeLocation('/accountManage')
-          }else {
-            const { name, privateKey } = accounts[0]
-            chrome.runtime.sendMessage({
-              action: 'GET_PASSWORD',
-            },(res)=> {
-              const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-              iost.loginAccount(name, encodedPrivateKey)
-              this.setState({
-                loading: false,
-                currentAccount: accounts[0],
-              })
-            })
-          }
+          })
+
         })
       }else {
         this.changeLocation('/accountImport')
@@ -92,30 +81,25 @@ class Account extends Component<Props> {
   }
 
   chooseAccount = (account) => () => {
+    console.log(account)
     const { accounts } = this.props
 
     const { name, privateKey, publicKey, network } = account
-
+    
     chrome.runtime.sendMessage({
       action: 'GET_PASSWORD',
     },(res)=> {
       const encodedPrivateKey = utils.aesDecrypt(privateKey, res)
-      console.log('encodedPrivateKey', encodedPrivateKey)
+      const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+      iost.changeNetwork(url)
       iost.loginAccount(name, encodedPrivateKey)
-      this.moveTo('/account')()
-    })
-
-    const ac = {}
-    ac.id = name
-    ac.publicKey = publicKey
-    ac.encodedPrivateKey = privateKey
-
-    this.setState({
-      currentAccount: account,
-    })
-    chrome.storage.sync.set({ 'activeAccount': account }, () => {
-      console.log('切换账号')
-      this.toggleAccountList()
+      this.setState({
+        currentAccount: account,
+      })
+      chrome.storage.local.set({ 'activeAccount': account }, () => {
+        console.log('switch account')
+        this.toggleAccountList()
+      })
     })
   }
 
@@ -129,8 +113,8 @@ class Account extends Component<Props> {
         <Header onSetting={this.moveTo('/accountSetting')} logo={true}>
           <div className="account-currentName-box">
             <i className={cx('circle', currentAccount.network != 'MAINNET' ? 'test' : '')} />
-            <span className="account-name">{currentAccount.id}</span>
-            <i className={cx('arrow', accounts.length != 1 ? 'arrow-hide' : (isShowAccountList ? 'arrow-down' : 'arrow-right'))}
+            <span className="account-name">{currentAccount.name}</span>
+            <i className={cx('arrow', accounts.length <=1 ? 'arrow-hide' : (isShowAccountList ? 'arrow-down' : 'arrow-right'))}
                onClick={this.toggleAccountList} />
           </div>
         </Header>

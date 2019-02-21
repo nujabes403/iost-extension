@@ -20,7 +20,7 @@ const store = createStore(
 // i18n set
 syncTranslationWithStore(store)
 store.dispatch(loadTranslations(translationObject))
-chrome.storage.sync.get(['locale'], (result) => {
+chrome.storage.local.get(['locale'], (result) => {
   store.dispatch(setLocale(result.locale || 'zh'))
 })
 

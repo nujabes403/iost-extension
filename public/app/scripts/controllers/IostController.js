@@ -23,26 +23,18 @@ const iost = {
     iost.rpc = new IOST.RPC(newNetworkProvider)
     iost.network = url
     // Save last network you used in extension storage.
-    chrome.storage.sync.set({
+    chrome.storage.local.set({
       activeNetwork: url
     })
   },
   // account
-  loginAccount: (id, encodedPrivateKey) => {
-    iost.account = new IOST.Account(id)
+  loginAccount: (name, encodedPrivateKey) => {
+    iost.account = new IOST.Account(name)
     const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey))
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
 
     // Save secure account information in extension storage.
-    chrome.storage.sync.set({
-      activeAccount: {
-        id,
-        encodedPrivateKey,
-        publicKey: kp.id,
-      }
-    })
-
     return iost.account
   },
   logoutAccount: () => {

@@ -21,7 +21,7 @@ class TokenSelector extends Component<Props> {
   }
 
   componentDidMount() {
-    chrome.storage.sync.get(['savedTokenSymbols'], (result) => {
+    chrome.storage.local.get(['savedTokenSymbols'], (result) => {
       this.setState({ isLoading: false })
       console.log(result, result.savedTokenSymbols, 'result')
       if (!result.savedTokenSymbols instanceof Array) return
@@ -47,7 +47,7 @@ class TokenSelector extends Component<Props> {
       ...tokenSymbols.slice(0, idx),
       ...tokenSymbols.slice(idx + 1)
     ]
-    chrome.storage.sync.set({ savedTokenSymbols: newTokenSymbols })
+    chrome.storage.local.set({ savedTokenSymbols: newTokenSymbols })
     token.updateSavedTokenSymbols(newTokenSymbols)
   }
 

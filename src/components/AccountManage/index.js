@@ -41,6 +41,9 @@ class AccountManage extends Component<Props> {
     chrome.storage.local.set({accounts: accounts})
     this.props.dispatch(accountActions.setAccounts(accounts))
     ui.toggleModal()
+    if(!accounts.length){
+      this.props.changeLocation('/accountImport')
+    }
   }
 
   render() {

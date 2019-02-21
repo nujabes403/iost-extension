@@ -28,7 +28,7 @@ class TokenAddition extends Component<Props> {
     const tokenSymbols = token.getTokenSymbols()
 
     const newTokenSymbolList = [...tokenSymbols, { symbol: tokenSymbol }]
-    chrome.storage.sync.set({ savedTokenSymbols: newTokenSymbolList })
+    chrome.storage.local.set({ savedTokenSymbols: newTokenSymbolList })
     token.updateSavedTokenSymbols(newTokenSymbolList)
   }
 

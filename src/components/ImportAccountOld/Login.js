@@ -53,7 +53,9 @@ class Login extends Component<Props> {
         }
 
         iost.loginAccount(account, privateKey)
-        changeLocation('/account')
+        chrome.storage.local.set({ activeAccount: account },() => {
+          changeLocation('/account')
+        })
       })
       .catch(this.throwErrorMessage)
 
