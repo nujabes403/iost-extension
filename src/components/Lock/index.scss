@@ -1,5 +1,4 @@
 @import "colors.scss";
-@import "mixins.scss";
 
 .lock-box {
   height: 175px;
@@ -11,11 +10,4 @@
     padding: 0 15px;
     margin-bottom: 15px;
   }
-}
-
-.lock-errorMessage {
-  font-size: 10px;
-  color: $brand-red;
-  margin: 4px;
-  text-align: left;
 }

@@ -34,9 +34,6 @@
   }
   .input {
     padding-left: 15px;
-    color: $input-text;
-    font-weight: 300;
-    font-size: 16px;
     margin: 8px 0 10px;
     &.iGASLimit {
       margin: 0;
@@ -76,7 +73,7 @@
   width: 100%;
   margin-top: 12px;
   height: 52px;
-  border-radius: 6px;
+  border-radius: 4px;
   font-family: 'Montserrat';
   font-size: 18px;
 }

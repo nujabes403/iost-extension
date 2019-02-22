@@ -36,7 +36,6 @@ const getAccounts = () => new Promise((resolve, reject) => {
 
 class AccountImport extends Component<Props> {
   componentDidMount() {
-    console.log(this.props.locationList)
   }
   state = {
     privateKey: '',

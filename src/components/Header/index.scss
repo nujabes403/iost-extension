@@ -14,18 +14,23 @@
     cursor: pointer;
   }
   .icon-back {
-    width: 15px;
-    height: 24px;
+    width: 15*0.8px;
+    height: 24*0.8px;
     background-image: url("/static/images/arrow-left.png");
+    opacity: 0.5;
+    transition: .5s opacity;
+    &:hover {
+      opacity: 1;
+    }
   }
   .icon-logo {
-    width: 30px;
-    height: 34px;
+    width: 30*0.8px;
+    height: 34*0.8px;
     background-image: url("/static/images/logo.png");
   }
   .icon-setting {
-    width: 30px;
-    height: 32px;
+    width: 30*0.8px;
+    height: 32*0.8px;
     background-image: url("/static/images/setting.png");
   }
   .title {
@@ -42,5 +47,10 @@
     line-height: 20px;
     font-size: 12px;
     cursor: pointer;
+    transition: background-color 300ms, color 300ms;
+    &:hover {
+      background-color: $blue;
+      color: $white;
+    }
   }
 }

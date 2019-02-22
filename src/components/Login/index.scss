@@ -38,6 +38,10 @@
     background-color: transparent;
     color: black;
     border: 1px solid #000000;
+    &:hover {
+      background-color: #000000;
+      color: $white;
+    }
   }
   .radio-box {
     width: 300px;
@@ -49,13 +53,18 @@
       margin-right: 5px;
       width: 14px;
       height: 14px;
-      background-size: cover;
+      background-size: 10px 8px;
+      background-repeat: no-repeat;
       border: 1px solid blue;
-      border-radius: 3px;
+      border-radius: 2px;
       background-image: url("/static/images/icon-checked.png");
+      //padding: 2px 0 0 1px;
+      background-position: center center;
       cursor: pointer;
+      background-clip: content-box;
       &.noChecked {
         background-image: none;
+        border: 1px solid $input-text;
       }
     }
     > span {

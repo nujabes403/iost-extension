@@ -2,12 +2,12 @@
 
 .Button {
   width: 300px;
-  height: 50px;
+  height: 40px;
   background-color: #000000;
   color: $white;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 0;
   outline: 0;
   text-align: center;
@@ -23,7 +23,7 @@
 
   &.btn-account {
     width: 120px;
-    height: 50px;
+    height: 40px;
     background-color: $white;
     color: #000000;
     border: 1px solid;
