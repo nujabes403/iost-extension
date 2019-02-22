@@ -1,0 +1,62 @@
+@import "colors.scss";
+.success-box {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  background-color: $gray;
+  text-align: center;
+  padding: 30px;
+  .success-logo-box {
+    margin-bottom: 20px;
+    .success-logo {
+      display: inline-block;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background-image: url("/static/images/icon-success.png");
+      background-size: contain;
+      margin-bottom: 10px;
+    }
+    .success-result {
+      color: #1AA757;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 300;
+
+    }
+  }
+  .item-box {
+    text-align: left;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 15px;
+    .item-title {
+      display: flex;
+      font-weight: bold;
+      margin-bottom: 10px;
+      line-height: 16px;
+    }
+    .item-content {
+      width: 300px;
+      border: 1px solid $border;
+      border-radius: 4px;
+      padding: 0 15px;
+      &.item-txHash {
+        height: 60px;
+        line-height: 24px;
+        padding-top: 6px;
+      }
+      &.item-gasUsage {
+        height: 40px;
+        line-height: 40px;
+      }
+    }
+  }
+  .btn-close {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: 30px;
+  }
+}

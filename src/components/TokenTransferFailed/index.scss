@@ -1,0 +1,78 @@
+@import "colors.scss";
+.failed-box {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  background-color: $gray;
+  text-align: center;
+  padding: 30px;
+  .failed-logo-box {
+    margin-bottom: 20px;
+    .failed-logo {
+      display: inline-block;
+      width: 90px;
+      height: 90px;
+      line-height: 90px;
+      border-radius: 50%;
+      background-image: linear-gradient(#F17575, #AD1515);
+      color: $white;
+      font-size: 65px;
+      font-style: normal;
+      font-weight: bold;
+      font-family: serif;
+      margin-bottom: 10px;
+    }
+    .failed-result {
+      color: $red;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 300;
+
+    }
+  }
+  .item-box {
+    text-align: left;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 15px;
+    &:last-of-type {
+      margin-bottom: 20px;
+    }
+    .item-title {
+      display: flex;
+      font-weight: bold;
+      margin-bottom: 10px;
+      line-height: 16px;
+      .copy {
+        display: inline-block;
+        width: 13px;
+        height: 16px;
+        background-image: url("/static/images/copy.png");
+        background-size: contain;
+        cursor: pointer;
+        margin-left: 5px;
+      }
+    }
+    .item-content {
+      width: 300px;
+      border: 1px solid $border;
+      border-radius: 4px;
+      padding: 0 15px;
+      &.item-txHash {
+        height: 60px;
+        line-height: 24px;
+        padding-top: 6px;
+      }
+      &.item-gasUsage {
+        height: 40px;
+        line-height: 40px;
+      }
+      &.item-errorMessage {
+        height: 70px;
+        line-height: 24px;
+        overflow-y: auto;
+        color: $red;
+      }
+    }
+  }
+}

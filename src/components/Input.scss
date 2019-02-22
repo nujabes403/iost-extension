@@ -8,10 +8,9 @@
   border: 1px solid #C4C4C4;
   border-radius: 4px;
   font-size: 14px;
-  ::-webkit-input-placeholder {
+  &::-webkit-input-placeholder {
     color: $input-text;
     font-size: 14px;
     font-weight: 300;
-
   }
 }

@@ -12,7 +12,7 @@ import { GET_TOKEN_BALANCE_INTERVAL } from 'constants/token'
 import TokenTransferSuccess from 'components/TokenTransferSuccess'
 import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
-
+import LoadingImage from 'components/LoadingImage'
 
 import './index.scss'
 
@@ -32,12 +32,12 @@ class Index extends Component<Props> {
   state = {
     to: '',
     amount: 0,
+    memo: '',
     isSending: false,
     iGASPrice: defaultConfig.gasRatio,
     iGASLimit: defaultConfig.gasLimit,
     errorMessage: '',
     isShowing: false, // 是否显示多余资源输入框
-
   }
 
   componentDidMount() {
@@ -82,10 +82,10 @@ class Index extends Component<Props> {
   }
 
   transfer = () => {
-    const { to, amount, iGASPrice, iGASLimit } = this.state
+    const { to, amount, iGASPrice, iGASLimit, memo } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
-  
+
     // 1. Create transfer tx
     const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
@@ -94,7 +94,7 @@ class Index extends Component<Props> {
     tx.addAction(
       'token.iost',
       'transfer',
-      JSON.stringify([selectedTokenSymbol, accountName, to, amount, '']),
+      JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
     )
     tx.setTime(defaultConfig.expiration, defaultConfig.delay)
     tx.addApprove("*", defaultConfig.defaultLimit)
@@ -118,9 +118,11 @@ class Index extends Component<Props> {
       .onSuccess(async (response) => {
         clearInterval(intervalID)
         this.setState({ isSending: false })
-        ui.openPopup({
-          content: <TokenTransferSuccess tx={response} />
-        })
+        ui.settingTransferInfo(response)
+        this.moveTo('/tokenTransferSuccess')()
+        // ui.openPopup({
+        //   content: <TokenTransferSuccess tx={response} />
+        // })
       })
       .onFailed((err) => {
         clearInterval(intervalID)
@@ -133,9 +135,11 @@ class Index extends Component<Props> {
           this.setState({
             isSending: false,
           })
-          ui.openPopup({
-            content: <TokenTransferFailed tx={err} />
-          })
+          ui.settingTransferInfo(err)
+          this.moveTo('/tokenTransferFailed')()
+          // ui.openPopup({
+          //   content: <TokenTransferFailed tx={err} />
+          // })
         }
       })
       .send()
@@ -183,7 +187,7 @@ class Index extends Component<Props> {
             {I18n.t('remarks')}
           </label>
           <Input
-            name=""
+            name="memo"
             onChange={this.handleChange}
             placeholder={I18n.t('optional')}
             className="input"
@@ -211,14 +215,15 @@ class Index extends Component<Props> {
               </div>
             )
           }
-          <Button
-            className="btn-submit"
-            onClick={this.transfer}
-            isLoading={isSending}
-          >
-            {I18n.t('submit')}
-          </Button>
-          <p className="transferTips">{I18n.t('transferTips')}</p>
+          <div className="btn-box">
+            <Button
+              className="btn-submit"
+              onClick={this.transfer}
+            >
+              {isSending ? <LoadingImage /> : I18n.t('submit')}
+            </Button>
+            <p className="transferTips">{I18n.t('transferTips')}</p>
+          </div>
           <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>
       </Fragment>

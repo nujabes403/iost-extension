@@ -34,3 +34,5 @@ export const TOGGLE_MODAL = 'TOGGLE_MODAL'
 export const SETTING_LOCATION = 'SETTING_LOCATION'
 // 删除上次跳转的location
 export const DELETE_LOCATION = 'DELETE_LOCATION'
+// 交易信息
+export const TRANSFER_INFO = 'TRANSFER_INFO'

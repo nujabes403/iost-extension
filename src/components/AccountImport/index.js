@@ -3,6 +3,7 @@ import { I18n } from 'react-redux-i18n'
 import { connect } from 'react-redux'
 import { Header } from 'components'
 import Button from 'components/Button'
+import LoadingImage from 'components/LoadingImage'
 import NetworkSelector from 'components/NetworkSelector'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
@@ -36,14 +37,17 @@ const getAccounts = () => new Promise((resolve, reject) => {
 
 
 class AccountImport extends Component<Props> {
-  componentDidMount() {
-  }
+
   state = {
     privateKey: '',
+    isLoading: false,
     errorMessage: '',
   }
 
   onSubmit = async () => {
+    this.setState({
+      isLoading: true
+    })
     const { privateKey } = this.state
     const { changeLocation } = this.props
     
@@ -80,6 +84,14 @@ class AccountImport extends Component<Props> {
     const invalidLoginInput = !accounts.length || !privateKey || !publicKey
 
     if (invalidLoginInput) {
+      console.log('accounts.length', accounts.length)
+      console.log('privateKey', privateKey)
+      console.log('publicKey', publicKey)
+      console.log(111111)
+      // 没有找见账户，私钥为空，没有对应的公钥
+      this.setState({
+        isLoading: false
+      })
       this.throwErrorMessage()
       return
     }
@@ -142,7 +154,7 @@ class AccountImport extends Component<Props> {
   }
 
   render() {
-    const { errorMessage } = this.state
+    const { isLoading } = this.state
     return (
       <Fragment>
         <Header title={I18n.t('accountImport')} onBack={this.backTo} hasSetting={false} />
@@ -154,7 +166,7 @@ class AccountImport extends Component<Props> {
               className="Header__NetworkSelector"
             />
           */}
-          <Button className="btn-submit" onClick={this.onSubmit}>{I18n.t('submit')}</Button>
+          <Button className="btn-submit" onClick={this.onSubmit}>{isLoading ? <LoadingImage /> : I18n.t('submit')}</Button>
         </div>
       </Fragment>
     )

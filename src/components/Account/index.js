@@ -134,7 +134,6 @@ class Account extends Component<Props> {
             </ul>
           </div>
           <TokenBalance />
-
           <div className="btn-box">
             <Button
               className="btn-transfer"

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Login, Account, AccountImport, AccountManage, TokenTransfer, AccountQRCode,
-  AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
-  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement
+import { Login, Account, AccountImport, AccountManage, TokenTransfer, TokenTransferFailed, TokenTransferSuccess,
+  AccountQRCode, AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
+  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement,
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -25,15 +25,12 @@ const getPassword = () => new Promise((resolve, reject) => {
 })
 
 type Props = {
-  isLoading: boolean,
   children: React.DOM,
 }
 // /var/www/iost-helloworld-dapp/dist
 class App extends Component<Props> {
   state = {
-    isLoading: true,
     currentLocation: '/login',
-    // currentLocation: '/account',
   }
 
   componentDidMount() {
@@ -71,7 +68,7 @@ class App extends Component<Props> {
                     }else {
                       this.changeLocation('/lock')
                     }
-                    
+
                   })
                 })
               }else {
@@ -106,6 +103,10 @@ class App extends Component<Props> {
         return <AccountManage changeLocation={this.changeLocation} />
       case '/tokenTransfer':
         return <TokenTransfer changeLocation={this.changeLocation} />
+      case '/tokenTransferFailed':
+        return <TokenTransferFailed changeLocation={this.changeLocation} />
+      case '/tokenTransferSuccess':
+        return <TokenTransferSuccess changeLocation={this.changeLocation} />
       case '/accountQRCode':
         return <AccountQRCode changeLocation={this.changeLocation} />
       case '/accountCreateStep1':
@@ -135,7 +136,7 @@ class App extends Component<Props> {
     return (
       <div className="App">
         {this.renderComponentByLocation()}
-        {/*这个是新的全屏弹窗容器*/}
+        {/*这个是新的全屏弹窗容器，应该用不到了*/}
         <Popup />
       </div>
     )

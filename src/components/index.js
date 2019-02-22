@@ -9,6 +9,8 @@ import AccountImport from './AccountImport';
 import AccountManage from './AccountManage';
 import TokenBalance from './TokenBalance';
 import TokenTransfer from './TokenTransfer';
+import TokenTransferFailed from './TokenTransferFailed';
+import TokenTransferSuccess from './TokenTransferSuccess';
 import AccountQRCode from './AccountQRCode';
 import AccountCreateStep1 from './AccountCreateStep1';
 import AccountCreateStep2 from './AccountCreateStep2';
@@ -32,6 +34,8 @@ export {
   AccountManage,
   TokenBalance,
   TokenTransfer,
+  TokenTransferFailed,
+  TokenTransferSuccess,
   AccountQRCode,
   AccountCreateStep1,
   AccountCreateStep2,

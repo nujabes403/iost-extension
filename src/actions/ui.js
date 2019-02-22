@@ -12,7 +12,7 @@ import {
   TOGGLE_MODAL,
   SETTING_LOCATION,
   DELETE_LOCATION,
-  CURRENT_LOCATION,
+  TRANSFER_INFO,
 } from 'actions/actionTypes'
 
 /**
@@ -105,4 +105,11 @@ export const settingLocation = (location) => ({
 
 export const deleteLocation = () => ({
   type: DELETE_LOCATION,
+})
+
+export const settingTransferInfo = (transferInfo) => ({
+  type: TRANSFER_INFO,
+  payload: {
+    transferInfo,
+  },
 })

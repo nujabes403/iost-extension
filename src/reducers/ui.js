@@ -11,7 +11,7 @@ import {
   TOGGLE_MODAL,
   SETTING_LOCATION,
   DELETE_LOCATION,
-  CURRENT_LOCATION,
+  TRANSFER_INFO,
 } from 'actions/actionTypes'
 
 const initialState = {
@@ -21,6 +21,7 @@ const initialState = {
   isOverlayOn: false,
   isShowModal: false,
   locationList: [],
+  transferInfo: null,
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -92,6 +93,12 @@ const uiReducer = (state = initialState, action) => {
       return {
         ...state,
         locationList: state.locationList,
+      }
+    }
+    case TRANSFER_INFO: {
+      return {
+        ...state,
+        transferInfo: action.payload.transferInfo,
       }
     }
     default:
