@@ -19,7 +19,6 @@ type Props = {
 
 class AccountSetting extends Component<Props> {
   componentDidMount() {
-    console.log(this.props.locationList)
   }
 
   moveTo = (location) => () => {

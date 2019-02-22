@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 import cx from 'classnames'
-import { connect } from 'react-redux'
 import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
@@ -19,11 +19,6 @@ const dealList = [
   {id: 5, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 1, account: -233 },
   {id: 6, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 2, account: -233 }
 ]
-
-const accountName = {
-  name: 'testnetiost',
-  network: 'MAINNET',
-}
 
 type Props = {
 
@@ -92,9 +87,6 @@ class Account extends Component<Props> {
   }
 
   chooseAccount = (account) => () => {
-    console.log(account)
-    const { accounts } = this.props
-
     const { name, privateKey, publicKey, network } = account
     
     chrome.runtime.sendMessage({
@@ -117,7 +109,6 @@ class Account extends Component<Props> {
   render() {
     const { isShowAccountList, currentAccount, loading } = this.state
     const { accounts } = this.props
-    const isCurrentAccount = true
     if(loading) return <div></div>
     return (
       <Fragment>
@@ -137,7 +128,7 @@ class Account extends Component<Props> {
                   <li key={item.name + '_' + item.network} onClick={this.chooseAccount(item)}>
                     <i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />
                     <span className="account-name">{item.name}</span>
-                    <i className={cx('check', isCurrentAccount ? 'checked' : '')} />
+                    <i className={cx('check', ((item.name + '_' + item.network) == (currentAccount.name + '_' + currentAccount.network)) ? 'checked' : '')} />
                   </li>)
               }
             </ul>

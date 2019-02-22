@@ -15,7 +15,6 @@ const { Modal1 } = Modal
 class AccountManage extends Component<Props> {
   componentDidMount() {
     ui.settingLocation('/accountManage')
-    console.log(this.props.locationList)
   }
   onCopy = () => {
     Toast.html(I18n.t('copySuccess'))
@@ -58,7 +57,8 @@ class AccountManage extends Component<Props> {
     const { accounts } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />
+        {/*<Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />*/}
+        <Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />
         <div className="accountManage-box">
           {
             accounts.map((item) =>

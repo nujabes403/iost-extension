@@ -20,27 +20,27 @@
       }
       > i {
         display: inline-block;
-        width: 25px;
+        width: 25*0.8px;
         background-size: cover;
         margin-right: 20px;
         &.accountManage {
-          height: 20px;
+          height: 20*0.8px;
           background-image: url("/static/images/icon-accountManage.png");
         }
         &.changeLanguage {
-          height: 20px;
+          height: 20*0.8px;
           background-image: url("/static/images/icon-changeLanguage.png");
         }
         &.changePwd {
-          height: 25px;
+          height: 25*0.8px;
           background-image: url("/static/images/icon-changePwd.png");
         }
         &.lock {
-          height: 25px;
+          height: 25*0.8px;
           background-image: url("/static/images/icon-lock.png");
         }
         &.iostWallet {
-          height: 19px;
+          height: 19*0.8px;
           background-image: url("/static/images/icon-iostWallet.png");
         }
       }

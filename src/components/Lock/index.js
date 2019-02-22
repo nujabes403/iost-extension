@@ -16,7 +16,6 @@ type Props = {
 class Lock extends Component<Props> {
   state = {
     password: '',
-    errorMessage: '',
   }
 
   componentDidMount() {
@@ -28,13 +27,6 @@ class Lock extends Component<Props> {
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      errorMessage: '',
-    })
-  }
-
-  throwErrorMessage = () => {
-    this.setState({
-      errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
 
@@ -81,9 +73,13 @@ class Lock extends Component<Props> {
     }
   }
 
+  keyUnlock = (e) => {
+    if (e.keyCode == 13) {
+      this.unlockWallet()
+    }
+  }
 
   render() {
-    const { errorMessage } = this.state
     return (
       <Fragment>
         <Landing />
@@ -94,8 +90,8 @@ class Lock extends Component<Props> {
             className="input-password"
             onChange={this.handleChange}
             placeholder={I18n.t('inputPwd')}
+            onKeyDown={this.keyUnlock}
           />
-          {!!errorMessage && <p className="lock-errorMessage">{errorMessage}</p>}
           <Button className="btn-unlockWallet" onClick={this.unlockWallet}>{I18n.t('unlockWallet')}</Button>
         </div>
       </Fragment>

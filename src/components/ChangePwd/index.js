@@ -19,20 +19,12 @@ class AccountSetting extends Component<Props> {
     currentPwd: '',
     newPwd: '',
     repeatNewPwd: '',
-    errorMessage: '',
-    isCurrentPwd: '',    // 输入当前密码是否正确
-    isDifferent: false,    // 两次设置的新密码是否一致
+    isCurrentPwd: '',  // 输入当前密码是否正确
+    isDifferent: false,  // 两次设置的新密码是否一致
   }
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      errorMessage: '',
-    })
-  }
-
-  throwErrorMessage = () => {
-    this.setState({
-      errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
 
@@ -141,7 +133,7 @@ class AccountSetting extends Component<Props> {
   }
 
   render() {
-    const { currentPwd, newPwd, repeatNewPwd, isCurrentPwd, errorMessage, isDifferent } = this.state
+    const { currentPwd, newPwd, repeatNewPwd, isCurrentPwd, isDifferent } = this.state
     return (
       <Fragment>
         <Header title={I18n.t('changePwd')} onBack={this.moveTo('/accountSetting')} hasSetting={false} />
