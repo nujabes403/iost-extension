@@ -110,15 +110,15 @@ class AccountImport extends Component<Props> {
         if(activeAccount){
           changeLocation('/accountManage')
         }else {
+          const url = accounts[0].network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+          iost.changeNetwork(url)
+
           iost.rpc.blockchain.getAccountInfo(accounts[0].name)
           .then((accountInfo) => {
             if (!iost.isValidAccount(accountInfo, accounts[0].publicKey)) {
               this.throwErrorMessage()
               return
             }
-            const url = accounts[0].network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
-            iost.changeNetwork(url)
-            
             iost.loginAccount(accounts[0].name, accounts[0].publicKey)
             chrome.storage.local.set({ activeAccount: accounts[0] },() => {
               changeLocation('/accountManage')
