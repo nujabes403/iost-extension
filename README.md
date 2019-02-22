@@ -27,3 +27,6 @@ Here is a dapp sample. [iost-helloworld-dapp](https://github.com/lucusfly/iost-h
 ### Community
 
 Please join our [telegram group](https://t.me/IOSTWallet) for more info.
+
+
+<!-- const iost = IOSTJS.iost(IOST) -->

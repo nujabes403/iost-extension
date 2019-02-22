@@ -32,12 +32,12 @@ class Index extends Component<Props> {
   state = {
     to: '',
     amount: 0,
+    memo: '',
     isSending: false,
     iGASPrice: defaultConfig.gasRatio,
     iGASLimit: defaultConfig.gasLimit,
     errorMessage: '',
     isShowing: false, // 是否显示多余资源输入框
-
   }
 
   componentDidMount() {
@@ -82,7 +82,7 @@ class Index extends Component<Props> {
   }
 
   transfer = () => {
-    const { to, amount, iGASPrice, iGASLimit } = this.state
+    const { to, amount, iGASPrice, iGASLimit, memo } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
   
@@ -94,7 +94,7 @@ class Index extends Component<Props> {
     tx.addAction(
       'token.iost',
       'transfer',
-      JSON.stringify([selectedTokenSymbol, accountName, to, amount, '']),
+      JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
     )
     tx.setTime(defaultConfig.expiration, defaultConfig.delay)
     tx.addApprove("*", defaultConfig.defaultLimit)
@@ -183,7 +183,7 @@ class Index extends Component<Props> {
             {I18n.t('remarks')}
           </label>
           <Input
-            name=""
+            name="memo"
             onChange={this.handleChange}
             placeholder={I18n.t('optional')}
             className="input"

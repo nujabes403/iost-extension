@@ -89,7 +89,8 @@ class AccountSetting extends Component<Props> {
       return;
     }
     try {
-      const en_password = utils.aesEncrypt('account', newPwd)
+      // const en_password = utils.aesEncrypt('account', newPwd)
+      const en_password = hash.sha256().update(newPwd).digest('hex')
       chrome.storage.local.set({password: en_password})
       chrome.runtime.sendMessage({
         action: 'SET_PASSWORD',
