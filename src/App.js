@@ -60,13 +60,18 @@ class App extends Component<Props> {
                   chrome.runtime.sendMessage({
                     action: 'GET_PASSWORD',
                   },(res)=> {
-                    const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-                    const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
-                    iost.changeNetwork(url)
-                    iost.loginAccount(name, encodedPrivateKey)
-                    chrome.storage.local.set({ activeAccount: account },() => {
-                      this.changeLocation('/account')
-                    })
+                    if(res){
+                      const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
+                      const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+                      iost.changeNetwork(url)
+                      iost.loginAccount(name, encodedPrivateKey)
+                      chrome.storage.local.set({ activeAccount: account },() => {
+                        this.changeLocation('/account')
+                      })
+                    }else {
+                      this.changeLocation('/lock')
+                    }
+                    
                   })
                 })
               }else {

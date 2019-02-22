@@ -34,6 +34,7 @@ const getAccounts = () => new Promise((resolve, reject) => {
   })
 })
 
+
 class AccountImport extends Component<Props> {
   componentDidMount() {
     console.log(this.props.locationList)
@@ -50,6 +51,7 @@ class AccountImport extends Component<Props> {
     let publicKey, accounts = []
     try {
       publicKey = privateKeyToPublicKey(privateKey)
+
       let accounts1 = await publickKeyToAccount(publicKey, true)
       let accounts2 = await publickKeyToAccount(publicKey, false)
       
@@ -85,29 +87,36 @@ class AccountImport extends Component<Props> {
 
     try {
       const laccounts = await getAccounts()
-      
       const hash = {}
       accounts = laccounts.concat(accounts).reduce((prev, next) => {
         const _h = `${next.name}_${next.network}`
         hash[_h] ? '' : hash[_h] = true && prev.push(next);
         return prev
-      },[])
+      },[]);
       chrome.storage.local.set({accounts: accounts})
       this.props.dispatch(accountActions.setAccounts(accounts));
-      iost.rpc.blockchain.getAccountInfo(accounts[0].name)
+      chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
+        if(activeAccount){
+          changeLocation('/accountManage')
+        }else {
+          iost.rpc.blockchain.getAccountInfo(accounts[0].name)
           .then((accountInfo) => {
-            if (!iost.isValidAccount(accountInfo, publicKey)) {
+            if (!iost.isValidAccount(accountInfo, accounts[0].publicKey)) {
               this.throwErrorMessage()
               return
             }
-
-            iost.loginAccount(accounts[0].name, privateKey)
-            console.log(accounts[0])
+            const url = accounts[0].network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+            iost.changeNetwork(url)
+            
+            iost.loginAccount(accounts[0].name, accounts[0].publicKey)
             chrome.storage.local.set({ activeAccount: accounts[0] },() => {
               changeLocation('/accountManage')
             })
           })
           .catch(this.throwErrorMessage)
+        }
+      })
+      
     } catch (e) {
       console.log(e)
     }

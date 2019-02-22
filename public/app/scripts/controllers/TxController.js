@@ -20,6 +20,8 @@ TxController.prototype.processTx = function(txIdx) {
   if(iostController.network.indexOf('//api.iost.io') < 0){
     tx.setChainID(1023)
   }
+  // 交易的机器本地时间不能比节点的时间提前超过1秒，此处-3秒防止本地时间不对
+  tx.time = tx.time - 3 * 1e9
   tx.addApprove("*", "unlimited")
 
   if (txObject[1] === 'transfer') {

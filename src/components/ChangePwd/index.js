@@ -5,7 +5,7 @@ import Input from 'components/Input'
 import { Header } from 'components'
 import Button from 'components/Button'
 import utils from 'utils'
-
+import hash from 'hash.js'
 import * as accountActions from 'actions/accounts'
 
 import './index.scss'
@@ -54,10 +54,18 @@ class AccountSetting extends Component<Props> {
     const { currentPwd } = this.state
     try {
       const en_password = await getEnPassword()
-      utils.aesDecrypt(en_password, currentPwd)
-      this.setState({
-        isCurrentPwd: true
-      })
+      const _password = hash.sha256().update(currentPwd).digest('hex')
+      if(_password === en_password){
+        this.setState({
+          isCurrentPwd: true
+        })
+      }else {
+        this.setState({
+          isCurrentPwd: false
+        })
+      }
+      // utils.aesDecrypt(en_password, currentPwd)
+      
     } catch (err) {
       this.setState({
         isCurrentPwd: false
@@ -94,7 +102,7 @@ class AccountSetting extends Component<Props> {
       chrome.runtime.sendMessage({
         action: 'SET_PASSWORD',
         payload: {
-          newPwd
+          password: newPwd
         }
       })
       //重新设置账号列表
@@ -110,7 +118,17 @@ class AccountSetting extends Component<Props> {
           })
           chrome.storage.local.set({accounts: accounts},() =>{
             this.props.dispatch(accountActions.setAccounts(accounts));
-            this.moveTo('/accountSetting')()
+
+            //修改当前账号
+            chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
+              if(activeAccount){
+                activeAccount.privateKey = utils.aesEncrypt(utils.aesDecrypt(activeAccount.privateKey, currentPwd), newPwd)
+                chrome.storage.local.set({ activeAccount: activeAccount },() => {
+                  this.moveTo('/accountSetting')()
+                })
+              }
+            })
+            
           })
         }else {
           this.moveTo('/accountSetting')()

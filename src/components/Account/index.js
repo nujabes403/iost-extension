@@ -7,9 +7,10 @@ import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
 import ui from 'utils/ui'
 import * as accountActions from 'actions/accounts';
+import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils';
 import './index.scss'
-
+import bs58 from 'bs58'
 const dealList = [
   {id: 1, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 0, account: -233 },
   {id: 2, time: '02/01/2019 11:23:33', transferTo: 'sdingidngmie', status: 1, account: -233 },
@@ -28,6 +29,11 @@ type Props = {
 
 }
 
+const Algorithm = {
+  Ed25519: 2,
+  Secp256k1: 1,
+};
+
 class Account extends Component<Props> {
   state = {
     loading: true,
@@ -36,6 +42,12 @@ class Account extends Component<Props> {
   }
 
   componentDidMount() {
+    // const seckey = bs58.decode('BNkwBQabFLjUBmcJQhKAHYF99Qkx3tfJpSmZ6riyY69n');
+    // const edKP = new iost.pack.KeyPair(seckey, Algorithm.Secp256k1);
+    // console.log(bs58.encode(Buffer.from(edKP.pubkey, 'hex')))
+    // let sig = new iost.pack.Signature(info, edKP);
+    // console.log(privateKeyToPublicKey('4T8mZnSnbfQWpVUDUj9PJnGYFJMCdUobVPzrxCgWodr63i8PvVLQKHHMsA1FwE7bxQZAFWZCir2LCfdaTvWk8kBm',Algorithm.Ed25519))
+    // console.log(privateKeyToPublicKey('BNkwBQabFLjUBmcJQhKAHYF99Qkx3tfJpSmZ6riyY69n',Algorithm.Secp256k1))
     chrome.storage.local.get(['accounts'], ({accounts}) => {
       if (accounts && accounts.length){
         this.props.dispatch(accountActions.setAccounts(accounts));

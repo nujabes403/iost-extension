@@ -33,7 +33,6 @@ const callABI = ((actionId) => (...args) => {
   }
 
   actionMap[actionId] = fire
-
   window.postMessage(message, '*')
 
   return handler
@@ -47,6 +46,7 @@ window.addEventListener('message', (e) => {
   if (e.source !== window) return
   const messageData = e.data && e.data.message
   if (messageData && messageData.actionId !== undefined) {
+    console.log(messageData)
     const fire = actionMap[messageData.actionId]
     if (messageData.pending) {
       fire.pending(messageData.pending)

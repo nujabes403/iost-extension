@@ -7,6 +7,7 @@ import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
 import ui from 'utils/ui';
+import hash from 'hash.js'
 
 import './index.scss'
 
@@ -60,7 +61,8 @@ class Login extends Component<Props> {
     }
     if (this.onCheckPassword()) {
       // save password
-      const en_password = utils.aesEncrypt('account', password)
+      const en_password = hash.sha256().update(password).digest('hex')
+      // const en_password = utils.aesEncrypt('account', password)
       chrome.storage.local.set({password: en_password})
       chrome.runtime.sendMessage({
         action: 'SET_PASSWORD',

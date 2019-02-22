@@ -6,7 +6,7 @@ import { Landing, Toast } from 'components'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
-
+import hash from 'hash.js'
 import './index.scss'
 
 type Props = {
@@ -56,20 +56,25 @@ class Lock extends Component<Props> {
     })
     try {
       const en_password = await getEnPassword()
-      utils.aesDecrypt(en_password, password)
-      chrome.runtime.sendMessage({
-        action: 'SET_PASSWORD',
-        payload: {
-          password
-        }
-      })
-      chrome.storage.local.get(['accounts'], ({accounts}) => {
-        if(accounts.length){
-          this.moveTo('/account')()
-        }else {
-          this.moveTo('/AccountImport')()
-        }
-      })      
+      const _password = hash.sha256().update(password).digest('hex')
+      // utils.aesDecrypt(en_password, password)
+      if(_password === en_password){
+        chrome.runtime.sendMessage({
+          action: 'SET_PASSWORD',
+          payload: {
+            password
+          }
+        })
+        chrome.storage.local.get(['accounts'], ({accounts}) => {
+          if(accounts.length){
+            this.moveTo('/account')()
+          }else {
+            this.moveTo('/AccountImport')()
+          }
+        })      
+      }else {
+        throw new Error()
+      }
     } catch (err) {
       Toast.html(I18n.t('passwordTip4'))
       throw new Error('invalid password')

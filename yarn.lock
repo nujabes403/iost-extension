@@ -4310,7 +4310,7 @@ hash-base@^3.0.0:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-hash.js@^1.0.0, hash.js@^1.0.3:
+hash.js@^1.0.0, hash.js@^1.0.3, hash.js@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/hash.js/-/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
   dependencies:
@@ -4625,10 +4625,10 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
 
-iost@0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/iost/-/iost-0.0.17.tgz#aebbef83043e044ff9b0af14d0e2e9c8d8116da5"
-  integrity sha512-o5XOZs1F7P+q08nYLmTGlRqgk2Igsw2SiGsZ+b4HXmtCmZsSuUsoYUsGo3CkmyM0QtxAP66XpPGRIZfZLuhASA==
+iost@0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/iost/-/iost-0.0.20.tgz#e753fbdcf2d3e86eadbc52028be92e23715c24d3"
+  integrity sha512-elLHnkAixf/JSq4CLJkePaWeKgNXPobDDXoBATopAyGmN5dfNBaZBR0m07gAD8sDRXW6wagbDcfHVwNTuDKoIQ==
   dependencies:
     atob "^2.1.2"
     axios "^0.18.0"

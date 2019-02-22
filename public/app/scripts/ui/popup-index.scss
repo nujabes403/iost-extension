@@ -34,20 +34,20 @@ p {
 }
 
 .AskPopup__header {
-  height: 80px;
+  // height: 80px;
   background-color: #F6F6F6;
-  padding: 15px 30px 0;
+  padding: 15px 30px;
   .title{
     font-size: 22px;
     margin-bottom: 9px;
     font-weight: 500;
   }
   span{
-    display: inline-block;
-    max-width: 200px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    // display: inline-block;
+    // max-width: 200px;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+    // overflow: hidden;
     &:nth-child(2){
       margin: 0 5px;
     }
