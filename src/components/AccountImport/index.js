@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { I18n } from 'react-redux-i18n'
 import { connect } from 'react-redux'
-import { Header } from 'components'
+import { Header, Toast } from 'components'
 import Button from 'components/Button'
 import LoadingImage from 'components/LoadingImage'
 import NetworkSelector from 'components/NetworkSelector'
@@ -84,13 +84,15 @@ class AccountImport extends Component<Props> {
     const invalidLoginInput = !accounts.length || !privateKey || !publicKey
 
     if (invalidLoginInput) {
-      console.log('accounts.length', accounts.length)
-      console.log('privateKey', privateKey)
-      console.log('publicKey', publicKey)
-      console.log(111111)
-      // 没有找见账户，私钥为空，没有对应的公钥
+      if (!privateKey) {
+        Toast.html(I18n.t('accountImportTip2'))
+      } else if (!publicKey) {
+        Toast.html(I18n.t('accountImportTip3'))
+      } else if (!accounts.length) {
+        Toast.html(I18n.t('accountImportTip1'))
+      }
       this.setState({
-        isLoading: false
+        isLoading: false,
       })
       this.throwErrorMessage()
       return
