@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Header } from 'components'
+import { Header, Toast } from 'components'
 import { I18n } from 'react-redux-i18n'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import QRCode from 'qrcode.react'
@@ -15,6 +15,7 @@ type Props = {
 
 class AccountQRCode extends Component<Props> {
   onCopy = () => {
+    Toast.html(I18n.t('copySuccess'))
     console.log('复制成功')
   }
   moveTo = (location) => () => {

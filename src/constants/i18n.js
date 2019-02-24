@@ -189,7 +189,7 @@ const zhTranslation = {
   english: 'English',
   japan: '日本语',
   confirmDelWhether: '是否确认删除？',
-  confirmDelTip: '删除账号前请确定已导出私钥，否则删除后将无法恢复账号！？',
+  confirmDelTip: '删除账号前请确定已导出私钥，否则删除后将无法恢复账号。',
   confirmDel: '确认',
   nodeVoting: '参与节点投票',
   userAgreement: '用户协议',
@@ -201,8 +201,6 @@ const zhTranslation = {
   passwordTip3: '2次密码不一致！',
   passwordTip4: '密码错误，请重试！',
   copySuccess: '复制成功！',
-
-
 }
 
 

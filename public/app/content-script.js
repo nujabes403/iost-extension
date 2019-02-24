@@ -8,7 +8,7 @@ function injectInpageScript() {
     const scriptTag = document.createElement('script')
     scriptTag.setAttribute('async', false)
     scriptTag.setAttribute('src', inpagePath)
-
+    // scriptTag.textContent = inpagePath
     container.insertBefore(scriptTag, container.children[0])
     // After injecting the script, *run*, remove the script tag.
     container.removeChild(scriptTag)
@@ -28,6 +28,19 @@ function listenForProviderRequest() {
           payload: data.payload,
           actionId: data.actionId,
         })
+        break;
+      case 'GET_ACCOUNT': 
+        chrome.runtime.sendMessage({
+          action: 'GET_ACCOUNT',
+        },(account) => {
+          window.postMessage({
+            message: {
+              account,
+              actionId: 0
+            },
+          }, '*')
+        })
+        break;
       default:
     }
   })

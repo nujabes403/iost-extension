@@ -71,7 +71,7 @@ class Index extends Component<Props> {
         <div className="TokenBalance-amount-box">
           <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
           <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
-          {(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>}
+          {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
         </div>
         {!isLoading && (
           <div className="TokenBalance__resources">

@@ -87,6 +87,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case 'GET_PASSWORD': 
       sendResponse(state.getPassword())
       break
+    case 'GET_ACCOUNT': 
+      sendResponse(iostController.account.getID())
+      break
     default:
   }
 })

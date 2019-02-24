@@ -5,6 +5,7 @@
   text-align: center;
   margin-bottom: 25px;
   min-height: 169px;
+  text-decoration: none;
   .logo-box {
     margin-top: 30px;
     .logo {
@@ -18,11 +19,13 @@
     font-size: 22px;
     display: inline-block;
     margin-right: 5px;
+    text-decoration: none;
   }
   .TokenBalance__symbol {
     display: inline-block;
     font-size: 22px;
     text-transform: uppercase;
+    text-decoration: none;
   }
   .TokenBalance__frozenBalance {
     display: inline-block;
