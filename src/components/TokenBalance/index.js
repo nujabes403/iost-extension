@@ -62,9 +62,10 @@ class Index extends Component<Props> {
 
   render() {
     const { frozenAmount, accountInfo, amount, gas, ram, isLoading } = this.state
-    const { selectedTokenSymbol } = this.props
+    const { selectedTokenSymbol, account } = this.props
+    const url = account?`${account.network == 'MAINNET'?'https://explorer.iost.io':'http://54.249.186.224'}/account/${account.name}`:'#'
     return (
-      <a className="TokenBalance-box" target={accountInfo?"_blank":''} href={accountInfo?`https://explorer.iost.io/account/${accountInfo.name}`:'#'}>
+      <a className="TokenBalance-box" target={account?"_blank":''} href={url}>
         <div className="logo-box">
           <img className="logo" src={iconSrc[selectedTokenSymbol]} />
         </div>

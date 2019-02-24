@@ -35,7 +35,7 @@ const iost = {
   // account
   loginAccount: (id, encodedPrivateKey) => {
     iost.account = new IOST.Account(id)
-    const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey))//, encodedPrivateKey.length>50?2:1
+    const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey),encodedPrivateKey.length>50?2:1)
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
 

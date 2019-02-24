@@ -73,6 +73,7 @@ class AskPopup extends Component<Props> {
   render() {
     const [contractAddress, abi, args = []] = this.txInfo
     //transfer
+    console.log(args)
     return (
       <div className="AskPopup">
         <header className="AskPopup__header">
@@ -124,13 +125,12 @@ class AskPopup extends Component<Props> {
 }
 
 const ContractDetail = ({args, accountId}) => {
-  const [ memo ] = args
   return (
     <div className="AskPopup__detail">
       <span className="title">Account</span>
       <p>{accountId}</p>
       <span className="title">Memo</span>
-      <p className="memo">{memo}</p>
+      <p className="memo">{args}</p>
     </div>
   )
 }

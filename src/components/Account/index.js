@@ -133,7 +133,7 @@ class Account extends Component<Props> {
               }
             </ul>
           </div>
-          <TokenBalance />
+          <TokenBalance account={currentAccount}/>
           <div className="btn-box">
             <Button
               className="btn-transfer"
