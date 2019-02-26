@@ -1,13 +1,47 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import i18n from './i18n'
-import AskPopupSummary from './popup-summary'
-import AskPopupDetail from './popup-detail'
+// import i18n from './i18n'
+// import AskPopupSummary from './popup-summary'
+// import AskPopupDetail from './popup-detail'
+
+import './popup-index.scss'
+
+const i18n = {
+  en: {
+    "Dapp_Unlock": "Unlock Now",
+    "Dapp_Authorization": "Authorization Requested",
+    "Dapp_Tip1": "* Account authorization does not share your private key",
+    "Dapp_Tip2": "* Current applications are developed by third parties, please pay attention to screening",
+    "Dapp_Signature": "Signature Requested",
+    "Dapp_WhiteList": "Add to white-list",
+    "Dapp_Cancel": "Cancel",
+    "Dapp_Confirm": "Confirm", 
+  },
+  ko: {
+    "Dapp_Unlock": "지금 잠금해제하기",
+    "Dapp_Authorization": "승인 요청 됨",
+    "Dapp_Tip1": "* 계정 인증은 프라이빗 키를 공유하지 않습니다.",
+    "Dapp_Tip2": "* 현재 응용 프로그램은 제 3 자에 의해 개발되었습니다. 스크리닝에 주의해 주세요.",
+    "Dapp_Signature": "서명 요청",
+    "Dapp_WhiteList": "화이트리스트에 추가",
+    "Dapp_Cancel": "취소",
+    "Dapp_Confirm": "확인",
+  },
+  zh: {
+    "Dapp_Unlock": "立即解锁",
+    "Dapp_Authorization": "请求授权",
+    "Dapp_Tip1": "* 账户授权并不会共享您的私钥",
+    "Dapp_Tip2": "* 当前应用为第三方开发，请注意甄别",
+    "Dapp_Signature": "请求签名",
+    "Dapp_WhiteList": "添加到白名单",
+    "Dapp_Cancel": "取消",
+    "Dapp_Confirm": "确认",
+  },
+}
+
 const transLocal = (lan, name) => {
   return i18n[lan][name]
 }
-import './popup-index.scss'
-
 type Props = {
 
 }
@@ -41,10 +75,12 @@ class AskPopup extends Component<Props> {
   }
 
   componentDidMount() {
-    chrome.storage.local.get(['locale'], (result) => {
-      this.setState({
-        lan: result.locale
-      })
+    chrome.storage.local.get(['locale'], ({locale}) => {
+      if(locale){
+        this.setState({
+          lan: locale
+        })
+      }
     })
     // chrome.windows.onRemoved.addListener((integer windowId) => {
     //   chrome.runtime.sendMessage({
