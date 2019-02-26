@@ -8,7 +8,7 @@ import './index.scss'
 
 const settingList = [
   { id: 1, name: 'china', lan: '中文' },
-  { id: 2, name: 'english', lan: 'english' },
+  { id: 2, name: 'english', lan: 'English' },
   { id: 3, name: 'korea', lan: '한국어' },
 ]
 type Props = {
