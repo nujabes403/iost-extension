@@ -53,6 +53,13 @@ class AccountCreateStep3 extends Component<Props> {
     } else {
       this.moveTo('/accountManage')()
     }
+
+    // chrome.runtime.sendMessage({
+    //   action: 'CHECK_CREATE_ACCOUNT',
+    //   payload: {
+    //     str: 'memo',
+    //   }
+    // })
   }
 
   render() {

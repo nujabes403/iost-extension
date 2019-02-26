@@ -18,12 +18,9 @@ type Props = {
 
 class AccountCreateStep1 extends Component<Props> {
   state = {
-<<<<<<< HEAD
     errorMessage: '',
-    isLoading: false
-=======
+    isLoading: false,
     account: '',
->>>>>>> 21392055274ae2a78b062ff81f029168cf11b0ca
   }
 
   componentDidMount() {
@@ -51,7 +48,7 @@ class AccountCreateStep1 extends Component<Props> {
       await iost.rpc.blockchain.getAccountInfo(account)
       Toast.html('账号已存在', 100)
     } catch (err) {
-      this.moveTo('/accountCreateStep2')
+      this.moveTo('/accountCreateStep2')()
     }
     this.setState({
       isLoading: false

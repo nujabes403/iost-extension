@@ -25,14 +25,13 @@ const state = {
     this.unlock = false
   }
 
-
-
 }
 
 const txController = new TxController(state)
 const networkController = new NetworkController()
 const iostController = IostController
 
+iostController.setState(state)
 
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -97,6 +96,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         account: iostController.account.getID(),
         network: iostController.network.indexOf('//api.iost.io') > -1? 'MAINNET':'TESTNET'
       })
+      break
+    case 'CHECK_CREATE_ACCOUNT': 
+      iostController.checkCreateAccount(message.payload)
       break
     default:
   }

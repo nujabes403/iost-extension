@@ -1,5 +1,12 @@
 const IOST = require('iost')
 const bs58 = require('bs58')
+const crypto = require('crypto')
+
+const getAccounts = () => new Promise((resolve, reject) => {
+  chrome.storage.local.get(['accounts'], ({accounts}) => {
+    resolve(accounts || [])
+  })
+})
 
 const DEFAULT_IOST_CONFIG = {
   gasPrice: 100,
@@ -9,13 +16,18 @@ const DEFAULT_IOST_CONFIG = {
 
 const IOST_NODE_URL = 'http://localhost:30001'
 const IOST_PROVIDER = new IOST.HTTPProvider(IOST_NODE_URL)
-
+const delay = (ms) =>  new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve()
+  }, ms)
+})
 const iost = {
   pack: IOST,
   iost: new IOST.IOST(DEFAULT_IOST_CONFIG, IOST_PROVIDER),
   rpc: new IOST.RPC(IOST_PROVIDER),
   account: new IOST.Account('empty'),
   network: IOST_NODE_URL,
+  state: null,
   // network
   changeNetwork: async (url) => {
     const newNetworkProvider = new IOST.HTTPProvider(url)
@@ -41,8 +53,37 @@ const iost = {
   logoutAccount: () => {
     iost.account = new IOST.Account('empty')
     // Save secure account information in extension storage.
-    chrome.storage.sync.remove(['activeAccount'])
+    chrome.storage.local.remove(['activeAccount'])
+  },
+  checkCreateAccount: async (obj, time = 240) => {
+    const [option, name, ownerkey, activekey] = obj.str.split(':')
+    if(time > 0){
+      await delay(5*1000)
+      try {
+        let account = await iost.rpc.blockchain.getAccountInfo(name)
+        const laccounts = await getAccounts()
+        const hash = {}
+        accounts = laccounts.concat(accounts).reduce((prev, next) => {
+          const _h = `${next.name}_${next.network}`
+          hash[_h] ? '' : hash[_h] = true && prev.push(next);
+          return prev
+        },[]);
+        chrome.storage.local.set({accounts: accounts})
+      } catch (err) {
+        iost.checkCreateAccount(obj, --time)
+      }
+    }
+  },
+  setState: (state) => {
+    iost.state = state
   }
+}
+
+function aesEncrypt(encrypted, key){
+  const cipher = crypto.createCipher('aes192', key);
+  let crypted = cipher.update(data, 'utf8', 'hex');
+  crypted += cipher.final('hex');
+  return crypted;
 }
 
 module.exports = iost
