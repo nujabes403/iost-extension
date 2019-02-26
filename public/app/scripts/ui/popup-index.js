@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import i18n from 'constants/i18n'
-import Button from 'components/Button'
+import i18n from './i18n'
 import AskPopupSummary from './popup-summary'
 import AskPopupDetail from './popup-detail'
 const transLocal = (lan, name) => {
