@@ -22,7 +22,7 @@ module.exports = {
   // ],
   entry: {
     main: ['@babel/polyfill', 'react-hot-loader/patch', path.resolve(__dirname, 'src/index.js'), 'webpack-hot-middleware/client'],
-    popup: ['@babel/polyfill', 'react-hot-loader/patch', path.resolve(__dirname, 'public/app/scripts/ui/popup-index.js'),  'webpack-hot-middleware/client'],
+    popup: ['@babel/polyfill', path.resolve(__dirname, 'public/app/scripts/ui/popup-index.js')],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),

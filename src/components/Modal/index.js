@@ -59,15 +59,15 @@ class Modal1 extends Component {
     const { isShowModal } = this.props
     return (
       <Modal
-        title={I18n.t('confirmDelWhether')}
+        title={I18n.t('ManageAccount_Delete')}
         {...this.props}
         visible={isShowModal}
         onClose={this.onCloseModal}
         DialogClass='delete-wrapper'
       >
         <div className="delete-container">
-          <p className="confirmDelTip">{I18n.t('confirmDelTip')}</p>
-          <Button className="btn-confirm" onClick={this.confirmDelete}>{I18n.t('confirmDel')}</Button>
+          <p className="confirmDelTip">{I18n.t('ManageAccount_DeleteTip')}</p>
+          <Button className="btn-confirm" onClick={this.confirmDelete}>{I18n.t('ManageAccount_Confirm')}</Button>
         </div>
       </Modal>
     )

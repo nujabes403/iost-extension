@@ -37,14 +37,14 @@ class AccountSetting extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('setting')} onBack={this.moveTo('/account')} hasSetting={false} />
+        <Header title={I18n.t('Settings_Title')} onBack={this.moveTo('/account')} hasSetting={false} />
         <div className="accountSetting-box">
           <ul>
             {
               settingList.map((item) =>
                 <li onClick={this.moveTo(`/${item.name}`)} key={item.id}>
                   <i className={item.name} />
-                  <span className="name">{I18n.t(item.name)}</span>
+                  <span className="name">{I18n.t(`Settings_${item.name}`)}</span>
                 </li>
               )
             }

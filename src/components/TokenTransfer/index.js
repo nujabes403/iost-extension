@@ -173,40 +173,40 @@ class Index extends Component<Props> {
     const { className, selectedTokenSymbol } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('transfer')} onBack={this.moveTo('/account')} hasSetting={false} />
+        <Header title={I18n.t('Account_Transfer')} onBack={this.moveTo('/account')} hasSetting={false} />
         <div className="tokenTransfer-box">
           <div className="transferAmount-box">
-            <span className="transferAmount">{I18n.t('transferAmount')}</span>
-            <span className="balance">{I18n.t('balance', { num: balance, token: selectedTokenSymbol })}</span>
+            <span className="transferAmount">{I18n.t('Transfer_Amount')}</span>
+            <span className="balance">{I18n.t('Transfer_Balance', { num: balance, token: selectedTokenSymbol })}</span>
           </div>
           <Input
             name="amount"
             onChange={this.handleChange}
-            placeholder={I18n.t('enterAmount')}
+            placeholder={I18n.t('Transfer_InputAmount')}
             className="input"
           />
           <label className="label">
-            {I18n.t('addressCollection')}
+            {I18n.t('Transfer_Payee')}
           </label>
           <Input
             name="to"
             onChange={this.handleChange}
-            placeholder={I18n.t('address')}
+            placeholder={I18n.t('Transfer_EnterName')}
             className="input"
           />
           <label className="label">
-            {I18n.t('remarks')}
+            {I18n.t('Transfer_Note')}
           </label>
           <Input
             name="memo"
             onChange={this.handleChange}
-            placeholder={I18n.t('optional')}
+            placeholder={I18n.t('Transfer_Optional')}
             className="input"
           />
 
           <div className="transferAmount-box">
-            <span className="transferAmount">{I18n.t('resourceCost')}</span>
-            <span className="iGAS-price" onClick={this.toggleMenu}>{iGASPrice} {I18n.t('iGAS')} <i /></span>
+            <span className="transferAmount">{I18n.t('Transfer_Resource')}</span>
+            <span className="iGAS-price" onClick={this.toggleMenu}>{iGASPrice} iGas <i /></span>
           </div>
           {
             isShowing && (
@@ -231,9 +231,9 @@ class Index extends Component<Props> {
               className="btn-submit"
               onClick={this.transfer}
             >
-              {isSending ? <LoadingImage /> : I18n.t('submit')}
+              {isSending ? <LoadingImage /> : I18n.t('Transfer_Submit')}
             </Button>
-            <p className="transferTips">{I18n.t('transferTips')}</p>
+            <p className="transferTips">{I18n.t('Transfer_Tip')}</p>
           </div>
           <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>

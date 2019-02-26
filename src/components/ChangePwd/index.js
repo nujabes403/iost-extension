@@ -137,7 +137,7 @@ class AccountSetting extends Component<Props> {
     const { currentPwd, newPwd, repeatNewPwd, isCurrentPwd, isDifferent } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('changePwd')} onBack={this.moveTo('/accountSetting')} hasSetting={false} />
+        <Header title={I18n.t('Settings_changePwd')} onBack={this.moveTo('/accountSetting')} hasSetting={false} />
         <div className="changePwd-box">
           <Input
             name="currentPwd"
@@ -145,30 +145,30 @@ class AccountSetting extends Component<Props> {
             onChange={this.handleChange}
             onBlur={this.onCheckCurrentPwd}
             className="input-pwd"
-            placeholder={I18n.t('inputCurrentPwd')}
+            placeholder={I18n.t('ChangePassword_CurrentPassword')}
           />
           {
-            (currentPwd == '' || isCurrentPwd === '')? '': <p className={isCurrentPwd?'approved':'verify-error'}>{I18n.t(isCurrentPwd?'approved':'tryAgainPwd')}</p>
+            (currentPwd == '' || isCurrentPwd === '')? '': <p className={isCurrentPwd?'approved':'verify-error'}>{I18n.t(isCurrentPwd?'ChangePassword_Verification':'ChangePassword_Wrong')}</p>
           }
           <Input
             name="newPwd"
             type="password"
             onChange={this.handleChange}
             className="input-pwd"
-            placeholder={I18n.t('setNewPwd')}
+            placeholder={I18n.t('ChangePassword_NewPassword')}
           />
           <Input
             name="repeatNewPwd"
             type="password"
             onChange={this.handleChange}
             className="input-pwd"
-            placeholder={I18n.t('repeatNewPwd')}
+            placeholder={I18n.t('ChangePassword_Repeat')}
             onBlur={this.onCheckNewPwd}
           />
           {
-            isDifferent ? <p className="verify-error">{I18n.t('tryAgainPwd')}</p> : ''
+            isDifferent ? <p className="verify-error">{I18n.t('ChangePassword_Wrong')}</p> : ''
           }
-          <Button className="btn-setting" onClick={this.onUpdatePwd}>{I18n.t('changePwd')}</Button>
+          <Button className="btn-setting" onClick={this.onUpdatePwd}>{I18n.t('Settings_changePwd')}</Button>
         </div>
       </Fragment>
     )

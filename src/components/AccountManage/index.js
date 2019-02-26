@@ -17,7 +17,7 @@ class AccountManage extends Component<Props> {
     ui.settingLocation('/accountManage')
   }
   onCopy = () => {
-    Toast.html(I18n.t('copySuccess'))
+    Toast.html(I18n.t('ManageAccount_Copy'))
   }
 
   moveTo = (location) => () => {
@@ -57,19 +57,19 @@ class AccountManage extends Component<Props> {
     const { accounts } = this.props
     return (
       <Fragment>
-        {/*<Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />*/}
-        <Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />
+        <Header title={I18n.t('Settings_accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountAdd')} setting={false} />
+        {/*<Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />*/}
         <div className="accountManage-box">
           {
             accounts.map((item) =>
               <div className="account-item" key={item.name + '_' + item.network}>
                 <div className="left">
                   <div className="account-name-box">
-                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('test') : I18n.t('official')}</span>
+                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
                   </div>
                   <div className="publicKey-box">
-                    <span className="publicKey-title">{I18n.t('publicKey')}</span>
+                    <span className="publicKey-title">{I18n.t('ManageAccount_PublicKey')}</span>
                     <span className="publicKey-name">
                       <span>********</span>
                       <CopyToClipboard onCopy={this.onCopy} text={item.publicKey}>

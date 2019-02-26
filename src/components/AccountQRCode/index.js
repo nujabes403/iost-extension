@@ -26,9 +26,9 @@ class AccountQRCode extends Component<Props> {
     const value = iost.account.getID()
     return (
       <Fragment>
-        <Header title={I18n.t('receipt')} onBack={this.moveTo('/account')} hasSetting={false}/>
+        <Header title={I18n.t('Account_Receive')} onBack={this.moveTo('/account')} hasSetting={false}/>
         <div className="accountQRCode-box">
-          <p className="qrTitle">{I18n.t('qrTitle')}</p>
+          <p className="qrTitle">{I18n.t('Receive_Title')}</p>
           <QRCode value={value} />
           <p className="name">{value}</p>
           <CopyToClipboard onCopy={this.onCopy} text={value}>
@@ -36,10 +36,10 @@ class AccountQRCode extends Component<Props> {
               className="btn-copyAddress"
               onClick={this.moveTo('/accountQRCode')}
             >
-              {I18n.t('copyAddress')}
+              {I18n.t('Receive_Copy')}
             </Button>
           </CopyToClipboard>
-          <p className="receiptTips">{I18n.t('receiptTips')}</p>
+          <p className="receiptTips">{I18n.t('Receive_Tip')}</p>
         </div>
       </Fragment>
 

@@ -115,6 +115,9 @@
   }
 
   .btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     > button {
       &:hover {
         background-color: #000000;

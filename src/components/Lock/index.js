@@ -68,7 +68,7 @@ class Lock extends Component<Props> {
         throw new Error()
       }
     } catch (err) {
-      Toast.html(I18n.t('passwordTip4'))
+      Toast.html(I18n.t('Password_TryAgain'))
       throw new Error('invalid password')
     }
   }
@@ -89,10 +89,10 @@ class Lock extends Component<Props> {
             type="password"
             className="input-password"
             onChange={this.handleChange}
-            placeholder={I18n.t('inputPwd')}
+            placeholder={I18n.t('Lock_EnterPassword')}
             onKeyDown={this.keyUnlock}
           />
-          <Button className="btn-unlockWallet" onClick={this.unlockWallet}>{I18n.t('unlockWallet')}</Button>
+          <Button className="btn-unlockWallet" onClick={this.unlockWallet}>{I18n.t('Lock_Unlock')}</Button>
         </div>
       </Fragment>
     )

@@ -31,14 +31,14 @@ class IostWallet extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('iostWallet')} onBack={this.moveTo('/accountSetting')} hasSetting={false} />
+        <Header title={I18n.t('Settings_iostWallet')} onBack={this.moveTo('/accountSetting')} hasSetting={false} />
         <div className="iostWallet-box">
           <ul>
             {
               settingList.map((item) =>
                 <li onClick={this.moveItem(item.name)} key={item.id}>
                   <i className={item.name} />
-                  <span className="name">{I18n.t(item.name)}</span>
+                  <span className="name">{I18n.t(`AboutIOST_${item.name}`)}</span>
                 </li>
               )
             }
