@@ -1,7 +1,24 @@
 // const iost = require('iost')
 const ACTION = require('./extensionActions')
 
+class Callback {
+  constructor() {
+      this.map = {}
+  }
 
+  on(msg, f) {
+      this.map[msg] = f;
+      return this;
+  }
+
+  pushMsg(msg, args) {
+      const f = this.map[msg];
+      if (f === undefined) {
+          return
+      }
+      f(args)
+  }
+}
 
 const actionMap = {}
 
@@ -125,23 +142,6 @@ window.addEventListener('message', (e) => {
 })
 
 
-class Callback {
-  constructor() {
-      this.map = {}
-  }
 
-  on(msg, f) {
-      this.map[msg] = f;
-      return this;
-  }
-
-  pushMsg(msg, args) {
-      const f = this.map[msg];
-      if (f === undefined) {
-          return
-      }
-      f(args)
-  }
-}
 
 module.exports = IOSTJS
