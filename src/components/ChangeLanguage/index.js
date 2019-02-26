@@ -7,9 +7,9 @@ import i18n from 'utils/i18n'
 import './index.scss'
 
 const settingList = [
-  { id: 1, name: 'china' },
-  { id: 2, name: 'english' },
-  { id: 3, name: 'korea' },
+  { id: 1, name: 'china', lan: '中文' },
+  { id: 2, name: 'english', lan: 'english' },
+  { id: 3, name: 'korea', lan: '한국어' },
 ]
 type Props = {
 
@@ -42,7 +42,8 @@ class ChangeLanguage extends Component<Props> {
               settingList.map((item) =>
                 <li onClick={this.changeLanguage(item.name)} key={item.id}>
                   <i className={item.name} />
-                  <span className="name">{I18n.t(`ChangeLanguage_${item.name}`)}</span>
+                  {/*<span className="name">{I18n.t(`ChangeLanguage_${item.name}`)}</span>*/}
+                  <span className="name">{item.lan}</span>
                 </li>
               )
             }
