@@ -24,7 +24,6 @@ const state = {
     this.password = ''
     this.unlock = false
   }
-
 }
 
 const txController = new TxController(state)
