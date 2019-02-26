@@ -38,7 +38,7 @@ class Account extends Component<Props> {
 
   componentDidMount() {
 
-   
+   console.log(iost)
     chrome.storage.local.get(['accounts'], ({accounts}) => {
       if (accounts && accounts.length){
         this.props.dispatch(accountActions.setAccounts(accounts));

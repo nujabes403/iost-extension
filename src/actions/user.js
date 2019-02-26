@@ -1,6 +1,7 @@
 import {
   SET_USER_INFO,
   RESET_USER_INFO,
+  CREATE_ACCOUNT,
 } from 'actions/actionTypes'
 
 export const setUserInfo = (accountName, publicKey) => ({
@@ -15,4 +16,12 @@ export const setUserInfo = (accountName, publicKey) => ({
 
 export const resetUserInfo = () => ({
   type: RESET_USER_INFO,
+})
+
+
+export const createAccountInfo = (value) => ({
+  type: CREATE_ACCOUNT,
+  payload: {
+    value
+  }
 })

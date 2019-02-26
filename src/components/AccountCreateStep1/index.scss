@@ -19,7 +19,7 @@
     .input-accountName {
       padding: 0 15px;
     }
-    .deleteAll {
+    .illegal {
       position: absolute;
       right: 10px;
       top: 7px;
@@ -42,5 +42,11 @@
     left: 0;
     right: 0;
     margin: 0 auto;
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $gray;
+      color: $input-text;
+      border: 1px solid #999999;
+    }
   }
 }
