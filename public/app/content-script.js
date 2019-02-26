@@ -32,11 +32,11 @@ function listenForProviderRequest() {
       case 'GET_ACCOUNT': 
         chrome.runtime.sendMessage({
           action: 'GET_ACCOUNT',
-        },(account) => {
+        },(payload) => {
           window.postMessage({
             message: {
-              account,
-              actionId: 0
+              actionId: 0,
+              payload
             },
           }, '*')
         })

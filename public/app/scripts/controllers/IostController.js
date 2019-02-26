@@ -21,6 +21,7 @@ const iost = {
     const newNetworkProvider = new IOST.HTTPProvider(url)
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
+    iost.iost.setRPC(iost.rpc)
     iost.network = url
     // Save last network you used in extension storage.
     chrome.storage.local.set({
@@ -30,10 +31,10 @@ const iost = {
   // account
   loginAccount: (name, encodedPrivateKey) => {
     iost.account = new IOST.Account(name)
-    const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey))
+    const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey),encodedPrivateKey.length>50?2:1)
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
-
+    iost.iost.setAccount(iost.account)
     // Save secure account information in extension storage.
     return iost.account
   },
