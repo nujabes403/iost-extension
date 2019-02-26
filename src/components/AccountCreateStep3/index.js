@@ -53,42 +53,42 @@ class AccountCreateStep3 extends Component<Props> {
   }
 
   onCheckCreate = async () => {
-    const { createAccountInfo: { name, publicKey, privateKey} } = this.props
-    chrome.runtime.sendMessage({
-      action: 'CHECK_CREATE_ACCOUNT',
-      payload: {
-        name,
-        publicKey,
-        privateKey
-      }
-    })
-    try {
-      // 如果没有找到账户信息，就会报错
-      await iost.rpc.blockchain.getAccountInfo(name)
-      chrome.runtime.sendMessage({
-        action: 'GET_PASSWORD',
-      },(res)=> {
-        let accounts = await getAccounts()
-        const hash = {}
-        accounts.push({
-          name,
-          network: 'MAINNET',
-          privateKey: utils.aesDecrypt(privateKey, res),
-          publicKey,
-        })
-        accounts = accounts.reduce((prev, next) => {
-          const _h = `${next.name}_${next.network}`
-          hash[_h] ? '' : hash[_h] = true && prev.push(next);
-          return prev
-        },[]);
-        chrome.storage.local.set({accounts: accounts})
-        Toast.html(I18n.t('CreateAccount_ToastTip3'))
-        this.moveTo('/accountManage')()
-      })
+    // const { createAccountInfo: { name, publicKey, privateKey} } = this.props
+    // chrome.runtime.sendMessage({
+    //   action: 'CHECK_CREATE_ACCOUNT',
+    //   payload: {
+    //     name,
+    //     publicKey,
+    //     privateKey
+    //   }
+    // })
+    // try {
+    //   // 如果没有找到账户信息，就会报错
+    //   await iost.rpc.blockchain.getAccountInfo(name)
+    //   chrome.runtime.sendMessage({
+    //     action: 'GET_PASSWORD',
+    //   }, async (res)=> {
+    //     let accounts = await getAccounts()
+    //     const hash = {}
+    //     accounts.push({
+    //       name,
+    //       network: 'MAINNET',
+    //       privateKey: utils.aesDecrypt(privateKey, res),
+    //       publicKey,
+    //     })
+    //     accounts = accounts.reduce((prev, next) => {
+    //       const _h = `${next.name}_${next.network}`
+    //       hash[_h] ? '' : hash[_h] = true && prev.push(next);
+    //       return prev
+    //     },[]);
+    //     chrome.storage.local.set({accounts: accounts})
+    //     Toast.html(I18n.t('CreateAccount_ToastTip3'))
+    //     this.moveTo('/accountManage')()
+    //   })
       
-    } catch (err) {
-      Toast.html(I18n.t('CreateAccount_ToastTip2'))
-    }
+    // } catch (err) {
+    //   Toast.html(I18n.t('CreateAccount_ToastTip2'))
+    // }
   }
 
   render() {
