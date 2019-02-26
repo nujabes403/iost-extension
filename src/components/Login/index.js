@@ -53,6 +53,12 @@ class Login extends Component<Props> {
     return true
   }
 
+  keyOnImport = (e) => {
+    if (e.keyCode == 13) {
+      this.onImport()
+    }
+  }
+
   onImport = () => {
     const { password, isChecked } = this.state
     if (!isChecked) {
@@ -144,6 +150,7 @@ class Login extends Component<Props> {
             className="input-password"
             value={repassword}
             onChange={this.handleChange}
+            onKeyDown={this.keyOnImport}
             placeholder={I18n.t('firstLogin_RepeatPassword')}
           />
           {!!errorMessage && <p className="login-errorMessage">{errorMessage}</p>}

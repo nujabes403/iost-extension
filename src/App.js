@@ -34,9 +34,9 @@ class App extends Component<Props> {
   }
 
   componentDidMount() {
-    chrome.storage.local.remove(['password'],({ password }) => {
-      console.log(password)
-    })
+    // chrome.storage.local.remove(['password'],({ password }) => {
+    //   console.log(password)
+    // })
     chrome.storage.local.get(['password'],({ password }) => {
       if(password){
         chrome.runtime.sendMessage({
