@@ -5,10 +5,9 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import Input from 'components/Input'
 import { Header, Toast } from 'components'
 import Button from 'components/Button'
-
+import store from '../../store'
+import * as userActions from 'actions/user'
 import iost from 'iostJS/iost'
-import { privateKeyToPublicKey } from 'utils/key'
-
 import './index.scss'
 
 type Props = {
@@ -17,23 +16,19 @@ type Props = {
 
 class AccountCreateStep2 extends Component<Props> {
   state = {
-    errorMessage: '',
     ownerPublicKey: '',
     activePublicKey: '',
     ownerPrivateKey: '',
     activePrivateKey: '',
-
   }
+
+  componentDidMount() {
+    this.replaceKeyPair()
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      errorMessage: '',
-    })
-  }
-
-  throwErrorMessage = () => {
-    this.setState({
-      errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
 
@@ -43,25 +38,25 @@ class AccountCreateStep2 extends Component<Props> {
   }
 
   replaceKeyPair = () => {
-    console.log('replaceKeyPair')
+    const KeyPair = iost.pack.KeyPair
+    const newKP = KeyPair.newKeyPair();
+    const publicKey = newKP.B58PubKey(), privateKey = newKP.B58SecKey();
+    this.setState({
+      ownerPublicKey: publicKey,
+      activePublicKey: publicKey,
+      ownerPrivateKey: privateKey,
+      activePrivateKey: privateKey,
+    },() => {
+      store.dispatch(userActions.createAccountInfo({publicKey, privateKey}))
+    })
   }
 
   onCopy = () => {
     Toast.html(I18n.t('ManageAccount_Copy'))
   }
 
-  onCheckKey = () => {
-    const isLegal = true
-    // 密钥不合法
-    if (!isLegal) {
-      Toast.html(I18n.t('CreateAccount_ToastTip1'))
-    } else {
-      this.moveTo('/accountCreateStep3')()
-    }
-  }
-
   render() {
-    const { ownerPublicKey, activePublicKey, activePrivateKey, ownerPrivateKey, errorMessage } = this.state
+    const { ownerPublicKey, activePublicKey, activePrivateKey, ownerPrivateKey } = this.state
     return (
       <Fragment>
         <Header title={I18n.t('firstLogin_CreateAccount')} onBack={this.moveTo('/accountCreateStep1')} hasSetting={false} />
@@ -71,7 +66,7 @@ class AccountCreateStep2 extends Component<Props> {
 
           <label className="label">{I18n.t('CreateAccount_OwnerPublicKey')}</label>
           <div className="key-box">
-            <Input name="ownerPublicKey" onChange={this.handleChange} className="input-key" />
+            <Input name="ownerPublicKey" value={ownerPublicKey} readOnly={true} onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={ownerPublicKey}>
               <i className="copy" />
             </CopyToClipboard>
@@ -79,7 +74,7 @@ class AccountCreateStep2 extends Component<Props> {
 
           <label className="label">{I18n.t('CreateAccount_ActivePublicKey')}</label>
           <div className="key-box">
-            <Input name="activePublicKey" onChange={this.handleChange} className="input-key" />
+            <Input name="activePublicKey" value={activePublicKey} readOnly={true} onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={activePublicKey}>
               <i className="copy" />
             </CopyToClipboard>
@@ -87,7 +82,7 @@ class AccountCreateStep2 extends Component<Props> {
 
           <label className="label">{I18n.t('CreateAccount_OwnerPrivateKey')}</label>
           <div className="key-box">
-            <Input name="ownerPrivateKey" onChange={this.handleChange} className="input-key" />
+            <Input name="ownerPrivateKey" value={ownerPrivateKey} readOnly={true} onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={ownerPrivateKey}>
               <i className="copy" />
             </CopyToClipboard>
@@ -95,14 +90,14 @@ class AccountCreateStep2 extends Component<Props> {
 
           <label className="label">{I18n.t('CreateAccount_ActivePrivateKey')}</label>
           <div className="key-box">
-            <Input name="activePrivateKey" onChange={this.handleChange} className="input-key" />
+            <Input name="activePrivateKey" value={activePrivateKey} readOnly={true} onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={activePrivateKey}>
               <i className="copy" />
             </CopyToClipboard>
           </div>
           <div className="btn-box">
             <Button className="btn-replaceKeyPair" onClick={this.replaceKeyPair}>{I18n.t('CreateAccount_ChangePrivateKey')}</Button>
-            <Button onClick={this.onCheckKey}>{I18n.t('CreateAccount_NextStep')}</Button>
+            <Button onClick={this.moveTo('/accountCreateStep3')}>{I18n.t('CreateAccount_NextStep')}</Button>
           </div>
         </div>
       </Fragment>

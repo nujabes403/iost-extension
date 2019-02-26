@@ -36,3 +36,6 @@ export const SETTING_LOCATION = 'SETTING_LOCATION'
 export const DELETE_LOCATION = 'DELETE_LOCATION'
 // 交易信息
 export const TRANSFER_INFO = 'TRANSFER_INFO'
+
+// 创建账户
+export const CREATE_ACCOUNT = 'CREATE_ACCOUNT'

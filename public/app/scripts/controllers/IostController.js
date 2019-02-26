@@ -56,14 +56,20 @@ const iost = {
     chrome.storage.local.remove(['activeAccount'])
   },
   checkCreateAccount: async (obj, time = 240) => {
-    const [option, name, ownerkey, activekey] = obj.str.split(':')
-    if(time > 0){
+    const {name, publicKey, privateKey } = obj
+    if(time > 0 && iost.state.unlock && iost.state.password){
       await delay(5*1000)
       try {
-        let account = await iost.rpc.blockchain.getAccountInfo(name)
-        const laccounts = await getAccounts()
+        await iost.rpc.blockchain.getAccountInfo(name)
+        let accounts = await getAccounts()
         const hash = {}
-        accounts = laccounts.concat(accounts).reduce((prev, next) => {
+        accounts.push({
+          name,
+          network: 'MAINNET',
+          privateKey: aesEncrypt(privateKey, iost.state.password),
+          publicKey,
+        })
+        accounts = accounts.reduce((prev, next) => {
           const _h = `${next.name}_${next.network}`
           hash[_h] ? '' : hash[_h] = true && prev.push(next);
           return prev

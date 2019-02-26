@@ -1,10 +1,12 @@
 import {
   SET_USER_INFO,
   RESET_USER_INFO,
+  CREATE_ACCOUNT,
 } from 'actions/actionTypes'
 
 const initialState = {
   userInfo: null,
+  createAccountInfo: {},
 }
 
 const userReducer = (state = initialState, action) => {
@@ -18,6 +20,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: null,
+      }
+    case CREATE_ACCOUNT:
+      return {
+        ...state,
+        createAccountInfo: {...state.createAccountInfo, ...action.payload.data}
       }
     default:
       return state

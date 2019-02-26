@@ -14,6 +14,7 @@ const enTranslation = {
   "CreateAccount_AccountName": "Set IOST account name",
   "CreateAccount_Tip1": "Please enter 5-11 characters, consisting lower case letters and numbers, numbers cannot be 0.",
   "CreateAccount_QueryStatus": "Available status in query",
+  "CreateAccount_AccountExist": "Account already exists",
   "CreateAccount_NextStep": "Next Step",
   "CreateAccount_ConfirmPrivate": "Confirm private key pair",
   "CreateAccount_Tip2": "Pleae confirm and save the following account information, you can also click to edit.",
@@ -28,8 +29,9 @@ const enTranslation = {
   "CreateAccount_Tip4": "Please select payment method to pay.",
   "CreateAccount_PaymentCurrency": "Payment Currency ",
   "CreateAccount_PaymentAddress": "Payment Address",
-  "CreateAccount_CheckCreate": "Check to see if account is successfully created",
+  "CreateAccount_CheckCreate": "Check account creation status",
   "CreateAccount_ToastTip2": "Account not created yet ",
+  "CreateAccount_ToastTip3": "账户创建成功",
 
   "ImportAccount_EnterPrivate": "Fill in account private key",
   "ImportAccount_Submit": "Submit",
@@ -113,6 +115,7 @@ const zhTranslation = {
   "CreateAccount_AccountName": "设置 IOST 账户名",
   "CreateAccount_Tip1": "请输入5～11位字符，由小写字母和数字组成，数字不可为0。",
   "CreateAccount_QueryStatus": "查询可用状态中…",
+  "CreateAccount_AccountExist": "账号已存在",
   "CreateAccount_NextStep": "下一步",
   "CreateAccount_ConfirmPrivate": "确认密钥对",
   "CreateAccount_Tip2": "请确认并保存以下账户信息，您也可点击修改。",
@@ -129,6 +132,7 @@ const zhTranslation = {
   "CreateAccount_PaymentAddress": "支付地址",
   "CreateAccount_CheckCreate": "检查账户是否创建成功",
   "CreateAccount_ToastTip2": "账户尚未创建成功",
+  "CreateAccount_ToastTip3": "账户创建成功",
 
   "ImportAccount_EnterPrivate": "填写账户私钥",
   "ImportAccount_Submit": "提交",
@@ -221,6 +225,7 @@ const koTranslation = {
   "CreateAccount_AccountName": "IOST 계정 이름 설정",
   "CreateAccount_Tip1": "소문자와 숫자로 구성된 5-11자를 입력하십시오. 숫자는 0 일 수 없습니다.",
   "CreateAccount_QueryStatus": "쿼리에서 사용 가능한 상태",
+  "CreateAccount_AccountExist": "계정이 이미 있습니다",
   "CreateAccount_NextStep": "다음 단계",
   "CreateAccount_ConfirmPrivate": "개인 키 쌍 확인",
   "CreateAccount_Tip2": "다음 계정 정보를 확인하고 저장해 주세요. 편집을 원하시는 경우 클릭하시면 됩니다. ",
@@ -235,8 +240,9 @@ const koTranslation = {
   "CreateAccount_Tip4": "결제 방법을 선택하십시오.",
   "CreateAccount_PaymentCurrency": "지불 통화",
   "CreateAccount_PaymentAddress": "지불 주소",
-  "CreateAccount_CheckCreate": "계정이 성공적으로 생성되었는지 확인하십시오.",
+  "CreateAccount_CheckCreate": "계정 생성 상태 확인",
   "CreateAccount_ToastTip2": "아직 계정이 생성되지 않았습니다.",
+  "CreateAccount_ToastTip3": "账户创建成功",
 
   "ImportAccount_EnterPrivate": "계정 프라이빗 키 채우기",
   "ImportAccount_Submit": "제출",
@@ -299,8 +305,8 @@ const koTranslation = {
   "Dapp_Tip2": "* 현재 응용 프로그램은 제 3 자에 의해 개발되었습니다. 스크리닝에 주의해 주세요.",
   "Dapp_Signature": "서명 요청",
   "Dapp_WhiteList": "화이트리스트에 추가",
-  "Dapp_Cancel": "Cancel",
-  "Dapp_Confirm": "Confirm",
+  "Dapp_Cancel": "취소",
+  "Dapp_Confirm": "확인",
 }
 
 export default {
