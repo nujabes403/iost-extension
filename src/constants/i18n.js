@@ -3,7 +3,7 @@ const enTranslation = {
   "firstLogin_RepeatPassword": "Repeat Password",
   "firstLogin_CreateAccount": "Create Account",
   "firstLogin_ImportAccount": "Import Account",
-  "firstLogin_AgreementTip1": "Using this plug-in means accepting to",
+  "firstLogin_AgreementTip1": "Using this plugin means accepting to",
   "firstLogin_AgreementTip2": "User Agreement",
   "firstLogin_AgreementTip3": "Please agree to User Agreement ",
   "Password_Length": "Password can not be less than 8 digits!",

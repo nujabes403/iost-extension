@@ -152,7 +152,10 @@ class Login extends Component<Props> {
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
           <div className="radio-box">
             <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
-            <span>{I18n.t('firstLogin_AgreementTip1')}<a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('firstLogin_AgreementTip2')}</a></span>
+            <span>
+              {I18n.t('firstLogin_AgreementTip1')}<br />
+              <a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('firstLogin_AgreementTip2')}</a>
+            </span>
           </div>
         </div>
       </Fragment>

@@ -46,11 +46,12 @@
   .radio-box {
     width: 300px;
     display: flex;
-    align-items: center;
+    align-items: end;
     margin: 10px 0 0 10px;
     > i {
       display: inline-block;
       margin-right: 5px;
+      margin-top: 1px;
       width: 14px;
       height: 14px;
       background-size: 10px 8px;
@@ -69,6 +70,7 @@
     }
     > span {
       color: $input-text;
+      text-align: left;
     }
   }
 }
