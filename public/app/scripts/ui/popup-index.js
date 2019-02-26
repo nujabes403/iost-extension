@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-
+import i18n from 'constants/i18n'
 import Button from 'components/Button'
 import AskPopupSummary from './popup-summary'
 import AskPopupDetail from './popup-detail'
-
+const transLocal = (lan, name) => {
+  console.log(i18n[lan][name])
+  return i18n[lan][name]
+}
 import './popup-index.scss'
 
 type Props = {
@@ -21,7 +24,7 @@ class AskPopup extends Component<Props> {
   constructor() {
     super()
     this.state = {
-      
+      lan: 'en'
     }
     window.location.search
       .replace('?', '')
@@ -40,6 +43,11 @@ class AskPopup extends Component<Props> {
   }
 
   componentDidMount() {
+    chrome.storage.local.get(['locale'], (result) => {
+      this.setState({
+        lan: result.locale
+      })
+    })
     // chrome.windows.onRemoved.addListener((integer windowId) => {
     //   chrome.runtime.sendMessage({
     //     action: 'TX_CANCEL',
@@ -70,21 +78,24 @@ class AskPopup extends Component<Props> {
     window.close()
   }
 
+  onTransLocal = (name) => {
+    console.log(name)
+    return transLocal(this.state.lan, name)
+  }
+
   render() {
     const [contractAddress, abi, args = []] = this.txInfo
-    //transfer
-    console.log(args)
     return (
       <div className="AskPopup">
         <header className="AskPopup__header">
-          <p className="title">Transfer</p>
+          <p className="title">{abi == 'transfer' ? this.onTransLocal('Dapp_Signature') : this.onTransLocal('Dapp_Authorization')}</p>
           <p><span>{contractAddress}</span><span>-></span><span>{abi}</span></p>
         </header>
         <div className="AskPopup__container">
           {abi == 'transfer'?
           <TransferDetail 
           args={args}
-          />:<ContractDetail 
+          />:<ContractDetail
           accountId={this.accountId}
           args={args}
           />}
@@ -101,20 +112,20 @@ class AskPopup extends Component<Props> {
           />
           <p className="AskPopup__confirmMessage">Are you sure to confirm this transaction?</p>
           */}
-          <p className="AskPopup__tip">* 账户授权并不会共享您的私钥</p>
-          <p className="AskPopup__tip">* 当前应用为第三方开发，请注意甄别</p>
+          <p className="AskPopup__tip">{this.onTransLocal('Dapp_Tip1')}</p>
+          <p className="AskPopup__tip">{this.onTransLocal('Dapp_Tip2')}</p>
           <div className="AskPopup__buttons">
             <button
               className="cancel"
               onClick={this.cancelTx}
             >
-              CANCEL
+              {this.onTransLocal('Dapp_Cancel')}
             </button>
             <button
               className="confirm"
               onClick={this.confirmTx}
             >
-              CONFIRM
+              {this.onTransLocal('Dapp_Confirm')}
             </button>
           </div>
         </div>

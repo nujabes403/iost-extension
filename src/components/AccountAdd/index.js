@@ -27,11 +27,11 @@ class AccountAdd extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('accountAdd')} onBack={this.moveTo('/accountManage')} hasSetting={false} />
+        <Header title={I18n.t('AccountAdd_Title')} onBack={this.moveTo('/accountManage')} hasSetting={false} />
         <Landing className="landing-color" />
         <div className="accountAdd-box">
-          <Button className="btn-accountCreate" onClick={this.moveTo('/accountCreateStep1')} disabled={true}>{I18n.t('accountCreate')}</Button>
-          <Button className="btn-accountImport" onClick={this.moveTo('/accountImport')}>{I18n.t('accountImport')}</Button>
+          <Button className="btn-accountCreate" onClick={this.moveTo('/accountCreateStep1')}>{I18n.t('firstLogin_CreateAccount')}</Button>
+          <Button className="btn-accountImport" onClick={this.moveTo('/accountImport')}>{I18n.t('firstLogin_ImportAccount')}</Button>
         </div>
       </Fragment>
     )

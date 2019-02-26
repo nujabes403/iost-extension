@@ -140,14 +140,14 @@ class Account extends Component<Props> {
               account
               onClick={this.moveTo('/tokenTransfer')}
             >
-              {I18n.t('transfer')}
+              {I18n.t('Account_Transfer')}
             </Button>
             <Button
               className="btn-receipt"
               account
               onClick={this.moveTo('/accountQRCode')}
             >
-              {I18n.t('receipt')}
+              {I18n.t('Account_Receive')}
             </Button>
           </div>
 

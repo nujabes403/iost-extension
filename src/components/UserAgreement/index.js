@@ -19,7 +19,7 @@ class UserAgreement extends Component<Props> {
   render() {
     return (
       <Fragment>
-        <Header title={I18n.t('userAgreement')} onBack={this.backTo} hasSetting={false} />
+        <Header title={I18n.t('AboutIOST_userAgreement')} onBack={this.backTo} hasSetting={false} />
         <div className="userAgreement-box">
           <div className="userAgreement-wrapper">
             <ul>

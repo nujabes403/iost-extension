@@ -85,11 +85,11 @@ class AccountImport extends Component<Props> {
 
     if (invalidLoginInput) {
       if (!privateKey) {
-        Toast.html(I18n.t('accountImportTip2'))
+        Toast.html(I18n.t('ImportAccount_Tip2'))
       } else if (!publicKey) {
-        Toast.html(I18n.t('accountImportTip3'))
+        Toast.html(I18n.t('ImportAccount_Tip3'))
       } else if (!accounts.length) {
-        Toast.html(I18n.t('accountImportTip1'))
+        Toast.html(I18n.t('ImportAccount_Tip1'))
       }
       this.setState({
         isLoading: false,
@@ -159,16 +159,11 @@ class AccountImport extends Component<Props> {
     const { isLoading } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('accountImport')} onBack={this.backTo} hasSetting={false} />
+        <Header title={I18n.t('firstLogin_ImportAccount')} onBack={this.backTo} hasSetting={false} />
         <div className="accountImport-box">
-          <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} />
-          {/*
-            <NetworkSelector
-              changeLocation={this.props.changeLocation}
-              className="Header__NetworkSelector"
-            />
-          */}
-          <Button className="btn-submit" onClick={this.onSubmit}>{isLoading ? <LoadingImage /> : I18n.t('submit')}</Button>
+          <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} placeholder={I18n.t('ImportAccount_EnterPrivate')}/>
+
+          <Button className="btn-submit" onClick={this.onSubmit}>{isLoading ? <LoadingImage /> : I18n.t('ImportAccount_Submit')}</Button>
         </div>
       </Fragment>
     )

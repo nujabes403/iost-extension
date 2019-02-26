@@ -17,7 +17,7 @@ class Header extends Component<Props> {
         { title && <span className="title">{title}</span> }
         {children}
         {
-          hasSetting ? (setting ? <i className="icon-setting" onClick={onSetting} /> : <span className="add-account" onClick={onAdd}>{I18n.t('addAccount')}</span>) : <i />
+          hasSetting ? (setting ? <i className="icon-setting" onClick={onSetting} /> : <span className="add-account" onClick={onAdd}>{I18n.t('ManageAccount_Add')}</span>) : <i />
         }
       </div>
     )

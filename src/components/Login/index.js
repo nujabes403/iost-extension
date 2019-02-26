@@ -38,16 +38,16 @@ class Login extends Component<Props> {
   onCheckPassword = () => {
     const { password, repassword } = this.state
     if(password == null || password.length < 8){
-      Toast.html(I18n.t('passwordTip1'))
+      Toast.html(I18n.t('Password_Length'))
       return false;
     }
     const reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
     if (!reg.test(password)) {
-      Toast.html(I18n.t('passwordTip2'))
+      Toast.html(I18n.t('Password_Combination'))
       return false;
     }
     if (password != repassword) {
-      Toast.html(I18n.t('passwordTip3'))
+      Toast.html(I18n.t('Password_Different'))
       return false;
     }
     return true
@@ -56,7 +56,7 @@ class Login extends Component<Props> {
   onImport = () => {
     const { password, isChecked } = this.state
     if (!isChecked) {
-      Toast.html(I18n.t('userAgreementTip3'))
+      Toast.html(I18n.t('firstLogin_AgreementTip3'))
       return
     }
     if (this.onCheckPassword()) {
@@ -136,7 +136,7 @@ class Login extends Component<Props> {
             className="input-password"
             value={password}
             onChange={this.handleChange}
-            placeholder={I18n.t('setPassword')}
+            placeholder={I18n.t('firstLogin_SetPassword')}
           />
           <Input
             name="repassword"
@@ -144,15 +144,15 @@ class Login extends Component<Props> {
             className="input-password"
             value={repassword}
             onChange={this.handleChange}
-            placeholder={I18n.t('repeatPassword')}
+            placeholder={I18n.t('firstLogin_RepeatPassword')}
           />
           {!!errorMessage && <p className="login-errorMessage">{errorMessage}</p>}
           <div className="line"></div>
-          <Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('accountCreate')}</Button>
-          <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('accountImport')}</Button>
+          <Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>
+          <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
           <div className="radio-box">
             <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
-            <span>{I18n.t('userAgreementTip1')}<a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('userAgreementTip2')}</a></span>
+            <span>{I18n.t('firstLogin_AgreementTip1')}<a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('firstLogin_AgreementTip2')}</a></span>
           </div>
         </div>
       </Fragment>
