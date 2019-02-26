@@ -104,6 +104,17 @@ class Index extends Component<Props> {
     // 2. Sign on transfer tx
     iost.account.signTx(tx)
 
+    // iost.signAndSend(tx)
+    //   .on('pending', (response) => {
+    //     console.log(response)
+    //   })
+    //   .on('success', (response) => {
+    //     console.log(response)
+    //   })
+    //   .on('failed', (response) => {
+    //     console.log(response)
+    //   })
+
     // 3. Handle transfer tx
     const handler = new iost.pack.TxHandler(tx, iost.rpc)
 

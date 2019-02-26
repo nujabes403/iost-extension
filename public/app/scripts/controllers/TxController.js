@@ -1,6 +1,11 @@
 const iostController = require('./IostController')
+const crypto = require('crypto')
 
-function TxController() {
+const IOST_NODE_URL = 'http://api.iost.io' //当前节点
+const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' 
+
+function TxController(state) {
+  this.state = state
   this.txQueue = []
 }
 
@@ -13,54 +18,111 @@ TxController.prototype.processTx = function(txIdx) {
   const txInfo = this.txQueue[txIdx]
   if (!txInfo) throw new Error(`That TX does not exist. slotIdx: ${txIdx}`)
 
-  const txObject = txInfo.tx
-  const actionId = txInfo.actionId
-
-  const tx = iostController.iostInstance.callABI(...txObject)
-  if(iostController.network.indexOf('//api.iost.io') < 0){
-    tx.setChainID(1023)
-  }
-  // 交易的机器本地时间不能比节点的时间提前超过1秒，此处-3秒防止本地时间不对
-  tx.time = tx.time - 3 * 1e9
-  tx.addApprove("*", "unlimited")
-
-  if (txObject[1] === 'transfer') {
-    tx.addApprove("iost", txObject[2][3])
-  }
-
-  // 2. Sign on transfer tx
-  iostController.account.signTx(tx)
-
-  // 3. Handle transfer tx
-  const handler = new iostController.pack.TxHandler(tx, iostController.rpc)
-
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-    const activeTab = tabs[0].id
-    handler
-      .onPending((pending) => {
-        console.log(actionId, pending)
-        chrome.tabs.sendMessage(activeTab, {
-          actionId,
-          pending: pending
+  // const tx = txInfo.tx
+  // const actionId = txInfo.actionId
+  // const account = txInfo.account
+  // const network = txInfo.network
+  const { tx: _tx, txABI, actionId, account, network } = txInfo
+  chrome.storage.local.get(['accounts'], ({ accounts }) => {
+    if(accounts && accounts.length){
+      const acc = accounts.find(item => item.name == account && item.network == network)
+      if(acc){
+        const encodedPrivateKey = aesDecrypt(acc.privateKey, this.state.password)
+        //设置网络
+        iostController.changeNetwork(network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
+        iostController.loginAccount(account, encodedPrivateKey)
+        const tx = iostController.iostInstance.callABI(...txABI)
+        if(network != 'MAINNET'){
+          tx.setChainID(1023)
+        }
+        // tx.addApprove("*", "unlimited")
+        _tx.amount_limit.map(item => tx.addApprove(item.token, item.value))
+        if (txABI[1] === 'transfer') {
+          tx.addApprove("iost", txABI[2][3])
+        }
+        const handler = iostController.iost.signAndSend(tx)
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          const activeTab = tabs[0].id
+          handler
+          .on('pending', (pending) => {
+            console.log(actionId, pending)
+            chrome.tabs.sendMessage(activeTab, {
+              actionId,
+              pending: pending
+            })
+          })
+          .on('success', (response) => {
+            console.log(actionId, response)
+            chrome.tabs.sendMessage(activeTab, {
+              actionId,
+              success: response
+            })
+          })
+          .on('failed', (err) => {
+            console.log(actionId, err)
+            chrome.tabs.sendMessage(activeTab, {
+              actionId,
+              failed: err
+            })
+          })
         })
-      })
-      .onSuccess(async (response) => {
-        console.log(actionId, response)
-        chrome.tabs.sendMessage(activeTab, {
-          actionId,
-          success: response
-        })
-      })
-      .onFailed((err) => {
-        console.log(actionId, err)
-        chrome.tabs.sendMessage(activeTab, {
-          actionId,
-          failed: err
-        })
-      })
-      .send()
-      .listen(1000, 60)
+      }else {
+        //not find account
+      }
+    }else{
+      //not find account
+    }
+
   })
+
+  
+
+  
+  // const tx = iostController.iostInstance.callABI(...txObject)
+  // if(iostController.network.indexOf('//api.iost.io') < 0){
+  //   tx.setChainID(1023)
+  // }
+  // // 交易的机器本地时间不能比节点的时间提前超过1秒，此处-3秒防止本地时间不对
+  // tx.time = tx.time - 3 * 1e9
+  // tx.addApprove("*", "unlimited")
+
+  // if (txObject[1] === 'transfer') {
+  //   tx.addApprove("iost", txObject[2][3])
+  // }
+
+  // // 2. Sign on transfer tx
+  // iostController.account.signTx(tx)
+
+  // // 3. Handle transfer tx
+  // const handler = new iostController.pack.TxHandler(tx, iostController.rpc)
+
+  // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  //   const activeTab = tabs[0].id
+  //   handler
+  //     .onPending((pending) => {
+  //       console.log(actionId, pending)
+  //       chrome.tabs.sendMessage(activeTab, {
+  //         actionId,
+  //         pending: pending
+  //       })
+  //     })
+  //     .onSuccess(async (response) => {
+  //       console.log(actionId, response)
+  //       chrome.tabs.sendMessage(activeTab, {
+  //         actionId,
+  //         success: response
+  //       })
+  //     })
+  //     .onFailed((err) => {
+  //       console.log(actionId, err)
+  //       chrome.tabs.sendMessage(activeTab, {
+  //         actionId,
+  //         failed: err
+  //       })
+  //     })
+  //     .send()
+  //     .listen(1000, 60)
+  // })
 
   this.txQueue.splice(txIdx, 1)
 }
@@ -69,5 +131,31 @@ TxController.prototype.cancelTx = function(txIdx) {
   if (!this.txQueue[txIdx]) throw new Error(`That TX is not exist. slotIdx: ${txIdx}`)
   this.txQueue.splice(txIdx, 1)
 }
+
+
+
+
+// const utils = {
+//   aesEncrypt(data, key){
+//     const cipher = crypto.createCipher('aes192', key);
+//     var crypted = cipher.update(data, 'utf8', 'hex');
+//     crypted += cipher.final('hex');
+//     return crypted;
+//   },
+//   aesDecrypt(encrypted, key){
+//     const decipher = crypto.createDecipher('aes192', key);
+//     var decrypted = decipher.update(encrypted, 'hex', 'utf8');
+//     decrypted += decipher.final('utf8');
+//     return decrypted;
+//   }
+// }
+
+function aesDecrypt(encrypted, key){
+  const decipher = crypto.createDecipher('aes192', key);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}
+
 
 module.exports = TxController

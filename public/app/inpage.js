@@ -1,3 +1,3 @@
 const iostProxy = require('./iostProxy')
 
-window.iost = iostProxy
+window.IOSTJS = iostProxy

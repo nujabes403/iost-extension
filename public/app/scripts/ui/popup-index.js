@@ -141,7 +141,7 @@ const ContractDetail = ({args, accountId}) => {
       <span className="title">Account</span>
       <p>{accountId}</p>
       <span className="title">Memo</span>
-      <p className="memo">{args}</p>
+      <p className="memo">{args.join(', ')}</p>
     </div>
   )
 }

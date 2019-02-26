@@ -38,7 +38,7 @@ const iost = {
     const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey),encodedPrivateKey.length>50?2:1)
     iost.account.addKeyPair(kp, "owner")
     iost.account.addKeyPair(kp, "active")
-
+    iost.iost.setAccount(iost.account);
     // Redux dispatch
     store.dispatch(userActions.setUserInfo(id, kp.id))
 
