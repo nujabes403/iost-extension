@@ -42,45 +42,50 @@ class AccountCreateStep3 extends Component<Props> {
   }
 
   onCopy = () => {
-    console.log('复制成功')
+    Toast.html(I18n.t('ManageAccount_Copy'))
   }
 
   onCheckCreate = () => {
-    Toast.html('不和要求', 100)
-    console.log('检查')
+    const isLegal = true
+    // 验证失败
+    if (!isLegal) {
+      Toast.html(I18n.t('CreateAccount_ToastTip2'))
+    } else {
+      this.moveTo('/accountManage')()
+    }
   }
 
   render() {
     const { paymentCurrency, paymentAddress, memo, errorMessage } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('accountCreate')} onBack={this.moveTo('/accountCreateStep2')} hasSetting={false} />
+        <Header title={I18n.t('firstLogin_CreateAccount')} onBack={this.moveTo('/accountCreateStep2')} hasSetting={false} />
         <div className="accountCreate-box">
-          <p className="title">{I18n.t('payFee')}</p>
-          <p className="rule">{I18n.t('payFeeTips1')}</p>
-          <p className="rule">{I18n.t('payFeeTips2')}</p>
-          <label className="label">{I18n.t('paymentCurrency')}</label>
+          <p className="title">{I18n.t('CreateAccount_Pay')}</p>
+          <p className="rule">{I18n.t('CreateAccount_Tip3')}</p>
+          <p className="rule">{I18n.t('CreateAccount_Tip4')}</p>
+          <label className="label">{I18n.t('CreateAccount_PaymentCurrency')}</label>
           <div className="key-box">
             <Input name="paymentCurrency" onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={paymentCurrency}>
               <i className="copy" />
             </CopyToClipboard>
           </div>
-          <label className="label">{I18n.t('paymentAddress')}</label>
+          <label className="label">{I18n.t('CreateAccount_PaymentAddress')}</label>
           <div className="key-box">
             <Input name="paymentAddress" onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={paymentAddress}>
               <i className="copy" />
             </CopyToClipboard>
           </div>
-          <label className="label">{I18n.t('memo')}</label>
+          <label className="label">Memo</label>
           <div className="key-box">
             <Input name="memo" onChange={this.handleChange} className="input-key" />
             <CopyToClipboard onCopy={this.onCopy} text={memo}>
               <i className="copy" />
             </CopyToClipboard>
           </div>
-          <Button className="btn-checkCreate" onClick={this.onCheckCreate}>{I18n.t('checkCreate')}</Button>
+          <Button className="btn-checkCreate" onClick={this.onCheckCreate}>{I18n.t('CreateAccount_CheckCreate')}</Button>
         </div>
       </Fragment>
     )

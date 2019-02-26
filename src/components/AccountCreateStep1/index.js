@@ -9,6 +9,7 @@ import NetworkSelector from 'components/NetworkSelector'
 import iost from 'iostJS/iost'
 import { privateKeyToPublicKey } from 'utils/key'
 
+import ui from "utils/ui";
 import './index.scss'
 
 type Props = {
@@ -17,18 +18,16 @@ type Props = {
 
 class AccountCreateStep1 extends Component<Props> {
   state = {
-    errorMessage: '',
+    account: '',
   }
+
+  componentDidMount() {
+    ui.settingLocation('/accountCreateStep1')
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
-      errorMessage: '',
-    })
-  }
-
-  throwErrorMessage = () => {
-    this.setState({
-      errorMessage: I18n.t('invalidLoginInfo'),
     })
   }
 
@@ -37,25 +36,34 @@ class AccountCreateStep1 extends Component<Props> {
     changeLocation(location)
   }
 
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    changeLocation(locationList[locationList.length - 1])
+  }
+
+  onDeleteAll = () => {
+    this.setState({
+      account: ''
+    })
+  }
+
   render() {
-    const { errorMessage } = this.state
     const isLoading = true
     return (
       <Fragment>
-        <Header title={I18n.t('accountCreate')} onBack={this.moveTo('/login')} hasSetting={false} />
+        <Header title={I18n.t('firstLogin_CreateAccount')} onBack={this.backTo} hasSetting={false} />
         <div className="accountCreateStep1-box">
-          <p className="title">{I18n.t('setAccountName')}</p>
-          <p className="rule">{I18n.t('setNameRule')}</p>
-          <Input
-            name="account"
-            type="text"
-            className="input-accountName"
-            onChange={this.handleChange}
-          />
+          <p className="title">{I18n.t('CreateAccount_AccountName')}</p>
+          <p className="rule">{I18n.t('CreateAccount_Tip1')}</p>
+          <div className="accountName-box">
+            <Input name="account" type="text" onChange={this.handleChange} className="input-accountName" value={this.state.account}/>
+            <i className="deleteAll" onClick={this.onDeleteAll}>X</i>
+          </div>
           {
-            isLoading ? <p className="rule">{I18n.t('queryAvailable')}</p> : ''
+            isLoading ? <p className="rule">{I18n.t('CreateAccount_QueryStatus')}</p> : ''
           }
-          <Button className="btn-nextStep" onClick={this.moveTo('/accountCreateStep2')}>{I18n.t('nextStep')}</Button>
+          <Button className="btn-nextStep" onClick={this.moveTo('/accountCreateStep2')}>{I18n.t('CreateAccount_NextStep')}</Button>
         </div>
       </Fragment>
     )

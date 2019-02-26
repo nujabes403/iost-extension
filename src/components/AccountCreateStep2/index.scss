@@ -21,12 +21,15 @@
     position: relative;
     .input-key {
       position: relative;
-      padding: 0 15px;
+      padding: 0 27px 0 15px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .copy {
       position: absolute;
       right: 10px;
-      top: 15px;
+      top: 11px;
       display: inline-block;
       width: 15px;
       height: 19px;
@@ -47,6 +50,10 @@
       color: #000000;
       border: 1px solid;
       margin-bottom: 10px;
+      &:hover {
+        background-color: #000000;
+        color: $white;
+      }
     }
   }
 }
