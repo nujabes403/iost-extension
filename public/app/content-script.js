@@ -4,17 +4,17 @@ const ACTION = require('./extensionActions')
 const inpagePath = chrome.runtime.getURL('app/inpage.js')
 
 // const inpageContent = fs.readFileSync(path.join(__dirname, '..', '..', 'dist', 'app', 'inpage.js')).toString()
-const inpageContent = fs.readFileSync(path.join(__dirname, 'app', 'inpage.js')).toString()
-const inpageSuffix = '//# sourceURL=' + chrome.runtime.getURL('app/inpage.js') + '\n'
-const inpageBundle = inpageContent + inpageSuffix
-console.log(inpageBundle)
+// const inpageContent = fs.readFileSync(path.join(__dirname, 'app', 'inpage.js')).toString()
+// const inpageSuffix = '//# sourceURL=' + chrome.runtime.getURL('app/inpage.js') + '\n'
+// const inpageBundle = inpageContent + inpageSuffix
+// console.log(inpageBundle)
 function injectInpageScript() {
   try {
     const container = document.head || document.documentElement
     const scriptTag = document.createElement('script')
     scriptTag.setAttribute('async', false)
-    // scriptTag.setAttribute('src', inpagePath)
-    scriptTag.textContent = inpageBundle
+    scriptTag.setAttribute('src', inpagePath)
+    // scriptTag.textContent = inpageBundle
     container.insertBefore(scriptTag, container.children[0])
     // After injecting the script, *run*, remove the script tag.
     // container.removeChild(scriptTag)
