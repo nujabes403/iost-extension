@@ -13,10 +13,29 @@
     color: $title-text;
     margin-top: 5px;
   }
-  .input-accountName {
+  .accountName-box {
+    position: relative;
     margin: 10px 0;
-    padding: 0 15px;
+    .input-accountName {
+      padding: 0 15px;
+    }
+    .deleteAll {
+      position: absolute;
+      right: 10px;
+      top: 7px;
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: $red;
+      color: $white;
+      font-style: normal;
+      line-height: 25px;
+      text-align: center;
+    }
   }
+
   .btn-nextStep {
     position: absolute;
     bottom: 30px;
