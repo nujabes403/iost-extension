@@ -17,7 +17,7 @@ function injectInpageScript() {
     // scriptTag.textContent = inpageBundle
     container.insertBefore(scriptTag, container.children[0])
     // After injecting the script, *run*, remove the script tag.
-    // container.removeChild(scriptTag)
+    container.removeChild(scriptTag)
   } catch (e) {
     console.error('injection failed', e)
   }
