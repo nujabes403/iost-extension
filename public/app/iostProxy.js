@@ -121,10 +121,6 @@ window.addEventListener('message', (e) => {
       IOSTJS.setAccount(messageData.payload)
     }
   }
-
-  // setTimeout(()=>{
-  //   user.name = '123'
-  // }, 5000)
  
 })
 

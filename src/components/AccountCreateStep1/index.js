@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
-import { Header } from 'components'
+import { Header,Toast } from 'components'
 import Button from 'components/Button'
 import NetworkSelector from 'components/NetworkSelector'
 import iost from 'iostJS/iost'
@@ -18,6 +18,7 @@ type Props = {
 class AccountCreateStep1 extends Component<Props> {
   state = {
     errorMessage: '',
+    isLoading: false
   }
   handleChange = (e) => {
     this.setState({
@@ -37,9 +38,26 @@ class AccountCreateStep1 extends Component<Props> {
     changeLocation(location)
   }
 
+  
+  onNext = async () => {
+    this.setState({
+      isLoading: true
+    })
+    const { account } = this.state
+    try {
+      await iost.rpc.blockchain.getAccountInfo(account)
+      Toast.html('账号已存在', 100)
+    } catch (err) {
+      this.moveTo('/accountCreateStep2')
+    }
+    this.setState({
+      isLoading: false
+    })
+
+  }
+
   render() {
-    const { errorMessage } = this.state
-    const isLoading = true
+    const { errorMessage, isLoading } = this.state
     return (
       <Fragment>
         <Header title={I18n.t('accountCreate')} onBack={this.moveTo('/login')} hasSetting={false} />
@@ -55,7 +73,7 @@ class AccountCreateStep1 extends Component<Props> {
           {
             isLoading ? <p className="rule">{I18n.t('queryAvailable')}</p> : ''
           }
-          <Button className="btn-nextStep" onClick={this.moveTo('/accountCreateStep2')}>{I18n.t('nextStep')}</Button>
+          <Button className="btn-nextStep" onClick={this.onNext}>{I18n.t('nextStep')}</Button>
         </div>
       </Fragment>
     )

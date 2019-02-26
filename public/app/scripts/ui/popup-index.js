@@ -5,7 +5,6 @@ import Button from 'components/Button'
 import AskPopupSummary from './popup-summary'
 import AskPopupDetail from './popup-detail'
 const transLocal = (lan, name) => {
-  console.log(i18n[lan][name])
   return i18n[lan][name]
 }
 import './popup-index.scss'
@@ -79,7 +78,6 @@ class AskPopup extends Component<Props> {
   }
 
   onTransLocal = (name) => {
-    console.log(name)
     return transLocal(this.state.lan, name)
   }
 

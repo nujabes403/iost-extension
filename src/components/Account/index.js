@@ -37,12 +37,8 @@ class Account extends Component<Props> {
   }
 
   componentDidMount() {
-    // const seckey = bs58.decode('BNkwBQabFLjUBmcJQhKAHYF99Qkx3tfJpSmZ6riyY69n');
-    // const edKP = new iost.pack.KeyPair(seckey, Algorithm.Secp256k1);
-    // console.log(bs58.encode(Buffer.from(edKP.pubkey, 'hex')))
-    // let sig = new iost.pack.Signature(info, edKP);
-    // console.log(privateKeyToPublicKey('4T8mZnSnbfQWpVUDUj9PJnGYFJMCdUobVPzrxCgWodr63i8PvVLQKHHMsA1FwE7bxQZAFWZCir2LCfdaTvWk8kBm',Algorithm.Ed25519))
-    // console.log(privateKeyToPublicKey('BNkwBQabFLjUBmcJQhKAHYF99Qkx3tfJpSmZ6riyY69n',Algorithm.Secp256k1))
+
+   
     chrome.storage.local.get(['accounts'], ({accounts}) => {
       if (accounts && accounts.length){
         this.props.dispatch(accountActions.setAccounts(accounts));
