@@ -3,9 +3,9 @@
 
 .login-box {
   width: 320px;
-  margin: 70px auto 0;
+  //margin: 70px auto 0;
+  margin: 153px auto 0;
   text-align: center;
-  //font-family: 'Montserrat';
   .input-password {
     padding: 0 15px;
     margin-bottom: 15px;
@@ -69,9 +69,6 @@
     }
     > span {
       color: $input-text;
-      a {
-
-      }
     }
   }
 }

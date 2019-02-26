@@ -148,7 +148,7 @@ class Login extends Component<Props> {
           />
           {!!errorMessage && <p className="login-errorMessage">{errorMessage}</p>}
           <div className="line"></div>
-          <Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>
+          {/*<Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>*/}
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
           <div className="radio-box">
             <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
