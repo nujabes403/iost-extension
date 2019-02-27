@@ -17,29 +17,25 @@ TxController.prototype.addTx = function(txInfo) {
 TxController.prototype.processTx = function(txIdx) {
   const txInfo = this.txQueue[txIdx]
   if (!txInfo) throw new Error(`That TX does not exist. slotIdx: ${txIdx}`)
-
-  // const tx = txInfo.tx
-  // const actionId = txInfo.actionId
-  // const account = txInfo.account
-  // const network = txInfo.network
+  
   const { tx: _tx, txABI, actionId, account, network } = txInfo
   chrome.storage.local.get(['accounts'], ({ accounts }) => {
     if(accounts && accounts.length){
       const acc = accounts.find(item => item.name == account && item.network == network)
       if(acc){
         const encodedPrivateKey = aesDecrypt(acc.privateKey, this.state.password)
-        //设置网络
         iostController.changeNetwork(network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
         iostController.loginAccount(account, encodedPrivateKey)
-        const tx = iostController.iostInstance.callABI(...txABI)
+        const tx = new iostController.pack.Tx()
+        Object.keys(_tx).map(key => tx[key] = _tx[key])
         if(network != 'MAINNET'){
           tx.setChainID(1023)
         }
         // tx.addApprove("*", "unlimited")
-        _tx.amount_limit.map(item => tx.addApprove(item.token, item.value))
-        if (txABI[1] === 'transfer') {
-          tx.addApprove("iost", txABI[2][3])
-        }
+        // _tx.amount_limit.map(item => tx.addApprove(item.token, item.value))
+        // if (txABI[1] === 'transfer') {
+        //   tx.addApprove("iost", txABI[2][3])
+        // }
         const handler = iostController.iost.signAndSend(tx)
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
           const activeTab = tabs[0].id

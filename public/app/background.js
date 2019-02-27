@@ -54,7 +54,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           + `&tx=${encodeURIComponent(JSON.stringify(message.payload.txABI))}`,
         type: 'popup',
         width: 500,
-        height: 620,
+        height: 660,
       })
       break
     case ACTION.TX_CONFIRM:
