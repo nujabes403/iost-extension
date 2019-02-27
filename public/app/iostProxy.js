@@ -68,25 +68,25 @@ const DEFAULT_IOST_CONFIG = {
 
 const IOST_NODE_URL = 'http://api.iost.io' //当前节点
 const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' //当前节点
-const IWallet = {
+const IWalletJS = {
   newIOST: (IOST) => {
-      IWallet.pack = IOST
-      IWallet.iost = new IOST.IOST(DEFAULT_IOST_CONFIG);
-      const IOST_PROVIDER = new IOST.HTTPProvider(IWallet.network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
-      IWallet.rpc = new IOST.RPC(IOST_PROVIDER)
-      IWallet.iost.signAndSend = signAndSend
-      IWallet.iost.setRPC(IWallet.rpc)
-      IWallet.iost.account = new IOST.Account(IWallet.account)
-      IWallet.iost.setAccount(IWallet.iost.account)
-      return IWallet.iost
+      IWalletJS.pack = IOST
+      IWalletJS.iost = new IOST.IOST(DEFAULT_IOST_CONFIG);
+      const IOST_PROVIDER = new IOST.HTTPProvider(IWalletJS.network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
+      IWalletJS.rpc = new IOST.RPC(IOST_PROVIDER)
+      IWalletJS.iost.signAndSend = signAndSend
+      IWalletJS.iost.setRPC(IWalletJS.rpc)
+      IWalletJS.iost.account = new IOST.Account(IWalletJS.account)
+      IWalletJS.iost.setAccount(IWalletJS.iost.account)
+      return IWalletJS.iost
   },
   enable: () => {
     //获取当前账号，后期可以改为账号选择
     return new Promise((resolve, reject) => {
-      if(IWallet.iost){
-        resolve(IWallet.iost.account._id)
-      }else if(IWallet.account != 'empty'){
-        resolve(IWallet.account)
+      if(IWalletJS.iost){
+        resolve(IWalletJS.iost.account._id)
+      }else if(IWalletJS.account != 'empty'){
+        resolve(IWalletJS.account)
       }else {
         resolve()
       }
@@ -94,8 +94,8 @@ const IWallet = {
   },
 
   setAccount: ({account, network}) => {
-    IWallet.account = account
-    IWallet.network = network
+    IWalletJS.account = account
+    IWalletJS.network = network
   },
 }
 
@@ -122,7 +122,7 @@ function signAndSend(tx){
 
 window.postMessage({action: 'GET_ACCOUNT'}, '*')
 
-// window.iost = IWallet
+// window.iost = IWalletJS
 
 window.addEventListener('message', (e) => {
   if (e.source !== window) return
@@ -140,7 +140,7 @@ window.addEventListener('message', (e) => {
       fire.pushMsg("failed", messageData.failed)
       // fire.failed(messageData.failed)
     }else if(messageData.payload){
-      IWallet.setAccount(messageData.payload)
+      IWalletJS.setAccount(messageData.payload)
     }
   }
  
@@ -149,4 +149,4 @@ window.addEventListener('message', (e) => {
 
 
 
-module.exports = IWallet
+module.exports = IWalletJS
