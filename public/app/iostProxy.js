@@ -68,25 +68,25 @@ const DEFAULT_IOST_CONFIG = {
 
 const IOST_NODE_URL = 'http://api.iost.io' //当前节点
 const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' //当前节点
-const IOSTJS = {
-  newIost: (IOST) => {
-      IOSTJS.pack = IOST
-      IOSTJS.iost = new IOST.IOST(DEFAULT_IOST_CONFIG);
-      const IOST_PROVIDER = new IOST.HTTPProvider(IOSTJS.network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
-      IOSTJS.rpc = new IOST.RPC(IOST_PROVIDER)
-      IOSTJS.iost.signAndSend = signAndSend
-      IOSTJS.iost.setRPC(IOSTJS.rpc)
-      IOSTJS.iost.account = new IOST.Account(IOSTJS.account)
-      IOSTJS.iost.setAccount(IOSTJS.iost.account)
-      return IOSTJS.iost
+const IWallet = {
+  newIOST: (IOST) => {
+      IWallet.pack = IOST
+      IWallet.iost = new IOST.IOST(DEFAULT_IOST_CONFIG);
+      const IOST_PROVIDER = new IOST.HTTPProvider(IWallet.network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
+      IWallet.rpc = new IOST.RPC(IOST_PROVIDER)
+      IWallet.iost.signAndSend = signAndSend
+      IWallet.iost.setRPC(IWallet.rpc)
+      IWallet.iost.account = new IOST.Account(IWallet.account)
+      IWallet.iost.setAccount(IWallet.iost.account)
+      return IWallet.iost
   },
   enable: () => {
     //获取当前账号，后期可以改为账号选择
     return new Promise((resolve, reject) => {
-      if(IOSTJS.iost){
-        resolve(IOSTJS.iost.account._id)
-      }else if(IOSTJS.account != 'empty'){
-        resolve(IOSTJS.account)
+      if(IWallet.iost){
+        resolve(IWallet.iost.account._id)
+      }else if(IWallet.account != 'empty'){
+        resolve(IWallet.account)
       }else {
         resolve()
       }
@@ -94,12 +94,13 @@ const IOSTJS = {
   },
 
   setAccount: ({account, network}) => {
-    IOSTJS.account = account
-    IOSTJS.network = network
+    IWallet.account = account
+    IWallet.network = network
   },
 }
 
 function signAndSend(tx){
+  const domain = document.domain
   const cb = new Callback()
   const action = tx.actions[0]
   const network = this.currentRPC._provider._host.indexOf('//api.iost.io') > -1?'MAINNET':'TESTNET'
@@ -108,6 +109,7 @@ function signAndSend(tx){
     actionId: 0,
     payload: {
       tx,
+      domain,
       account: this.account._id,
       network,
       txABI: [action.contract, action.actionName, JSON.parse(action.data)]
@@ -120,7 +122,7 @@ function signAndSend(tx){
 
 window.postMessage({action: 'GET_ACCOUNT'}, '*')
 
-// window.iost = IOSTJS
+// window.iost = IWallet
 
 window.addEventListener('message', (e) => {
   if (e.source !== window) return
@@ -138,7 +140,7 @@ window.addEventListener('message', (e) => {
       fire.pushMsg("failed", messageData.failed)
       // fire.failed(messageData.failed)
     }else if(messageData.payload){
-      IOSTJS.setAccount(messageData.payload)
+      IWallet.setAccount(messageData.payload)
     }
   }
  
@@ -147,4 +149,4 @@ window.addEventListener('message', (e) => {
 
 
 
-module.exports = IOSTJS
+module.exports = IWallet

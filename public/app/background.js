@@ -44,6 +44,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         account: message.payload.account,
         network: message.payload.network,
         actionId: message.actionId,
+        domain: message.domain,
       })
       const slotIdx = totalTxLength - 1
       // const [contractAddress, abi, args] = message.payload

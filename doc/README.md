@@ -7,15 +7,15 @@ How to use for dapp?
 npm i -S iost
 ```
 
-### Using IOSTJS
+### Using IWallet
 
 ```javascript
 import IOST from 'iost'
 
-IOSTJS.enable().then((account) => {
+IWallet.enable().then((account) => {
     if(!account) return; // not login
 
-    const iost = IOSTJS.newIost(IOST)
+    const iost = IWallet.newIOST(IOST)
 
     //transfer
     const tx = iost.transfer('iost', account, "testiost1", "1.000", "this is memo")
