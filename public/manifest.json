@@ -1,5 +1,5 @@
 {
-  "name": "IOST Extension",
+  "name": "iWallet",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,11 +8,11 @@
     }
   ],
 	"manifest_version": 2,
-	"version": "0.1.2",
-	"description": "Extension for IOST",
+	"version": "0.1.3",
+	"description": "Wallet Extension for IOST",
 	"browser_action": {
 		"default_popup": "index.html",
-		"default_title": "IOST Extension"
+		"default_title": "iWallet"
 	},
 	"icons": {
 		"16": "assets/icon16.png",
