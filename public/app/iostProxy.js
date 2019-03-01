@@ -76,8 +76,9 @@ const IWalletJS = {
       IWalletJS.rpc = new IOST.RPC(IOST_PROVIDER)
       IWalletJS.iost.signAndSend = signAndSend
       IWalletJS.iost.setRPC(IWalletJS.rpc)
-      IWalletJS.iost.account = new IOST.Account(IWalletJS.account)
       IWalletJS.iost.setAccount(IWalletJS.iost.account)
+      IWalletJS.iost.account = new IOST.Account(IWalletJS.account)
+      IWalletJS.iost.rpc = IWalletJS.rpc
       return IWalletJS.iost
   },
   enable: () => {

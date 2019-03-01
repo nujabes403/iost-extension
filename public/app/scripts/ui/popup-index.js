@@ -16,6 +16,7 @@ const i18n = {
     "Dapp_WhiteList": "Add to white-list",
     "Dapp_Cancel": "Cancel",
     "Dapp_Confirm": "Confirm", 
+    "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   ko: {
     "Dapp_Unlock": "지금 잠금해제하기",
@@ -26,6 +27,7 @@ const i18n = {
     "Dapp_WhiteList": "화이트리스트에 추가",
     "Dapp_Cancel": "취소",
     "Dapp_Confirm": "확인",
+    "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   zh: {
     "Dapp_Unlock": "立即解锁",
@@ -36,6 +38,7 @@ const i18n = {
     "Dapp_WhiteList": "添加到白名单",
     "Dapp_Cancel": "取消",
     "Dapp_Confirm": "确认",
+    "Dapp_Tip3": "* 如您将这个合约加入白名单，代表您允许您的账号在同一网站发起同一合约请求给同一收款方的情况下，直接给予签名，而不再进行手动授权。",
   },
 }
 
@@ -56,7 +59,8 @@ class AskPopup extends Component<Props> {
   constructor() {
     super()
     this.state = {
-      lan: 'en'
+      lan: 'en',
+      isAddWhitelist: false
     }
     window.location.search
       .replace('?', '')
@@ -97,6 +101,7 @@ class AskPopup extends Component<Props> {
       action: 'TX_CONFIRM',
       payload: {
         slotIdx: this.slotIdx,
+        isAddWhitelist: this.state.isAddWhitelist
       }
     })
     window.close()
@@ -116,13 +121,21 @@ class AskPopup extends Component<Props> {
     return transLocal(this.state.lan, name)
   }
 
+  onToggleWhiteList = () => {
+    this.setState({
+      isAddWhitelist: !this.state.isAddWhitelist
+    })
+  }
+
   render() {
+    const { isAddWhitelist } = this.state
     const [contractAddress, abi, args = []] = this.txInfo
     return (
       <div className="AskPopup">
         <header className="AskPopup__header">
           <p className="title">{abi == 'transfer' ? this.onTransLocal('Dapp_Signature') : this.onTransLocal('Dapp_Authorization')}</p>
           <p><span>{contractAddress}</span><span>-></span><span>{abi}</span></p>
+          <span class={isAddWhitelist?'active':''} onClick={this.onToggleWhiteList}>  {this.onTransLocal('Dapp_WhiteList')}</span>
         </header>
         <div className="AskPopup__container">
           {abi == 'transfer'?
@@ -147,15 +160,14 @@ class AskPopup extends Component<Props> {
           */}
           <p className="AskPopup__tip">{this.onTransLocal('Dapp_Tip1')}</p>
           <p className="AskPopup__tip">{this.onTransLocal('Dapp_Tip2')}</p>
-          <div className="AskPopup__buttons">
+          <p className="AskPopup__tip">{this.onTransLocal('Dapp_Tip3')}</p>
+          <div className={`AskPopup__buttons ${isAddWhitelist?'active':''}`}>
             <button
-              className="cancel"
               onClick={this.cancelTx}
             >
               {this.onTransLocal('Dapp_Cancel')}
             </button>
             <button
-              className="confirm"
               onClick={this.confirmTx}
             >
               {this.onTransLocal('Dapp_Confirm')}

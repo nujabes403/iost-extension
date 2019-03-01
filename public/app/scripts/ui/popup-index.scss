@@ -35,6 +35,7 @@ p {
 
 .AskPopup__header {
   // height: 80px;
+  position: relative;
   background-color: #F6F6F6;
   padding: 15px 30px;
   .title{
@@ -42,14 +43,37 @@ p {
     margin-bottom: 9px;
     font-weight: 500;
   }
-  span{
-    // display: inline-block;
-    // max-width: 200px;
-    // white-space: nowrap;
-    // text-overflow: ellipsis;
-    // overflow: hidden;
-    &:nth-child(2){
-      margin: 0 5px;
+  p{
+    span{
+      // display: inline-block;
+      // max-width: 200px;
+      // white-space: nowrap;
+      // text-overflow: ellipsis;
+      // overflow: hidden;
+      &:nth-child(2){
+        margin: 0 5px;
+      }
+    }
+  }
+  >span{
+    color: #999999;
+    position: absolute;
+    right: 30px;
+    width: 90px;
+    height: 30px;
+    top:15px;
+    background-color: transparent;
+    border-radius: 2px;
+    border: 1px solid #999999;
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    &.active{
+      border-color: #1E64E2;
+      color: #1E64E2;
+      font-weight: bold;
     }
   }
 }
@@ -171,10 +195,20 @@ p {
     background-color: #ffffff;
     font-size: 18px;
     color: #000;
-    &.confirm{
+    &:last-child{
       background-color: #000;
       color: #fff;
       margin-left: 15px;
+    }
+  }
+  &.active{
+    button{
+      border-color: #1E64E2;
+      color: #1E64E2;
+      &:last-child{
+        background-color: #1E64E2;
+        color: #fff;
+      }
     }
   }
 }

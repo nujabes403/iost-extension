@@ -20,10 +20,7 @@
 		"128": "assets/icon128.png"
 	},
 	"permissions": [
-    "webRequest",
-    "*://developer.mozilla.org/",
     "activeTab",
-    "tabs",
     "storage"
   ],
   "background": {

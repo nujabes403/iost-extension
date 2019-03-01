@@ -18,7 +18,7 @@ IWalletJS.enable().then((account) => {
     const iost = IWalletJS.newIOST(IOST)
 
     //transfer
-    const tx = iost.transfer('iost', account, "testiost1", "1.000", "this is memo")
+    const tx = iost.transfer('iost', account, "testnetiost", "1.000", "this is memo")
     
     iost.signAndSend(tx)
     .on('pending', (trx) => {
