@@ -109,11 +109,11 @@ class Account extends Component<Props> {
     return (
       <Fragment>
         <Header onSetting={this.moveTo('/accountSetting')} logo={true}>
-          <div className="account-currentName-box">
+          <div className="account-currentName-box" onClick={this.toggleAccountList}>
             <i className={cx('circle', currentAccount.network != 'MAINNET' ? 'test' : '')} />
             <span className="account-name">{currentAccount.name}</span>
             <i className={cx('arrow', accounts.length <=1 ? 'arrow-hide' : (isShowAccountList ? 'arrow-down' : 'arrow-right'))}
-               onClick={this.toggleAccountList} />
+                />
           </div>
         </Header>
         <div className="account-box">
@@ -122,7 +122,8 @@ class Account extends Component<Props> {
               {
                 accounts.map((item) =>
                   <li key={item.name + '_' + item.network} onClick={this.chooseAccount(item)}>
-                    <i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />
+                    {/*<i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />*/}
+                    <span className={cx('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
                     <i className={cx('check', ((item.name + '_' + item.network) == (currentAccount.name + '_' + currentAccount.network)) ? 'checked' : '')} />
                   </li>)

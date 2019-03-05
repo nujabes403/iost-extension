@@ -86,6 +86,17 @@
         &:hover {
           background-color: $white;
         }
+        .account-title {
+          text-align: center;
+          width: 50px;
+          height: 20px;
+          line-height: 20px;
+          color: $white;
+          background-color: #E28A1E;
+          &.test {
+            background-color: $green;
+          }
+        }
         .circle {
           width: 10px;
           height: 10px;

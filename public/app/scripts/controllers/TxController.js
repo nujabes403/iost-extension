@@ -151,7 +151,20 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
 }
 
 TxController.prototype.cancelTx = function(txIdx) {
-  if (!this.txQueue[txIdx]) throw new Error(`That TX is not exist. slotIdx: ${txIdx}`)
+  const txInfo = this.txQueue[txIdx]
+  
+  if(txInfo){
+    setTimeout(() => {
+      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        const activeTab = tabs[0].id
+        chrome.tabs.sendMessage(activeTab, {
+          actionId: txInfo.actionId,
+          failed: 'user reject'
+        })
+      })
+    },200)
+  }
+  if (!txInfo) throw new Error(`That TX is not exist. slotIdx: ${txIdx}`)
   this.txQueue.splice(txIdx, 1)
 }
 

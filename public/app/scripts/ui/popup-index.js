@@ -13,7 +13,7 @@ const i18n = {
     "Dapp_Tip1": "* Account authorization does not share your private key",
     "Dapp_Tip2": "* Current applications are developed by third parties, please pay attention to screening",
     "Dapp_Signature": "Signature Requested",
-    "Dapp_WhiteList": "Add to white-list",
+    "Dapp_WhiteList": "Enable Whitelist",
     "Dapp_Cancel": "Cancel",
     "Dapp_Confirm": "Confirm", 
     "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",

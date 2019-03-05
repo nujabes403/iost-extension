@@ -100,6 +100,9 @@ const IWalletJS = {
   },
 }
 
+window.postMessage({action: 'GET_ACCOUNT'}, '*')
+
+
 function signAndSend(tx){
   const domain = document.domain
   const cb = new Callback()
@@ -121,7 +124,6 @@ function signAndSend(tx){
   return cb
 }
 
-window.postMessage({action: 'GET_ACCOUNT'}, '*')
 
 // window.iost = IWalletJS
 
