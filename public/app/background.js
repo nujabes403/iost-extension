@@ -135,9 +135,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sendResponse(store.getPassword())
       break
     case 'GET_ACCOUNT': 
-      sendResponse({
+      store.getLockState()?sendResponse({
         account: iostController.account.getID(),
         network: iostController.network.indexOf('//api.iost.io') > -1? 'MAINNET':'TESTNET'
+      }):sendResponse({
+        account: null,
+        network: 'MAINNET',
       })
       break
     case 'CHECK_CREATE_ACCOUNT': 
