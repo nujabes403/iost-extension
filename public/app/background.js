@@ -89,14 +89,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if(whitelist && whitelist.length && whitelist.find(item =>item.network == message.payload.network && item.domain == _tx.domain && item.account == _tx.account && item.contract == contract && item.action == actionName && item.to == _to)){
           txController.processTx(slotIdx)
         }else {
+          const height = 600;
+          const width = 500;
+          let middleX = parseInt(window.screen.availWidth/2 - (width/2));
+          let middleY = parseInt(window.screen.availHeight/2 - (height/2));
+          const url = 'askTx.html'
+          + `?slotIdx=${slotIdx}`
+          + `&accountId=${iostController.account.getID()}`
+          + `&tx=${encodeURIComponent(JSON.stringify(message.payload.txABI))}`
           chrome.windows.create({
-            url: 'askTx.html'
-              + `?slotIdx=${slotIdx}`
-              + `&accountId=${iostController.account.getID()}`
-              + `&tx=${encodeURIComponent(JSON.stringify(message.payload.txABI))}`,
+            url,
             type: 'popup',
-            width: 500,
-            height: 700,
+            width,
+            height,
+            left: middleX,
+            top: middleY
           })
         }
       })

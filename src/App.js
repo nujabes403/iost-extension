@@ -51,7 +51,7 @@ class App extends Component<Props> {
               if (accounts && accounts.length){
                 this.props.dispatch(accountActions.setAccounts(accounts));
                 chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-                  console.log('当前账号', activeAccount)
+                  // console.log('当前账号', activeAccount)
                   const account = activeAccount || accounts[0]
                   const { name, privateKey } = account
                   chrome.runtime.sendMessage({

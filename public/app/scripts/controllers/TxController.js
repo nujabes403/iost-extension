@@ -26,7 +26,6 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
 
   const { tx: _tx, txABI, actionId, account, network, domain } = txInfo
   const [ contract, actionName, memo ] = txABI
-  console.log(isAddWhitelist)
   if(isAddWhitelist){
     let whitelist = await getStorage('whitelist', [])
     let _to = contract
@@ -159,7 +158,7 @@ TxController.prototype.cancelTx = function(txIdx) {
         const activeTab = tabs[0].id
         chrome.tabs.sendMessage(activeTab, {
           actionId: txInfo.actionId,
-          failed: 'user reject'
+          failed: 'User rejected the signature request'
         })
       })
     },200)

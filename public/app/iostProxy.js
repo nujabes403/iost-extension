@@ -86,10 +86,12 @@ const IWalletJS = {
     return new Promise((resolve, reject) => {
       if(IWalletJS.iost){
         resolve(IWalletJS.iost.account._id)
-      }else if(IWalletJS.account != 'empty'){
+      }else if(IWalletJS.account != 'empty' && IWalletJS.account != null){
         resolve(IWalletJS.account)
       }else {
-        resolve()
+        reject({
+          type: 'locked'
+        })
       }
     })
   },
