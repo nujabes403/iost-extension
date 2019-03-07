@@ -89,7 +89,7 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
           console.log(actionId, err)
           chrome.tabs.sendMessage(activeTab, {
             actionId,
-            failed: err
+            failed: err.stack?err.message:err
           })
         })
       })

@@ -66,7 +66,7 @@ const enTranslation = {
   "Settings_lock": "Lock now",
   "Settings_iostWallet": "About IOST Wallet",
   "ManageAccount_Add": "Import",
-  "ManageAccount_PublicKey": "Public Key",
+  "ManageAccount_PublicKey": "PubKey",
   "ManageAccount_PrivateKey": "Private Key",
   "ManageAccount_Official": "MainNet",
   "ManageAccount_Test": "TestNet",
