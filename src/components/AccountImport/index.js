@@ -112,7 +112,7 @@ class AccountImport extends Component<Props> {
         if(activeAccount){
           changeLocation('/accountManage')
         }else {
-          const url = accounts[0].network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+          const url = accounts[0].network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
           iost.changeNetwork(url)
 
           iost.rpc.blockchain.getAccountInfo(accounts[0].name)

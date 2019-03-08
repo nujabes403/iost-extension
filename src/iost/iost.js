@@ -11,7 +11,7 @@ const DEFAULT_IOST_CONFIG = {
 }
 
 // const IOST_NODE_URL = 'http://localhost:30001'
-const IOST_NODE_URL = 'http://api.iost.io'
+const IOST_NODE_URL = 'https://api.iost.io'
 const IOST_PROVIDER = new IOST.HTTPProvider(IOST_NODE_URL)
 
 const iost = {

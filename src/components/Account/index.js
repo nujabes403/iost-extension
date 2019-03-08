@@ -89,7 +89,7 @@ class Account extends Component<Props> {
       action: 'GET_PASSWORD',
     },(res)=> {
       const encodedPrivateKey = utils.aesDecrypt(privateKey, res)
-      const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+      const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
       iost.changeNetwork(url)
       iost.loginAccount(name, encodedPrivateKey)
       this.setState({

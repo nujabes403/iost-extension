@@ -7,7 +7,7 @@ const getStorage = (name, defvalue) => new Promise((resolve, reject) => {
   })
 })
 
-const IOST_NODE_URL = 'http://api.iost.io' //当前节点
+const IOST_NODE_URL = 'https://api.iost.io' //当前节点
 const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' 
 
 function TxController(state) {

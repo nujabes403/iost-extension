@@ -35,7 +35,7 @@ class Index extends Component<Props> {
 
   getTokenBalance = async () => {
     const { account, selectedTokenSymbol } = this.props
-    const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+    const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
     iost.changeNetwork(url)
     const { balance, frozen_balances } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)
 

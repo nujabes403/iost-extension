@@ -59,7 +59,7 @@ class App extends Component<Props> {
                   },(res)=> {
                     if(res){
                       const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-                      const url = account.network == 'MAINNET'?'http://api.iost.io':'http://13.52.105.102:30001';
+                      const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
                       iost.changeNetwork(url)
                       iost.loginAccount(name, encodedPrivateKey)
                       chrome.storage.local.set({ activeAccount: account },() => {
