@@ -27,7 +27,6 @@ class GasManage extends Component<Props> {
   }
 
   componentDidMount() {
-    ui.settingLocation('/GasManage')
   }
 
   moveTo = (location) => () => {
@@ -42,34 +41,12 @@ class GasManage extends Component<Props> {
   }
 
 
-  onBlur = () => {
-    const { account, illegal } = this.state
-    const reg = new RegExp(/^[A-Za-z1-9]{5,11}$/);
-    if (!reg.test(account)){
-      this.setState({
-        illegal: true
-      })
-    }
-    return illegal
-  }
-
-  onFocus = () => {
-    this.setState({
-      illegal: false
-    })
-  }
-
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     })
   }
 
-  deleteAll = () => {
-    this.setState({
-      account: '',
-    })
-  }
 
   render() {
     const { isStake, buyAmount, resourceAddress } = this.state

@@ -40,7 +40,6 @@ class RamManage extends Component<Props> {
   interval = null
 
   componentDidMount() {
-    ui.settingLocation('/GasManage')
     this.interval = setInterval(this.getRAMInfo, 1000)
   }
 
@@ -76,22 +75,6 @@ class RamManage extends Component<Props> {
     })
   }
 
-  onBlur = () => {
-    const { account, illegal } = this.state
-    const reg = new RegExp(/^[A-Za-z1-9]{5,11}$/);
-    if (!reg.test(account)){
-      this.setState({
-        illegal: true
-      })
-    }
-    return illegal
-  }
-
-  onFocus = () => {
-    this.setState({
-      illegal: false
-    })
-  }
 
   handleChange = (e) => {
     this.setState({
@@ -110,12 +93,16 @@ class RamManage extends Component<Props> {
         })
       })
       .onSuccess((response) => {
+        ui.settingTransferInfo(response)
         this.setState({ isLoading: false })
+
         // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
       .onFailed((err) => {
         console.log(err)
+        ui.settingTransferInfo(err)
         this.setState({ isLoading: false })
+
         // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }else {
@@ -126,11 +113,15 @@ class RamManage extends Component<Props> {
         })
       })
       .onSuccess((response) => {
+        ui.settingTransferInfo(response)
         this.setState({ isLoading: false })
+
         // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
       .onFailed((err) => {
+        ui.settingTransferInfo(err)
         this.setState({ isLoading: false })
+
         // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }
