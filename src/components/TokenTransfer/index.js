@@ -233,7 +233,7 @@ class Index extends Component<Props> {
             >
               {isSending ? <LoadingImage /> : I18n.t('Transfer_Submit')}
             </Button>
-            <p className="transferTips">{I18n.t('Transfer_Tip')}</p>
+            {/* <p className="transferTips">{I18n.t('Transfer_Tip')}</p> */}
           </div>
           <p className="TokenTransfer__errorMessage">{errorMessage}</p>
         </div>
