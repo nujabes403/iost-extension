@@ -4,6 +4,7 @@ import Login from './Login';
 import Landing from './Landing';
 import Toast from './Toast';
 import Modal from './Modal';
+import LoadingImage from './LoadingImage';
 import Account from './Account';
 import AccountImport from './AccountImport';
 import AccountManage from './AccountManage';
@@ -31,6 +32,7 @@ export {
   Landing,
   Toast,
   Modal,
+  LoadingImage,
   Account,
   AccountImport,
   AccountManage,

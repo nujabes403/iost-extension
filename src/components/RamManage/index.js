@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { I18n } from 'react-redux-i18n'
 
 import Input from 'components/Input'
-import { Header,Toast } from 'components'
+import { Header, Toast, LoadingImage } from 'components'
 import Button from 'components/Button'
 import classnames from 'classnames'
 
@@ -22,11 +22,13 @@ type Props = {
 class RamManage extends Component<Props> {
   state = {
     buyAmount: '',
+    sellAmount: '',
     resourceAddress: '',
     isLoading: false,
     isBuy: true,
     ramMarketInfo: {
-      buy_price: 0
+      buy_price: 0,
+      sell_price: 0
     },
     userRamInfo: {
       available: 0,
@@ -54,9 +56,9 @@ class RamManage extends Component<Props> {
       const { available, total, used } = data.ram_info
       this.setState({
         userRamInfo: {
-          available: available/1000,
-          total: total/1000,
-          used: used/1000,
+          available: (available/1024).toFixed(4),
+          total: (total/1024).toFixed(4),
+          used: (used/1024).toFixed(4),
         }
       })
     })
@@ -68,9 +70,9 @@ class RamManage extends Component<Props> {
   }
 
 
-  onToggleDeal = () => {
+  onToggleDeal = (isBuy) => () => {
     this.setState({
-      isBuy: !this.state.isBuy
+      isBuy
     })
   }
 
@@ -97,10 +99,46 @@ class RamManage extends Component<Props> {
     })
   }
 
+  onSubmit = () => {
+    const { isBuy, buyAmount,sellAmount, resourceAddress  } = this.state
+    const account = iost.account.getID()
+    if(isBuy){
+      iost.sendTransaction('ram.iost', 'buy', [account, resourceAddress || account, Number(buyAmount*1024)])
+      .onPending(() => {
+        this.setState({
+          isLoading: true,
+        })
+      })
+      .onSuccess((response) => {
+        this.setState({ isLoading: false })
+        // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
+      })
+      .onFailed((err) => {
+        console.log(err)
+        this.setState({ isLoading: false })
+        // ui.openPopup({ content: <TransactionFailed tx={err} /> })
+      })
+    }else {
+      iost.sendTransaction('ram.iost', 'sell', [account, account, Number(sellAmount*1024)])
+      .onPending(() => {
+        this.setState({
+          isLoading: true,
+        })
+      })
+      .onSuccess((response) => {
+        this.setState({ isLoading: false })
+        // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
+      })
+      .onFailed((err) => {
+        this.setState({ isLoading: false })
+        // ui.openPopup({ content: <TransactionFailed tx={err} /> })
+      })
+    }
+  }
+
 
   render() {
-    const { isBuy, buyAmount, resourceAddress, userRamInfo, ramMarketInfo } = this.state
-    const iostAmount = 12312
+    const { isBuy, buyAmount, sellAmount, resourceAddress, userRamInfo, ramMarketInfo, isLoading } = this.state
     const percent = userRamInfo.total?userRamInfo.used/userRamInfo.total*100:0
     return (
       <Fragment>
@@ -122,17 +160,17 @@ class RamManage extends Component<Props> {
 
           <div className="content-box">
             <div className="toggle-title">
-              <span className={classnames("toggle-buy", isBuy ? 'active': '')} onClick={this.onToggleDeal}>{I18n.t('RamManage_Buy')}</span>
-              <span className={classnames("toggle-sell", isBuy ? '' : 'active')} onClick={this.onToggleDeal}>{I18n.t('RamManage_Sell')}</span>
+              <span className={classnames("toggle-buy", isBuy ? 'active': '')} onClick={this.onToggleDeal(true)}>{I18n.t('RamManage_Buy')}</span>
+              <span className={classnames("toggle-sell", isBuy ? '' : 'active')} onClick={this.onToggleDeal(false)}>{I18n.t('RamManage_Sell')}</span>
             </div>
             <div className="toggle-box">
               <div className={classnames("buy-box", isBuy ? 'active': '')}>
                 <div className="buy-title">
                   <span className="buy-amount">{I18n.t('RamManage_PurchaseAmount')}</span>
-                  <span className="buy-price">{I18n.t('RamManage_PurchasePrice')}: {(ramMarketInfo.buy_price*1000).toFixed(4)} IOST/KB</span>
+                  <span className="buy-price">{I18n.t('RamManage_PurchasePrice')}: {(ramMarketInfo.buy_price*1024).toFixed(4)} IOST/KB</span>
                 </div>
                 <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('RamManage_PurchaseEnter')} onChange={this.handleChange} className="input-buyAmount" />
-                <p className="equal-iost">{`=${iostAmount} IOST`}</p>
+                <p className="equal-iost">{`=${(buyAmount*ramMarketInfo.buy_price*1024).toFixed(4)} IOST`}</p>
 
                 <span className="address-title">{I18n.t('RamManage_Address')}</span>
                 <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('RamManage_Optional')} onChange={this.handleChange} className="input-address" />
@@ -141,13 +179,13 @@ class RamManage extends Component<Props> {
               <div className={classnames("seal-box", isBuy ? '': 'active')}>
                 <div className="buy-title">
                   <span className="buy-amount">{I18n.t('RamManage_SellAmount')}</span>
-                  <span className="buy-price">{I18n.t('RamManage_SellPrice')}: 9.2334 IOST/KB</span>
+                  <span className="buy-price">{I18n.t('RamManage_SellPrice')}: {(ramMarketInfo.sell_price*1024).toFixed(4)} IOST/KB</span>
                 </div>
-                <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('RamManage_SellEnter')} onChange={this.handleChange} className="input-buyAmount" />
-                <p className="equal-iost">{`=${iostAmount} IOST`}</p>
+                <Input name="sellAmount" value={sellAmount} placeholder={I18n.t('RamManage_SellEnter')} onChange={this.handleChange} className="input-buyAmount" />
+                <p className="equal-iost">{`=${(sellAmount*ramMarketInfo.sell_price*1024).toFixed(4)} IOST`}</p>
               </div>
             </div>
-            <Button className="btn-submit">{I18n.t('Transfer_Submit')}</Button>
+            <Button className="btn-submit" onClick={this.onSubmit}>{isLoading?<LoadingImage />:I18n.t('Transfer_Submit')}</Button>
           </div>
         </div>
       </Fragment>
