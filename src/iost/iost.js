@@ -86,6 +86,11 @@ const iost = {
   sendTransaction: (contractAddress, contractAction, args) => {
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
     tx.addApprove("*", "unlimited")
+
+    if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
+      tx.setChainID(1023)
+    }
+
     iost.account.signTx(tx)
 
     const fire = {

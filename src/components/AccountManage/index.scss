@@ -7,6 +7,7 @@
   height: 540px;
   background-color: $gray;
   text-align: center;
+  overflow: scroll;
   .account-item {
     display: flex;
     justify-content: space-between;
