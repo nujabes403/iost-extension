@@ -25,10 +25,41 @@ class RamManage extends Component<Props> {
     resourceAddress: '',
     isLoading: false,
     isBuy: true,
+    ramMarketInfo: {
+      buy_price: 0
+    },
+    userRamInfo: {
+      available: 0,
+      total: 0,
+      used: 0,
+    }
   }
+
+  interval = null
 
   componentDidMount() {
     ui.settingLocation('/GasManage')
+    this.interval = setInterval(this.getRAMInfo, 1000)
+  }
+
+  getRAMInfo = () => {
+    iost.rpc.getProvider().send('get', 'getRAMInfo')
+    .then(ramMarketInfo => {
+      this.setState({
+        ramMarketInfo,
+      })
+    })
+    iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+    .then(data => {
+      const { available, total, used } = data.ram_info
+      this.setState({
+        userRamInfo: {
+          available: available/1000,
+          total: total/1000,
+          used: used/1000,
+        }
+      })
+    })
   }
 
   moveTo = (location) => () => {
@@ -68,8 +99,9 @@ class RamManage extends Component<Props> {
 
 
   render() {
-    const { isBuy, buyAmount, resourceAddress } = this.state
+    const { isBuy, buyAmount, resourceAddress, userRamInfo, ramMarketInfo } = this.state
     const iostAmount = 12312
+    const percent = userRamInfo.total?userRamInfo.used/userRamInfo.total*100:0
     return (
       <Fragment>
         <Header title={I18n.t('RamManage_Title')} onBack={this.moveTo('/account')} hasSetting={false} />
@@ -77,14 +109,14 @@ class RamManage extends Component<Props> {
           <div className="progress-box">
             <div className="ram-default">
               <span>RAM</span>
-              <span>30000 KB</span>
+              <span>{userRamInfo.total} KB</span>
             </div>
             <div className="progress-wrap">
-              <div className="progress-inner" style={{width: '50px'}}></div>
+              <div className="progress-inner" style={{width: `${percent}%`}}></div>
             </div>
             <div className="ram-used">
-              <span>{I18n.t('RamManage_Used')}: xKB</span>
-              <span>{I18n.t('RamManage_Remaining')}: xKB</span>
+              <span>{I18n.t('RamManage_Used')}: {userRamInfo.used}KB</span>
+              <span>{I18n.t('RamManage_Remaining')}: {userRamInfo.available}KB</span>
             </div>
           </div>
 
@@ -97,7 +129,7 @@ class RamManage extends Component<Props> {
               <div className={classnames("buy-box", isBuy ? 'active': '')}>
                 <div className="buy-title">
                   <span className="buy-amount">{I18n.t('RamManage_PurchaseAmount')}</span>
-                  <span className="buy-price">{I18n.t('RamManage_PurchasePrice')}: 9.2334 IOST/KB</span>
+                  <span className="buy-price">{I18n.t('RamManage_PurchasePrice')}: {(ramMarketInfo.buy_price*1000).toFixed(4)} IOST/KB</span>
                 </div>
                 <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('RamManage_PurchaseEnter')} onChange={this.handleChange} className="input-buyAmount" />
                 <p className="equal-iost">{`=${iostAmount} IOST`}</p>
