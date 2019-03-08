@@ -12,6 +12,7 @@ import { privateKeyToPublicKey } from 'utils/key'
 
 import ui from "utils/ui";
 import './index.scss'
+import classnames from "classnames";
 
 type Props = {
 
@@ -22,6 +23,7 @@ class GasManage extends Component<Props> {
     account: '',
     isLoading: false,
     illegal: false,
+    isStake: true
   }
 
   componentDidMount() {
@@ -32,33 +34,13 @@ class GasManage extends Component<Props> {
     const { changeLocation } = this.props
     changeLocation(location)
   }
-  
-  onNext = async () => {
+
+  onToggleDeal = (value = true) => () => {
     this.setState({
-      isLoading: true
-    })
-    const { account, illegal } = this.state
-    if (account == '' || this.onBlur()) {
-      return
-    }
-    try {
-      // 如果没有找到账户信息，就会报错
-      await iost.rpc.blockchain.getAccountInfo(account)
-      Toast.html(I18n.t('CreateAccount_AccountExist'))
-    } catch (err) {
-      store.dispatch(userActions.createAccountInfo({name: account}))
-      this.moveTo('/accountCreateStep2')()
-    }
-    this.setState({
-      isLoading: false
+      isStake: value
     })
   }
 
-  backTo = () => {
-    const { changeLocation, locationList } = this.props
-    ui.deleteLocation()
-    changeLocation(locationList[locationList.length - 1])
-  }
 
   onBlur = () => {
     const { account, illegal } = this.state
@@ -90,33 +72,56 @@ class GasManage extends Component<Props> {
   }
 
   render() {
-    const { isLoading, illegal, account } = this.state
+    const { isStake, buyAmount, resourceAddress } = this.state
+    const iostAmount = 12312
     return (
       <Fragment>
-        <Header title={I18n.t('firstLogin_CreateAccount')} onBack={this.backTo} hasSetting={false} />
-        <div className="accountCreateStep1-box">
-          <p className="title">{I18n.t('CreateAccount_AccountName')}</p>
-          <p className="rule">{I18n.t('CreateAccount_Tip1')}</p>
-          <div className="accountName-box">
-            <Input
-              name="account"
-              type="text"
-              value={this.state.account}
-              onChange={this.handleChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              className="input-accountName"
-
-
-            />
-            {
-              illegal ? <i className="illegal" onClick={this.deleteAll}>X</i> : ''
-            }
+        <Header title={I18n.t('GasManage_Title')} onBack={this.moveTo('/account')} hasSetting={false} />
+        <div className="gasManage-box">
+          <div className="progress-box">
+            <div className="ram-default">
+              <span>GAS</span>
+              <span>30000 KB</span>
+            </div>
+            <div className="progress-wrap">
+              <div className="progress-inner" style={{width: '50px'}}></div>
+            </div>
+            <div className="ram-used">
+              <span>{I18n.t('GasManage_Locked')}: xGAS</span>
+              <span>{I18n.t('GasManage_Available')}: xGAS</span>
+            </div>
           </div>
-          {
-            isLoading ? <p className="rule">{I18n.t('CreateAccount_QueryStatus')}</p> : ''
-          }
-          <Button className="btn-nextStep" onClick={this.onNext} disabled={account == ''}>{I18n.t('CreateAccount_NextStep')}</Button>
+
+          <div className="content-box">
+            <div className="toggle-title">
+              <span className={classnames("toggle-buy", isStake ? 'active': '')} onClick={this.onToggleDeal()}>{I18n.t('GasManage_Stake')}</span>
+              <span className={classnames("toggle-sell", isStake ? '' : 'active')} onClick={this.onToggleDeal(false)}>{I18n.t('GasManage_UnStake')}</span>
+            </div>
+            <div className="toggle-box">
+              <div className={classnames("buy-box", isStake ? 'active': '')}>
+                <div className="buy-title">
+                  <span className="buy-amount">{I18n.t('GasManage_StakeAmount')}</span>
+                  <span className="buy-price">{I18n.t('GasManage_Balance')}: 9.2334 IOST</span>
+                </div>
+                <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('GasManage_StakeEnter')} onChange={this.handleChange} className="input-buyAmount" />
+
+                <span className="address-title">{I18n.t('GasManage_StakeAddress')}</span>
+                <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('GasManage_Optional')} onChange={this.handleChange} className="input-address" />
+              </div>
+
+              <div className={classnames("seal-box", isStake ? '': 'active')}>
+                <div className="buy-title">
+                  <span className="buy-amount">{I18n.t('GasManage_StakeAmount')}</span>
+                  <span className="buy-price">{I18n.t('GasManage_Balance')}: 9.2334 IOST</span>
+                </div>
+                <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('GasManage_StakeEnter')} onChange={this.handleChange} className="input-buyAmount" />
+
+                <span className="address-title">{I18n.t('GasManage_StakeAddress')}</span>
+                <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('GasManage_Optional')} onChange={this.handleChange} className="input-address" />
+              </div>
+            </div>
+            <Button className="btn-submit">{I18n.t('Transfer_Submit')}</Button>
+          </div>
         </div>
       </Fragment>
     )

@@ -1,52 +1,112 @@
 @import "colors.scss";
 
-.accountCreateStep1-box {
+.gasManage-box {
   position: relative;
   width: 100%;
   height: 540px;
   background-color: $gray;
-  padding: 20px 30px 0;
-  .title {
-    font-size: 16px;
+  padding: 15px;
+}
+
+.progress-box {
+  height: 80px;
+  background-color: $white;
+  border-radius: 4px;
+  padding: 15px;
+  .ram-default {
+    display: flex;
+    justify-content: space-between;
   }
-  .rule {
-    color: $title-text;
-    margin-top: 5px;
+  .ram-used {
+    display: flex;
+    justify-content: space-between;
   }
-  .accountName-box {
-    position: relative;
-    margin: 10px 0;
-    .input-accountName {
-      padding: 0 15px;
+  .progress-wrap {
+    margin: 10px 0 5px;
+    background-color: #DCE6F2;
+    border-radius: 5px;
+    .progress-inner {
+      border-radius: 5px;
+      background-color: #6598F4;
+      height: 10px;
     }
-    .illegal {
-      position: absolute;
-      right: 10px;
-      top: 7px;
+  }
+}
+
+.content-box {
+  position: relative;
+  margin-top: 15px;
+  background-color: $white;
+  height: 306px;
+  border-radius: 4px;
+  padding: 15px;
+  .toggle-title {
+    font-size: 16px;
+    font-weight: bold;
+    .toggle-buy, .toggle-sell {
+      position: relative;
+      &.active {
+        &:before {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          width: 100%;
+          height: 4px;
+          border-radius: 2px;
+          background-color: #6598F4;
+
+        }
+      }
+    }
+    .toggle-sell {
       display: inline-block;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      cursor: pointer;
-      background-color: $red;
-      color: $white;
-      font-style: normal;
-      line-height: 25px;
-      text-align: center;
+      margin-left: 25px;
     }
   }
 
-  .btn-nextStep {
-    position: absolute;
-    bottom: 30px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    &:disabled {
-      cursor: not-allowed;
-      background-color: $gray;
-      color: $input-text;
-      border: 1px solid #999999;
+  .toggle-box {
+    margin-top: 30px;
+    .buy-box, .seal-box{
+      display: none;
+      &.active {
+        display: block;
+      }
+      .buy-title {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        .buy-amount {
+
+        }
+        .buy-price {
+          color: #1E64E2;
+        }
+
+      }
+      .input-buyAmount, .input-address {
+        background-color: #F6F6F6;
+        padding-left: 15px;
+      }
+
+      .equal-iost {
+        margin-top: 5px;
+        text-align: right;
+        font-size: 14px;
+        color: #333333;
+      }
+      .address-title {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
     }
   }
+}
+
+.btn-submit {
+  position: absolute;
+  bottom: 20px;
 }

@@ -110,6 +110,19 @@ const enTranslation = {
   "RamManage_SellAmount": "Sell Amount (KB)",
   "RamManage_SellPrice": "Sell Price",
   "RamManage_SellEnter": "Enter Sell amount",
+
+  "GasManage_Title": "管理GAS资源",
+  "GasManage_Locked": "已锁定",
+  "GasManage_Available": "可用",
+  "GasManage_Stake": "抵押",
+  "GasManage_UnStake": "退还",
+  "GasManage_StakeAmount": "抵押金额",
+  "GasManage_UnStakeAmount": "退还金额",
+  "GasManage_Balance": "余额",
+  "GasManage_StakeEnter": "输入金额",
+  "GasManage_StakeAddress": "收取资源地址",
+  "GasManage_UnStakeAddress": "退还资源地址",
+  "GasManage_Optional": "选填，默认为您的地址",
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",
@@ -235,6 +248,19 @@ const zhTranslation = {
   "RamManage_SellPrice": "卖出价",
   "RamManage_SellEnter": "输入卖出量",
 
+
+  "GasManage_Title": "管理GAS资源",
+  "GasManage_Locked": "已锁定",
+  "GasManage_Available": "可用",
+  "GasManage_Stake": "抵押",
+  "GasManage_UnStake": "退还",
+  "GasManage_StakeAmount": "抵押金额",
+  "GasManage_UnStakeAmount": "退还金额",
+  "GasManage_Balance": "余额",
+  "GasManage_StakeEnter": "输入金额",
+  "GasManage_StakeAddress": "收取资源地址",
+  "GasManage_UnStakeAddress": "退还资源地址",
+  "GasManage_Optional": "选填，默认为您的地址",
 }
 
 
@@ -352,6 +378,20 @@ const koTranslation = {
   "RamManage_SellAmount": "Sell Amount (KB)",
   "RamManage_SellPrice": "Sell Price",
   "RamManage_SellEnter": "Enter Sell amount",
+
+
+  "GasManage_Title": "管理GAS资源",
+  "GasManage_Locked": "已锁定",
+  "GasManage_Available": "可用",
+  "GasManage_Stake": "抵押",
+  "GasManage_UnStake": "退还",
+  "GasManage_StakeAmount": "抵押金额",
+  "GasManage_UnStakeAmount": "退还金额",
+  "GasManage_Balance": "余额",
+  "GasManage_StakeEnter": "输入金额",
+  "GasManage_StakeAddress": "收取资源地址",
+  "GasManage_UnStakeAddress": "退还资源地址",
+  "GasManage_Optional": "选填，默认为您的地址",
 }
 
 export default {
