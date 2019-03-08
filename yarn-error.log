@@ -1,11 +1,11 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn install
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js install
 
 PATH: 
   /Users/crane/cocos2d.1/templates:/Users/crane:/Users/crane/cocos2d.1/tools/cocos2d-console/bin:/Users/crane/Documents/crane/arc/arcanist/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin
 
 Yarn version: 
-  1.7.0
+  1.13.0
 
 Node version: 
   8.11.3
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/Users/crane/Documents/crane/iost-extension/node_modules/eslint-module-utils/node_modules/path-exists'
+  Error: EACCES: permission denied, unlink '/Users/crane/Documents/crane/iost-extension/node_modules/.yarn-integrity'
 
 npm manifest: 
   {
@@ -48,7 +48,7 @@ npm manifest:
       "elliptic": "^6.4.1",
       "gulp": "^4.0.0",
       "hash.js": "^1.1.7",
-      "iost": "0.0.20",
+      "iost": "0.0.21",
       "json-format": "^1.0.1",
       "lodash": "^4.17.10",
       "moment": "^2.22.2",
@@ -4766,10 +4766,10 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   
-  iost@0.0.20:
-    version "0.0.20"
-    resolved "https://registry.yarnpkg.com/iost/-/iost-0.0.20.tgz#e753fbdcf2d3e86eadbc52028be92e23715c24d3"
-    integrity sha512-elLHnkAixf/JSq4CLJkePaWeKgNXPobDDXoBATopAyGmN5dfNBaZBR0m07gAD8sDRXW6wagbDcfHVwNTuDKoIQ==
+  iost@0.0.21:
+    version "0.0.21"
+    resolved "https://registry.yarnpkg.com/iost/-/iost-0.0.21.tgz#e0541360bef592472ede076ec26d0086e95f878a"
+    integrity sha512-qUxfnPSTrLvhGsMIq0kH8e6uudNSBkrZ2RW5sA5wqoRZYKqFXA0ayY5vDVrnLDGG2z4pbrJPIsKLI0mjfF8KAg==
     dependencies:
       atob "^2.1.2"
       axios "^0.18.0"

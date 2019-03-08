@@ -96,6 +96,20 @@ const enTranslation = {
   "Dapp_WhiteList": "Add to white-list",
   "Dapp_Cancel": "Cancel",
   "Dapp_Confirm": "Confirm",
+
+  "RamManage_Title": "Manage RAM resources",
+  "RamManage_Used": "Used",
+  "RamManage_Remaining": "Remaining",
+  "RamManage_Buy": "Buy",
+  "RamManage_Sell": "Sell",
+  "RamManage_PurchaseAmount": "Purchase Amount (KB)",
+  "RamManage_PurchasePrice": "Purchase Price",
+  "RamManage_PurchaseEnter": "Enter purchase amount",
+  "RamManage_Address": "Resource collection address",
+  "RamManage_Optional": "Optional, default is your address",
+  "RamManage_SellAmount": "Sell Amount (KB)",
+  "RamManage_SellPrice": "Sell Price",
+  "RamManage_SellEnter": "Enter Sell amount",
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",
@@ -205,6 +219,22 @@ const zhTranslation = {
   "Dapp_WhiteList": "添加到白名单",
   "Dapp_Cancel": "取消",
   "Dapp_Confirm": "确认",
+
+
+  "RamManage_Title": "管理RAM资源",
+  "RamManage_Used": "已使用",
+  "RamManage_Remaining": "剩余",
+  "RamManage_Buy": "购买",
+  "RamManage_Sell": "卖出",
+  "RamManage_PurchaseAmount": "购买量（KB）",
+  "RamManage_PurchasePrice": "购买价",
+  "RamManage_PurchaseEnter": "输入购买量",
+  "RamManage_Address": "资源收取地址",
+  "RamManage_Optional": "选填，默认为您的地址",
+  "RamManage_SellAmount": "卖出量（KB）",
+  "RamManage_SellPrice": "卖出价",
+  "RamManage_SellEnter": "输入卖出量",
+
 }
 
 
@@ -307,6 +337,21 @@ const koTranslation = {
   "Dapp_WhiteList": "화이트리스트에 추가",
   "Dapp_Cancel": "취소",
   "Dapp_Confirm": "확인",
+
+
+  "RamManage_Title": "Manage RAM resources",
+  "RamManage_Used": "Used",
+  "RamManage_Remaining": "Remaining",
+  "RamManage_Buy": "Buy",
+  "RamManage_Sell": "Sell",
+  "RamManage_PurchaseAmount": "Purchase Amount (KB)",
+  "RamManage_PurchasePrice": "Purchase Price",
+  "RamManage_PurchaseEnter": "Enter purchase amount",
+  "RamManage_Address": "Resource collection address",
+  "RamManage_Optional": "Optional, default is your address",
+  "RamManage_SellAmount": "Sell Amount (KB)",
+  "RamManage_SellPrice": "Sell Price",
+  "RamManage_SellEnter": "Enter Sell amount",
 }
 
 export default {

@@ -9,6 +9,7 @@ import { GET_TOKEN_BALANCE_INTERVAL } from 'constants/token'
 import iconSrc from 'constants/icon'
 
 import './index.scss'
+import ui from "utils/ui";
 
 type Props = {
 
@@ -64,25 +65,31 @@ class Index extends Component<Props> {
 
   render() {
     const { frozenAmount, accountInfo, amount, gas, ram, isLoading } = this.state
-    const { selectedTokenSymbol, account } = this.props
+    const { selectedTokenSymbol, account, moveTo } = this.props
     const url = account?`${account.network == 'MAINNET'?'https://explorer.iost.io':'http://54.249.186.224'}/account/${account.name}`:'#'
     return (
-      <a className="TokenBalance-box" target={account?"_blank":''} href={url}>
-        <div className="logo-box">
-          <img className="logo" src={iconSrc[selectedTokenSymbol]} />
-        </div>
-        <div className="TokenBalance-amount-box">
-          <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
-          <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
-          {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
+      <div className="TokenBalance-box">
+        <a target={account?"_blank":''} href={url}>
+          <div className="logo-box">
+            <img className="logo" src={iconSrc[selectedTokenSymbol]} />
+          </div>
+          <div className="TokenBalance-amount-box">
+            <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
+            <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
+            {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
+          </div>
+        </a>
+        <div className="TokenBalance__resources">
+          <span className="TokenBalance__gas" onClick={moveTo('/gasManage')}>{gas} {I18n.t('iGAS')}</span>
+          <span className="TokenBalance__ram" onClick={moveTo('/ramManage')}>{ram} {I18n.t('iRAM')}</span>
         </div>
         {!isLoading && (
           <div className="TokenBalance__resources">
-            <span className="TokenBalance__gas">{gas} {I18n.t('iGAS')}</span>
-            <span className="TokenBalance__ram">{ram} {I18n.t('iRAM')}</span>
+            <span className="TokenBalance__gas" onClick={moveTo('/gasManage')}>{gas} {I18n.t('iGAS')}</span>
+            <span className="TokenBalance__ram" onClick={moveTo('/ramManage')}>{ram} {I18n.t('iRAM')}</span>
           </div>
         )}
-      </a>
+      </div>
     )
   }
 }

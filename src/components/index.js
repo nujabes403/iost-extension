@@ -22,6 +22,8 @@ import AccountAdd from './AccountAdd';
 import ChangeLanguage from './ChangeLanguage';
 import IostWallet from './IostWallet';
 import UserAgreement from './UserAgreement';
+import GasManage from './GasManage';
+import RamManage from './RamManage';
 
 export {
   Header,
@@ -47,5 +49,7 @@ export {
   ChangeLanguage,
   IostWallet,
   UserAgreement,
+  RamManage,
+  GasManage
 }
 

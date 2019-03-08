@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, TokenTransferFailed, TokenTransferSuccess,
   AccountQRCode, AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
-  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement,
+  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement, GasManage, RamManage
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -129,6 +129,10 @@ class App extends Component<Props> {
         return <IostWallet changeLocation={this.changeLocation} />
       case '/userAgreement':
         return <UserAgreement changeLocation={this.changeLocation} />
+      case '/gasManage':
+        return <GasManage changeLocation={this.changeLocation} />
+      case '/ramManage':
+        return <RamManage changeLocation={this.changeLocation} />
     }
   }
 
