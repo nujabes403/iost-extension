@@ -111,12 +111,12 @@ class GasManage extends Component<Props> {
 
               <div className={classnames("seal-box", isStake ? '': 'active')}>
                 <div className="buy-title">
-                  <span className="buy-amount">{I18n.t('GasManage_StakeAmount')}</span>
+                  <span className="buy-amount">{I18n.t('GasManage_UnStakeAmount')}</span>
                   <span className="buy-price">{I18n.t('GasManage_Balance')}: 9.2334 IOST</span>
                 </div>
                 <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('GasManage_StakeEnter')} onChange={this.handleChange} className="input-buyAmount" />
 
-                <span className="address-title">{I18n.t('GasManage_StakeAddress')}</span>
+                <span className="address-title">{I18n.t('GasManage_UnStakeAddress')}</span>
                 <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('GasManage_Optional')} onChange={this.handleChange} className="input-address" />
               </div>
             </div>
