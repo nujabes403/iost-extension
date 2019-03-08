@@ -21,7 +21,7 @@ type Props = {
 
 class RamManage extends Component<Props> {
   state = {
-    buyAmount: 0,
+    buyAmount: '',
     resourceAddress: '',
     isLoading: false,
     isBuy: true,
@@ -122,8 +122,8 @@ class RamManage extends Component<Props> {
 
           <div className="content-box">
             <div className="toggle-title">
-              <span onClick={this.onToggleDeal}>{I18n.t('RamManage_Buy')}</span>
-              <span className="toggle-sell" onClick={this.onToggleDeal}>{I18n.t('RamManage_Sell')}</span>
+              <span className={classnames("toggle-buy", isBuy ? 'active': '')} onClick={this.onToggleDeal}>{I18n.t('RamManage_Buy')}</span>
+              <span className={classnames("toggle-sell", isBuy ? '' : 'active')} onClick={this.onToggleDeal}>{I18n.t('RamManage_Sell')}</span>
             </div>
             <div className="toggle-box">
               <div className={classnames("buy-box", isBuy ? 'active': '')}>
@@ -134,9 +134,10 @@ class RamManage extends Component<Props> {
                 <Input name="buyAmount" value={buyAmount} placeholder={I18n.t('RamManage_PurchaseEnter')} onChange={this.handleChange} className="input-buyAmount" />
                 <p className="equal-iost">{`=${iostAmount} IOST`}</p>
 
-                <span>{I18n.t('RamManage_Address')}</span>
-                <Input name={resourceAddress} value={resourceAddress} placeholder={I18n.t('RamManage_Optional')} onChange={this.handleChange} className="input-address" />
+                <span className="address-title">{I18n.t('RamManage_Address')}</span>
+                <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('RamManage_Optional')} onChange={this.handleChange} className="input-address" />
               </div>
+
               <div className={classnames("seal-box", isBuy ? '': 'active')}>
                 <div className="buy-title">
                   <span className="buy-amount">{I18n.t('RamManage_SellAmount')}</span>

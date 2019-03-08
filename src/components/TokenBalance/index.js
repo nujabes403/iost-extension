@@ -79,6 +79,7 @@ class Index extends Component<Props> {
             {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
           </div>
         </a>
+
         {!isLoading && (
           <div className="TokenBalance__resources">
             <span className="TokenBalance__gas" onClick={moveTo('/gasManage')}>{gas} {I18n.t('iGAS')}</span>
