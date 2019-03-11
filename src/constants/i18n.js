@@ -121,7 +121,7 @@ const enTranslation = {
   "GasManage_UnStake": "Unpledge",
   "GasManage_CanUnStake": "Available",
   "GasManage_UnStakeing": "Unpledge",
-  "GasManage_StakeAmount": "Stake Amount",
+  "GasManage_StakeAmount": "Pledge Amount",
   "GasManage_UnStakeAmount": "Unpledge Amount",
   "GasManage_Balance": "Balance",
   "GasManage_StakeEnter": "Input Amount",
@@ -130,7 +130,7 @@ const enTranslation = {
   "GasManage_Optional": "Optional, default is your address",
   "GasManage_Tip": "* Unpledge resources require 3 natural days and the Unpledging amount is not available.",
   "GasManage_Records": "Resource Manage Record",
-  "GasManage_Records_Item": "Stake iGAS for %{name}",
+  "GasManage_Records_Item": "Pledge iGAS for %{name}",
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",

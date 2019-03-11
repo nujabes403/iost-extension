@@ -13,8 +13,13 @@ const utils = {
     var decrypted = decipher.update(encrypted, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     return decrypted;
+  },
+  delay(ms){
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
+
+
 
 
 // var data = 'Hello, this is a secret message!';

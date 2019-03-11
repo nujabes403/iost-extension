@@ -9,6 +9,7 @@ import iost from 'iostJS/iost'
 import store from '../../store'
 import * as userActions from 'actions/user'
 import { privateKeyToPublicKey } from 'utils/key'
+import utils from 'utils'
 
 import ui from "utils/ui";
 import './index.scss'
@@ -35,36 +36,50 @@ class GasManage extends Component<Props> {
     buyAmount: '',
     sellAmount: ''
   }
-  interval = null
+  timeout = null
+  _isMounted = false
 
   componentDidMount() {
     ui.settingLocation('/GasManage')
-    this.getGasInfo()
-    this.interval = setInterval(this.getGasInfo, 1000)
+    this._isMounted = true
+    this.getData()
+  }
+
+  getData = async () => {
+    while(this._isMounted){
+      await this.getGasInfo()
+      await utils.delay(5000)
+    }
   }
 
   componentWillUnmount() {
-    this.interval && clearInterval(this.interval)
+    this._isMounted = false
   }
 
 
   getGasInfo = () => {
-    iost.rpc.blockchain.getAccountInfo(iost.account.getID())
-    .then(data => {
-      const {gas_info: { current_total, limit, pledged_info }, balance, frozen_balances, } = data
-      this.setState({
-        userGasInfo: {
-          current_total,
-          limit,
-          pledged_info
-        },
-        balance,
-        frozen_balances: frozen_balances.reduce((prev, next) => {
-          return prev+=next.amount
-        },0),
-        pledged_amount: pledged_info.reduce((prev, next) => {
-          return prev+=next.amount
-        },0),
+    return new Promise((resolve, reject) => {
+      iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+      .then(data => {
+        const {gas_info: { current_total, limit, pledged_info }, balance, frozen_balances, } = data
+        this.setState({
+          userGasInfo: {
+            current_total,
+            limit,
+            pledged_info
+          },
+          balance,
+          frozen_balances: frozen_balances.reduce((prev, next) => {
+            return prev+=next.amount
+          },0),
+          pledged_amount: pledged_info.reduce((prev, next) => {
+            return prev+=next.amount
+          },0),
+        })
+        resolve()
+      })
+      .catch(err => {
+        resolve()
       })
     })
   }

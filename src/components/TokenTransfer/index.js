@@ -12,6 +12,7 @@ import { GET_TOKEN_BALANCE_INTERVAL } from 'constants/token'
 import TokenTransferSuccess from 'components/TokenTransferSuccess'
 import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
+import utils from 'utils'
 import LoadingImage from 'components/LoadingImage'
 
 import './index.scss'
@@ -39,16 +40,22 @@ class Index extends Component<Props> {
     errorMessage: '',
     isShowing: false, // 是否显示多余资源输入框
   }
+  _isMounted = false
 
   componentDidMount() {
-    this.intervalID = setInterval(() => {
-      this.getTokenBalance()
-      this.getResourceBalance()
-    }, GET_TOKEN_BALANCE_INTERVAL)
+    this._isMounted = true
+    this.getData()
   }
 
+  getData = async () => {
+    while(this._isMounted){
+      await this.getResourceBalance()
+      await utils.delay(5000)
+    }
+  }
+  
   componentWillUnmount() {
-    this.intervalID && clearInterval(this.intervalID)
+    this._isMounted = false
   }
 
   getTokenBalance = async () => {
@@ -68,13 +75,23 @@ class Index extends Component<Props> {
     })
   }
 
-  getResourceBalance = async () => {
-    const accountInfo = await iost.rpc.blockchain.getAccountInfo(iost.account.getID())
-    this.setState({
-      accountInfo,
-      gas: accountInfo.gas_info && accountInfo.gas_info.current_total,
-      ram: accountInfo.ram_info && accountInfo.ram_info.available,
-      isLoading: false,
+  getResourceBalance = () => {
+    return new Promise((resolve, reject) => {
+      iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+      .then(({ balance, frozen_balances, gas_info, ram_info}) => {
+        const frozenAmount = frozen_balances.reduce((prev, next) => (prev += next.amount, prev), 0)
+        this.setState({
+          balance,
+          frozenAmount,
+          gas: gas_info.current_total,
+          ram: ram_info.available,
+          isLoading: false,
+        })
+        resolve()
+      })
+      .catch(err => {
+        resolve()
+      })
     })
   }
 

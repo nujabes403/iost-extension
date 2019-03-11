@@ -7,6 +7,7 @@ import LoadingImage from 'components/LoadingImage'
 import iost from 'iostJS/iost'
 import { GET_TOKEN_BALANCE_INTERVAL } from 'constants/token'
 import iconSrc from 'constants/icon'
+import utils from 'utils'
 
 import './index.scss'
 import ui from "utils/ui";
@@ -20,20 +21,22 @@ class Index extends Component<Props> {
     amount: 0,
     isLoading: true,
   }
-
-  intervalID = null
+  _isMounted = false
 
   componentDidMount() {
-    this.getTokenBalance()
-    this.getResourceBalance()
-    this.intervalID = setInterval(() => {
-      this.getTokenBalance()
-      this.getResourceBalance()
-    }, GET_TOKEN_BALANCE_INTERVAL)
+    this._isMounted = true
+    this.getData()
+  }
+
+  getData = async () => {
+    while(this._isMounted){
+      await this.getResourceBalance()
+      await utils.delay(5000)
+    }
   }
 
   componentWillUnmount() {
-    if (this.intervalID) clearInterval(this.intervalID)
+    this._isMounted = false
   }
 
   getTokenBalance = async () => {
@@ -55,20 +58,30 @@ class Index extends Component<Props> {
     })
   }
 
-  getResourceBalance = async () => {
-    const accountInfo = await iost.rpc.blockchain.getAccountInfo(iost.account.getID())
-    this.setState({
-      accountInfo,
-      gas: accountInfo.gas_info && accountInfo.gas_info.current_total,
-      gas_used: accountInfo.gas_info && Number((accountInfo.gas_info.limit - accountInfo.gas_info.current_total).toFixed(4)),
-      ram: accountInfo.ram_info && Number((accountInfo.ram_info.available/1024).toFixed(4)),
-      ram_used: accountInfo.ram_info && Number((accountInfo.ram_info.used/1024).toFixed(4)),
-      isLoading: false,
+  getResourceBalance = () => {
+    return new Promise((resolve, reject) => {
+      iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+      .then(({balance, frozen_balances, gas_info, ram_info}) => {
+        const frozenAmount = frozen_balances.reduce((prev, next) => (prev += next.amount, prev), 0)
+        this.setState({
+          amount: balance,
+          frozenAmount,
+          gas: gas_info.current_total,
+          gas_used: Number((gas_info.limit - gas_info.current_total).toFixed(4)),
+          ram: Number((ram_info.available/1024).toFixed(4)),
+          ram_used: Number((ram_info.used/1024).toFixed(4)),
+          isLoading: false,
+        })
+        resolve()
+      })
+      .catch(err => {
+        resolve()
+      })
     })
   }
 
   render() {
-    const { frozenAmount, accountInfo, amount, gas, gas_used, ram, ram_used, isLoading } = this.state
+    const { frozenAmount, amount, gas, gas_used, ram, ram_used, isLoading } = this.state
     const { selectedTokenSymbol, account, moveTo } = this.props
     const url = account?`${account.network == 'MAINNET'?'https://explorer.iost.io':'http://54.249.186.224'}/account/${account.name}`:'#'
     return (

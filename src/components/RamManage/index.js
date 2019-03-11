@@ -11,6 +11,7 @@ import iost from 'iostJS/iost'
 import store from '../../store'
 import * as userActions from 'actions/user'
 import { privateKeyToPublicKey } from 'utils/key'
+import utils from 'utils'
 
 import ui from "utils/ui";
 import './index.scss'
@@ -36,34 +37,58 @@ class RamManage extends Component<Props> {
       used: 0,
     }
   }
+  _isMounted = false
 
-  interval = null
 
   componentDidMount() {
-    this.getRAMInfo()
-    this.interval = setInterval(this.getRAMInfo, 1000)
+    ui.settingLocation('/RamManage')
+    this._isMounted = true
+    this.getData()
+  }
+
+  getData = async () => {
+    while(this._isMounted){
+      await this.getRAMInfo()
+      await this.getUserRamInfo()
+      await utils.delay(5000)
+    }
   }
 
   componentWillUnmount() {
-    this.interval && clearInterval(this.interval)
+    this._isMounted = false
   }
 
   getRAMInfo = () => {
-    iost.rpc.getProvider().send('get', 'getRAMInfo')
-    .then(ramMarketInfo => {
-      this.setState({
-        ramMarketInfo,
+    return new Promise((resolve, reject) => {
+      iost.rpc.getProvider().send('get', 'getRAMInfo')
+      .then(ramMarketInfo => {
+        this.setState({
+          ramMarketInfo,
+        })
+        resolve()
+      })
+      .catch(err => {
+        resolve()
       })
     })
-    iost.rpc.blockchain.getAccountInfo(iost.account.getID())
-    .then(data => {
-      const { available, total, used } = data.ram_info
-      this.setState({
-        userRamInfo: {
-          available: (available/1024).toFixed(4),
-          total: (total/1024).toFixed(4),
-          used: (used/1024).toFixed(4),
-        }
+  }
+
+  getUserRamInfo = () => {
+    return new Promise((resolve, reject) => {
+      iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+      .then(data => {
+        const { available, total, used } = data.ram_info
+        this.setState({
+          userRamInfo: {
+            available: Number((available/1024).toFixed(4)),
+            total: Number((total/1024).toFixed(4)),
+            used: Number((used/1024).toFixed(4)),
+          }
+        })
+        resolve()
+      })
+      .catch(err => {
+        resolve()
       })
     })
   }
