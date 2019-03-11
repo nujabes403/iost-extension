@@ -253,13 +253,13 @@ const zhTranslation = {
   "GasManage_Locked": "已锁定",
   "GasManage_Available": "可用",
   "GasManage_Stake": "抵押",
-  "GasManage_UnStake": "退还",
+  "GasManage_UnStake": "赎回",
   "GasManage_StakeAmount": "抵押金额",
-  "GasManage_UnStakeAmount": "退还金额",
+  "GasManage_UnStakeAmount": "赎回金额",
   "GasManage_Balance": "余额",
   "GasManage_StakeEnter": "输入金额",
   "GasManage_StakeAddress": "收取资源地址",
-  "GasManage_UnStakeAddress": "退还资源地址",
+  "GasManage_UnStakeAddress": "赎回资源地址",
   "GasManage_Optional": "选填，默认为您的地址",
 }
 
