@@ -25,7 +25,7 @@ const enTranslation = {
   "CreateAccount_ChangePrivateKey": "Change private key pair",
   "CreateAccount_ToastTip1": "Wrong private key pair",
   "CreateAccount_Pay": "Pay",
-  "CreateAccount_Tip3": "Creating a new account on IOST network costs about 100 IOST. It will be used to purchase 0.98K RAM to get GAS fees.",
+  "CreateAccount_Tip3": "Creating a new account on IOST network costs about 100 IOST. It will be used to purchase 0.98K iRAM to get iGAS fees.",
   "CreateAccount_Tip4": "Please select payment method to pay.",
   "CreateAccount_PaymentCurrency": "Payment Currency ",
   "CreateAccount_PaymentAddress": "Payment Address",
@@ -97,7 +97,7 @@ const enTranslation = {
   "Dapp_Cancel": "Cancel",
   "Dapp_Confirm": "Confirm",
 
-  "RamManage_Title": "Manage RAM resource",
+  "RamManage_Title": "Manage iRAM resource",
   "RamManage_Used": "Used",
   "RamManage_Remaining": "Balance",
   "RamManage_Buy": "Purchase",
@@ -112,25 +112,25 @@ const enTranslation = {
   "RamManage_SellEnter": "Input Sell Amount ",
 
 
-  "GasManage_Title": "Manage GAS resource",
+  "GasManage_Title": "Manage iGAS resource",
   "GasManage_Lock": "Locked",
   "GasManage_Locked": "Locked",
   "GasManage_Available": "Available",
-  "GasManage_Stake": "Stake",
+  "GasManage_Stake": "Pledge",
   "GasManage_Stakeing": "抵押中",
-  "GasManage_UnStake": "Refund",
-  "GasManage_CanUnStake": "Refund Available",
-  "GasManage_UnStakeing": "Refund",
+  "GasManage_UnStake": "Unpledge",
+  "GasManage_CanUnStake": "Unpledge Available",
+  "GasManage_UnStakeing": "Unpledge",
   "GasManage_StakeAmount": "Stake Amount",
-  "GasManage_UnStakeAmount": "Refund Amount",
+  "GasManage_UnStakeAmount": "Unpledge Amount",
   "GasManage_Balance": "Balance",
   "GasManage_StakeEnter": "Input Amount",
   "GasManage_StakeAddress": "Resource Receive Address",
-  "GasManage_UnStakeAddress": "Resource Refund Address",
+  "GasManage_UnStakeAddress": "Resource Unpledge Address",
   "GasManage_Optional": "Optional, default is your address",
-  "GasManage_Tip": "* Refund resources require 3 natural days and the refunding amount is not available.",
+  "GasManage_Tip": "* Unpledge resources require 3 natural days and the Unpledging amount is not available.",
   "GasManage_Records": "Resource Manage Record",
-  "GasManage_Records_Item": "Stake GAS for %{name}",
+  "GasManage_Records_Item": "Stake iGAS for %{name}",
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",
@@ -161,7 +161,7 @@ const zhTranslation = {
   "CreateAccount_ChangePrivateKey": "更换密钥对",
   "CreateAccount_ToastTip1": "错误的密钥对",
   "CreateAccount_Pay": "支付费用",
-  "CreateAccount_Tip3": "在 IOST 网络上创建一个新账户需要支付约100 IOST的费用。它将被用于购买0.98K的RAM和抵押以获得GAS费用。",
+  "CreateAccount_Tip3": "在 IOST 网络上创建一个新账户需要支付约100 IOST的费用。它将被用于购买0.98K的iRAM和抵押以获得iGAS费用。",
   "CreateAccount_Tip4": "请根据选择的支付方式进行支付。",
   "CreateAccount_PaymentCurrency": "支付币种",
   "CreateAccount_PaymentAddress": "支付地址",
@@ -242,7 +242,7 @@ const zhTranslation = {
   "Dapp_Confirm": "确认",
 
 
-  "RamManage_Title": "管理RAM资源",
+  "RamManage_Title": "管理iRAM资源",
   "RamManage_Used": "已使用",
   "RamManage_Remaining": "剩余",
   "RamManage_Buy": "购买",
@@ -257,7 +257,7 @@ const zhTranslation = {
   "RamManage_SellEnter": "输入卖出量",
 
 
-  "GasManage_Title": "管理GAS资源",
+  "GasManage_Title": "管理iGAS资源",
   "GasManage_Lock": "锁定",
   "GasManage_Locked": "已锁定",
   "GasManage_Available": "可用",
@@ -275,7 +275,7 @@ const zhTranslation = {
   "GasManage_Optional": "选填，默认为您的地址",
   "GasManage_Tip": "*赎回资源需要3⾃然日，赎回金额不可用。",
   "GasManage_Records": "资源管理记录",
-  "GasManage_Records_Item": "为 %{name} 抵押 GAS",
+  "GasManage_Records_Item": "为 %{name} 抵押 iGAS",
 }
 
 
@@ -307,7 +307,7 @@ const koTranslation = {
   "CreateAccount_ChangePrivateKey": "프라이빗 키 쌍 변경",
   "CreateAccount_ToastTip1": "잘못된 프라이빗 키 쌍",
   "CreateAccount_Pay": "지불",
-  "CreateAccount_Tip3": "IOST 네트워크에서 새 계정을 만드는 데는 약 100 IOST가 소요됩니다. 그것은 GAS 요금을 얻기 위해 0.98K RAM을 구입하는 데 사용됩니다.",
+  "CreateAccount_Tip3": "IOST 네트워크에서 새 계정을 만드는 데는 약 100 IOST가 소요됩니다. 그것은 iGAS 요금을 얻기 위해 0.98K iRAM을 구입하는 데 사용됩니다.",
   "CreateAccount_Tip4": "결제 방법을 선택하십시오.",
   "CreateAccount_PaymentCurrency": "지불 통화",
   "CreateAccount_PaymentAddress": "지불 주소",
@@ -380,7 +380,7 @@ const koTranslation = {
   "Dapp_Confirm": "확인",
 
 
-  "RamManage_Title": "RAM 리소스를 조정하세요",
+  "RamManage_Title": "iRAM 리소스를 조정하세요",
   "RamManage_Used": "사용중",
   "RamManage_Remaining": "사용가능",
   "RamManage_Buy": "구매하기",
@@ -395,7 +395,7 @@ const koTranslation = {
   "RamManage_SellEnter": "판매 수량을 적으세요",
 
 
-  "GasManage_Title": "GAS 리소스를 조정하세요",
+  "GasManage_Title": "iGAS 리소스를 조정하세요",
   "GasManage_Lock": "locked",
   "GasManage_Locked": "Locked",
   "GasManage_Available": "사용가능",
@@ -413,7 +413,7 @@ const koTranslation = {
   "GasManage_Optional": "선택사항, 기본값은 당신의 주소입니다",
   "GasManage_Tip": "* 보너스 신청은 3 일간의 자연수가 필요하며 보너스 신청 금액은 없습니다.",
   "GasManage_Records": "리소스 관리 기록",
-  "GasManage_Records_Item": "GAS를 %{name}를 위해서 스테이킹하기",
+  "GasManage_Records_Item": "iGAS를 %{name}를 위해서 스테이킹하기",
 }
 
 export default {

@@ -70,7 +70,7 @@ class PledgeGas extends Component<Props> {
         </div>
         {!!amount && (
           <p className="PledgeGas__expectedEarnGas">
-            = Get {(Number(amount) * 100000)} immediate GAS + Generate {(Number(amount) * 200000)} GAS during 2 days.
+            = Get {(Number(amount) * 100000)} immediate iGAS + Generate {(Number(amount) * 200000)} iGAS during 2 days.
           </p>
         )}
         {isShowAdvancedOption && (

@@ -141,19 +141,19 @@ class GasManage extends Component<Props> {
         <div className="gasManage-box">
           <div className="progress-box">
             <div className="ram-default">
-              <span>GAS</span>
-              <span>{userGasInfo.limit} GAS</span>
+              <span>iGAS</span>
+              <span>{userGasInfo.limit} iGAS</span>
             </div>
             <div className="progress-wrap">
               <div className="progress-inner" style={{width: `${percent}%`}}></div>
             </div>
             <div className="ram-used">
-              <span>{I18n.t('GasManage_Locked')}: {Number((userGasInfo.limit-userGasInfo.current_total).toFixed(4))}GAS</span>
-              <span>{I18n.t('GasManage_Available')}: {Number(userGasInfo.current_total.toFixed(4))}GAS</span>
+              <span>{I18n.t('GasManage_Locked')}: {parseInt(userGasInfo.limit-userGasInfo.current_total)} iGAS</span>
+              <span>{I18n.t('GasManage_Available')}: {parseInt(userGasInfo.current_total)} iGAS</span>
             </div>
           </div>
 
-          {frozen_balances ? <div className="selling-gas"><span><b>{I18n.t('GasManage_UnStakeing')} GAS</b></span><span>{frozen_balances} IOST</span></div>: ''}
+          {frozen_balances ? <div className="selling-gas"><span><b>{I18n.t('GasManage_UnStakeing')} iGAS</b></span><span>{frozen_balances} IOST</span></div>: ''}
 
           <div className="gas-content-box">
             <div className="toggle-title">
@@ -183,7 +183,7 @@ class GasManage extends Component<Props> {
                 <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('GasManage_Optional')} onChange={this.handleChange} className="input-address" />
               </div>
             </div>
-            <Button className="gas-btn-submit" onClick={this.onSubmit}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
+            <Button className="gas-btn-submit" onClick={this.onSubmit} disabled={isStake?Number(buyAmount)<=0:Number(buyAmount)<=0}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
             {isStake?'':<p className="gas-tip">{I18n.t('GasManage_Tip')}</p>}
           </div>
 

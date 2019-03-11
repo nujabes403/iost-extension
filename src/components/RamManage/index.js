@@ -91,7 +91,8 @@ class RamManage extends Component<Props> {
     const { isBuy, buyAmount,sellAmount, resourceAddress  } = this.state
     const account = iost.account.getID()
     if(isBuy){
-      iost.sendTransaction('ram.iost', 'buy', [account, resourceAddress || account, Number(buyAmount*1024)])
+      const _buyAmount = parseInt(buyAmount * 1024)
+      iost.sendTransaction('ram.iost', 'buy', [account, resourceAddress || account, _buyAmount])
       .onPending(() => {
         this.setState({
           isLoading: true,
@@ -112,7 +113,8 @@ class RamManage extends Component<Props> {
         // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }else {
-      iost.sendTransaction('ram.iost', 'sell', [account, account, Number(sellAmount*1024)])
+      const _sellAmount = parseInt(sellAmount*1024)
+      iost.sendTransaction('ram.iost', 'sell', [account, account, _sellAmount])
       .onPending(() => {
         this.setState({
           isLoading: true,
@@ -145,7 +147,7 @@ class RamManage extends Component<Props> {
         <div className="ramManage-box">
           <div className="progress-box">
             <div className="ram-default">
-              <span>RAM</span>
+              <span>iRAM</span>
               <span>{userRamInfo.total} KB</span>
             </div>
             <div className="progress-wrap">
@@ -184,7 +186,7 @@ class RamManage extends Component<Props> {
                 <p className="equal-iost">{`=${(sellAmount*ramMarketInfo.sell_price*1024).toFixed(4)} IOST`}</p>
               </div>
             </div>
-            <Button className="btn-submit" onClick={this.onSubmit}>{isLoading?<LoadingImage />:I18n.t('Transfer_Submit')}</Button>
+            <Button className="ram-btn-submit" onClick={this.onSubmit} disabled={isBuy?Number(buyAmount)<=0:Number(sellAmount)<=0}>{isLoading?<LoadingImage />:I18n.t('Transfer_Submit')}</Button>
           </div>
         </div>
       </Fragment>

@@ -115,7 +115,10 @@
   }
 }
 
-.btn-submit {
+.ram-btn-submit {
   position: absolute;
   bottom: 20px;
+  &:disabled{
+    cursor: not-allowed;
+  }
 }
