@@ -6,6 +6,7 @@
   height: 540px;
   background-color: $gray;
   padding: 15px;
+  overflow: auto;
 }
 
 .progress-box {
@@ -135,4 +136,39 @@
   // position: absolute;
   // bottom: 20px;
   margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.gas-records{
+  margin: 15px 0;
+  .title{
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+    &:before{
+      content: '';
+      border-bottom: 1px solid #ddd;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 10px;
+      z-index: 1;
+    }
+    span{
+      padding: 0 5px;
+      position: relative;
+      z-index: 2;
+      background-color: #F6F6F6;
+    }
+  }
+  ul{
+    li{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+  }
 }

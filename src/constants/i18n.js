@@ -129,6 +129,8 @@ const enTranslation = {
   "GasManage_UnStakeAddress": "Resource Refund Address",
   "GasManage_Optional": "Optional, default is your address",
   "GasManage_Tip": "* Refund resources require 3 natural days and the refunding amount is not available.",
+  "GasManage_Records": "Resource Manage Record",
+  "GasManage_Records_Item": "Stake GAS for %{name}",
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",
@@ -272,6 +274,8 @@ const zhTranslation = {
   "GasManage_UnStakeAddress": "赎回资源地址",
   "GasManage_Optional": "选填，默认为您的地址",
   "GasManage_Tip": "*赎回资源需要3⾃然日，赎回金额不可用。",
+  "GasManage_Records": "资源管理记录",
+  "GasManage_Records_Item": "为 %{name} 抵押 GAS",
 }
 
 
@@ -408,6 +412,8 @@ const koTranslation = {
   "GasManage_UnStakeAddress": "리소스 리펀드 주소",
   "GasManage_Optional": "선택사항, 기본값은 당신의 주소입니다",
   "GasManage_Tip": "* 보너스 신청은 3 일간의 자연수가 필요하며 보너스 신청 금액은 없습니다.",
+  "GasManage_Records": "리소스 관리 기록",
+  "GasManage_Records_Item": "GAS를 %{name}를 위해서 스테이킹하기",
 }
 
 export default {

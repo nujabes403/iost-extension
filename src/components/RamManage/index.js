@@ -44,6 +44,10 @@ class RamManage extends Component<Props> {
     this.interval = setInterval(this.getRAMInfo, 1000)
   }
 
+  componentWillUnmount() {
+    this.interval && clearInterval(this.interval)
+  }
+
   getRAMInfo = () => {
     iost.rpc.getProvider().send('get', 'getRAMInfo')
     .then(ramMarketInfo => {

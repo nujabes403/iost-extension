@@ -47,6 +47,10 @@ class Index extends Component<Props> {
     }, GET_TOKEN_BALANCE_INTERVAL)
   }
 
+  componentWillUnmount() {
+    this.intervalID && clearInterval(this.intervalID)
+  }
+
   getTokenBalance = async () => {
     const { selectedTokenSymbol } = this.props
     const { balance, frozen_balances } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)

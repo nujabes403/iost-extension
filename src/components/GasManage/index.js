@@ -27,6 +27,7 @@ class GasManage extends Component<Props> {
     userGasInfo: {
       current_total: 0,
       limit: 0,
+      pledged_info: []
     },
     frozen_balances: 0,
     pledged_amount: 0,
@@ -42,6 +43,11 @@ class GasManage extends Component<Props> {
     this.interval = setInterval(this.getGasInfo, 1000)
   }
 
+  componentWillUnmount() {
+    this.interval && clearInterval(this.interval)
+  }
+
+
   getGasInfo = () => {
     iost.rpc.blockchain.getAccountInfo(iost.account.getID())
     .then(data => {
@@ -49,7 +55,8 @@ class GasManage extends Component<Props> {
       this.setState({
         userGasInfo: {
           current_total,
-          limit
+          limit,
+          pledged_info
         },
         balance,
         frozen_balances: frozen_balances.reduce((prev, next) => {
@@ -177,7 +184,16 @@ class GasManage extends Component<Props> {
               </div>
             </div>
             <Button className="gas-btn-submit" onClick={this.onSubmit}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
-            {isStake?'':<p>{I18n.t('GasManage_Tip')}</p>}
+            {isStake?'':<p className="gas-tip">{I18n.t('GasManage_Tip')}</p>}
+          </div>
+
+          <div className="gas-records">
+            <div className="title">
+              <span>{I18n.t('GasManage_Records')}</span>
+            </div>
+            <ul>
+              {userGasInfo.pledged_info.map( (t,i) => <li key={i}><span>{I18n.t('GasManage_Records_Item', {name: t.pledger})}</span><span>{t.amount} IOST</span></li>)}
+            </ul>
           </div>
         </div>
       </Fragment>
