@@ -119,7 +119,7 @@ const enTranslation = {
   "GasManage_Stake": "Pledge",
   "GasManage_Stakeing": "抵押中",
   "GasManage_UnStake": "Unpledge",
-  "GasManage_CanUnStake": "Unpledge Available",
+  "GasManage_CanUnStake": "Available",
   "GasManage_UnStakeing": "Unpledge",
   "GasManage_StakeAmount": "Stake Amount",
   "GasManage_UnStakeAmount": "Unpledge Amount",
