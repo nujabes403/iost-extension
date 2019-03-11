@@ -15,9 +15,10 @@
     height: 100px;
     width: 100%;
     padding: 0 20px;
-    &:nth-child(2n+1) {
-      background-color: $white;
-    }
+    border-bottom: 1px solid #eee;
+    // &:nth-child(2n+1) {
+    //   background-color: $white;
+    // }
     .left {
       span {
         display: inline-block;
