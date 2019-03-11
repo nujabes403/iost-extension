@@ -4,7 +4,7 @@ const ACTION = require('./extensionActions')
 const inpagePath = chrome.runtime.getURL('app/inpage.js')
 
 // const inpageContent = fs.readFileSync(path.join(__dirname, '..', '..', 'dist', 'app', 'inpage.js')).toString()
-const inpageContent = fs.readFileSync(path.join(__dirname, 'inpage.js')).toString()
+// const inpageContent = fs.readFileSync(path.join(__dirname, 'inpage.js')).toString()
 // const inpageSuffix = '//# sourceURL=' + chrome.runtime.getURL('app/inpage.js') + '\n'
 // const inpageBundle = inpageContent + inpageSuffix
 // console.log(inpageBundle)

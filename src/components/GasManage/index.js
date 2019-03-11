@@ -38,6 +38,7 @@ class GasManage extends Component<Props> {
 
   componentDidMount() {
     ui.settingLocation('/GasManage')
+    this.getGasInfo()
     this.interval = setInterval(this.getGasInfo, 1000)
   }
 
@@ -73,34 +74,12 @@ class GasManage extends Component<Props> {
   }
 
 
-  onBlur = () => {
-    const { account, illegal } = this.state
-    const reg = new RegExp(/^[A-Za-z1-9]{5,11}$/);
-    if (!reg.test(account)){
-      this.setState({
-        illegal: true
-      })
-    }
-    return illegal
-  }
-
-  onFocus = () => {
-    this.setState({
-      illegal: false
-    })
-  }
-
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
     })
   }
 
-  deleteAll = () => {
-    this.setState({
-      account: '',
-    })
-  }
 
   onSubmit = () => {
     const { isStake, buyAmount, resourceAddress, sellAmount } = this.state
@@ -114,10 +93,14 @@ class GasManage extends Component<Props> {
       })
       .onSuccess((response) => {
         this.setState({ isLoading: false })
+        ui.settingTransferInfo(response)
+        this.moveTo('/tokenTransferSuccess')()
         // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
       .onFailed((err) => {
         this.setState({ isLoading: false })
+        ui.settingTransferInfo(err)
+        this.moveTo('/tokenTransferFailed')()
         // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }else{
@@ -129,10 +112,14 @@ class GasManage extends Component<Props> {
         })
         .onSuccess((response) => {
           this.setState({ isLoading: false })
+          ui.settingTransferInfo(response)
+          this.moveTo('/tokenTransferSuccess')()
           // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
         })
         .onFailed((err) => {
           this.setState({ isLoading: false })
+          ui.settingTransferInfo(err)
+          this.moveTo('/tokenTransferFailed')()
           // ui.openPopup({ content: <TransactionFailed tx={err} /> })
         })
     }
@@ -159,7 +146,7 @@ class GasManage extends Component<Props> {
             </div>
           </div>
 
-          {frozen_balances ? <div className="selling-gas"><span><b>赎回中 GAS</b></span><span>{frozen_balances} IOST</span></div>: ''}
+          {frozen_balances ? <div className="selling-gas"><span><b>{I18n.t('GasManage_UnStakeing')} GAS</b></span><span>{frozen_balances} IOST</span></div>: ''}
 
           <div className="gas-content-box">
             <div className="toggle-title">
@@ -181,7 +168,7 @@ class GasManage extends Component<Props> {
               <div className={classnames("seal-box", isStake ? '': 'active')}>
                 <div className="buy-title">
                   <span className="buy-amount">{I18n.t('GasManage_UnStakeAmount')}</span>
-                  <span className="buy-price">{'可退换'}: {pledged_amount} IOST</span>
+                  <span className="buy-price">{I18n.t('GasManage_CanUnStake')}: {pledged_amount} IOST</span>
                 </div>
                 <Input name="sellAmount" value={sellAmount} placeholder={I18n.t('GasManage_StakeEnter')} onChange={this.handleChange} className="input-buyAmount" />
 
@@ -190,7 +177,7 @@ class GasManage extends Component<Props> {
               </div>
             </div>
             <Button className="gas-btn-submit" onClick={this.onSubmit}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
-            {isStake?'':<p>*赎回资源需要3⾃自然⽇日，期间赎回中⾦金金额不不可⽤用。</p>}
+            {isStake?'':<p>{I18n.t('GasManage_Tip')}</p>}
           </div>
         </div>
       </Fragment>

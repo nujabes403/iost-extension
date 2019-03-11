@@ -6,7 +6,7 @@ import ui from 'utils/ui';
 import './index.scss'
 
 const settingList = [
-  { id: 1, name: 'nodeVoting' },
+  // { id: 1, name: 'nodeVoting' },
   { id: 2, name: 'userAgreement' },
 ]
 type Props = {

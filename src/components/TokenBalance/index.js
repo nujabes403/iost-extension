@@ -24,6 +24,8 @@ class Index extends Component<Props> {
   intervalID = null
 
   componentDidMount() {
+    this.getTokenBalance()
+    this.getResourceBalance()
     this.intervalID = setInterval(() => {
       this.getTokenBalance()
       this.getResourceBalance()
@@ -58,13 +60,15 @@ class Index extends Component<Props> {
     this.setState({
       accountInfo,
       gas: accountInfo.gas_info && accountInfo.gas_info.current_total,
+      gas_used: accountInfo.gas_info && Number((accountInfo.gas_info.limit - accountInfo.gas_info.current_total).toFixed(4)),
       ram: accountInfo.ram_info && accountInfo.ram_info.available,
+      ram_used: accountInfo.ram_info && accountInfo.ram_info.used,
       isLoading: false,
     })
   }
 
   render() {
-    const { frozenAmount, accountInfo, amount, gas, ram, isLoading } = this.state
+    const { frozenAmount, accountInfo, amount, gas, gas_used, ram, ram_used, isLoading } = this.state
     const { selectedTokenSymbol, account, moveTo } = this.props
     const url = account?`${account.network == 'MAINNET'?'https://explorer.iost.io':'http://54.249.186.224'}/account/${account.name}`:'#'
     return (
@@ -82,8 +86,8 @@ class Index extends Component<Props> {
 
         {!isLoading && (
           <div className="TokenBalance__resources">
-            <span className="TokenBalance__gas" onClick={moveTo('/gasManage')}>{gas} {I18n.t('iGAS')}</span>
-            <span className="TokenBalance__ram" onClick={moveTo('/ramManage')}>{ram} {I18n.t('iRAM')}</span>
+            <p className="TokenBalance__gas" onClick={moveTo('/gasManage')}>GAS：{gas_used} {I18n.t('GasManage_Lock')}/{gas} {I18n.t('GasManage_Available')}</p>
+            <p className="TokenBalance__ram" onClick={moveTo('/ramManage')}>RAM：{ram_used} {I18n.t('RamManage_Used')}/{ram} {I18n.t('RamManage_Remaining')}</p>
           </div>
         )}
       </div>

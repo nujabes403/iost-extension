@@ -63,8 +63,8 @@ class App extends Component<Props> {
                       iost.changeNetwork(url)
                       iost.loginAccount(name, encodedPrivateKey)
                       chrome.storage.local.set({ activeAccount: account },() => {
-                        this.changeLocation('/gasManage')
-                        // this.changeLocation('/account')
+                        // this.changeLocation('/gasManage')
+                        this.changeLocation('/account')
                       })
                     }else {
                       this.changeLocation('/lock')

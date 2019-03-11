@@ -34,11 +34,17 @@
     font-size: 14px;
   }
   .TokenBalance__resources {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 300;
     .TokenBalance__ram {
       display: inline-block;
       margin-left: 10px;
+      // text-decoration: underline;
+      cursor: pointer;
+    }
+    .TokenBalance__gas{
+      // text-decoration: underline;
+      cursor: pointer;
     }
   }
 }
