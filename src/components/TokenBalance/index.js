@@ -61,8 +61,8 @@ class Index extends Component<Props> {
       accountInfo,
       gas: accountInfo.gas_info && accountInfo.gas_info.current_total,
       gas_used: accountInfo.gas_info && Number((accountInfo.gas_info.limit - accountInfo.gas_info.current_total).toFixed(4)),
-      ram: accountInfo.ram_info && accountInfo.ram_info.available,
-      ram_used: accountInfo.ram_info && accountInfo.ram_info.used,
+      ram: accountInfo.ram_info && Number((accountInfo.ram_info.available/1024).toFixed(4)),
+      ram_used: accountInfo.ram_info && Number((accountInfo.ram_info.used/1024).toFixed(4)),
       isLoading: false,
     })
   }
@@ -87,7 +87,7 @@ class Index extends Component<Props> {
         {!isLoading && (
           <div className="TokenBalance__resources">
             <p className="TokenBalance__gas" onClick={moveTo('/gasManage')}>iGAS：{parseInt(gas_used)} {I18n.t('GasManage_Lock')}/{parseInt(gas)} {I18n.t('GasManage_Available')}</p>
-            <p className="TokenBalance__ram" onClick={moveTo('/ramManage')}>iRAM：{ram_used} {I18n.t('RamManage_Used')}/{ram} {I18n.t('RamManage_Remaining')}</p>
+            <p className="TokenBalance__ram" onClick={moveTo('/ramManage')}>iRAM：{ram_used}KB {I18n.t('RamManage_Used')}/{ram}KB {I18n.t('RamManage_Remaining')}</p>
           </div>
         )}
       </div>
