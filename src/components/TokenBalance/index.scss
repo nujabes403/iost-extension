@@ -46,5 +46,16 @@
       // text-decoration: underline;
       cursor: pointer;
     }
+    .TokenBalance__resources_manage{
+      margin-top: 10px;
+      a{
+        font-size: 13px;
+        cursor: pointer;
+        text-decoration: underline;
+        &:first-child{
+          margin-right: 12px;
+        }
+      }
+    }
   }
 }

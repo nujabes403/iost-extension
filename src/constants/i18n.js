@@ -131,6 +131,15 @@ const enTranslation = {
   "GasManage_Tip": "* Unpledge resources require 3 natural days and the Unpledging amount is not available.",
   "GasManage_Records": "Resource Manage Record",
   "GasManage_Records_Item": "Pledge iGAS for %{name}",
+
+  "transferResult": "Transfer Result",
+  "transferSuccess": "Successfully Transfered",
+  "transferFailed": "Transfer Failed",
+  "transferFailedTip": "Transfer Failure Tip",
+  "txid": "Tx ID",
+  "gasUsage": "iGAS Usage",
+  "transferClose": "Close",
+
 }
 
 //   "Transfer_Balance": "余额：%{num} %{token}",
@@ -276,6 +285,14 @@ const zhTranslation = {
   "GasManage_Tip": "*赎回资源需要3⾃然日，赎回金额不可用。",
   "GasManage_Records": "资源管理记录",
   "GasManage_Records_Item": "为 %{name} 抵押 iGAS",
+
+  "transferResult": "转账结果",
+  "transferSuccess": "转账成功",
+  "transferFailed": "转账失败",
+  "transferFailedTip": "转账失败提示",
+  "txid": "交易 ID",
+  "gasUsage": "iGas 用量",
+  "transferClose": "关闭",
 }
 
 
@@ -414,6 +431,14 @@ const koTranslation = {
   "GasManage_Tip": "* 보너스 신청은 3 일간의 자연수가 필요하며 보너스 신청 금액은 없습니다.",
   "GasManage_Records": "리소스 관리 기록",
   "GasManage_Records_Item": "iGAS를 %{name}를 위해서 스테이킹하기",
+
+  "transferResult": "결과 전송",
+  "transferSuccess": "성공적인 전송",
+  "transferFailed": "전송 실패",
+  "transferFailedTip": "전송 실패 프롬프트",
+  "txid": "거래 ID",
+  "gasUsage": "iGas 소비",
+  "transferClose": "닫기",
 }
 
 export default {

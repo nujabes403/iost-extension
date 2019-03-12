@@ -49,6 +49,9 @@ function listenForProviderRequest() {
         break;
       default:
     }
+
+    var port = chrome.runtime.connect({name: "knockknock"});
+    console.log(port)
   })
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

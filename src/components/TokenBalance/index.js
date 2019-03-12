@@ -106,6 +106,7 @@ class Index extends Component<Props> {
           <div className="TokenBalance__resources">
             <p className="TokenBalance__gas" onClick={moveTo('/gasManage')}>iGAS：{parseInt(gas_used)} {I18n.t('GasManage_Lock')}/{parseInt(gas)} {I18n.t('GasManage_Available')}</p>
             <p className="TokenBalance__ram" onClick={moveTo('/ramManage')}>iRAM：{ram_used}KB {I18n.t('RamManage_Used')}/{ram}KB {I18n.t('RamManage_Remaining')}</p>
+            <p className="TokenBalance__resources_manage"><a onClick={moveTo('/gasManage')}>{I18n.t('GasManage_Title')}</a><a onClick={moveTo('/ramManage')}>{I18n.t('RamManage_Title')}</a></p>
           </div>
         )}
       </div>
