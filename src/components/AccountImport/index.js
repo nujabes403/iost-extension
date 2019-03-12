@@ -44,6 +44,10 @@ class AccountImport extends Component<Props> {
     errorMessage: '',
   }
 
+  componentDidMount() {
+    ui.settingLocation('/accountImport')
+  }
+
   onSubmit = async () => {
     this.setState({
       isLoading: true
@@ -151,6 +155,7 @@ class AccountImport extends Component<Props> {
   // 首次登陆页，或添加账号页
   backTo = () => {
     const { changeLocation, locationList } = this.props
+    console.log(locationList)
     ui.deleteLocation()
     changeLocation(locationList[locationList.length - 1])
   }
