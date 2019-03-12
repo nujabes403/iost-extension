@@ -15,6 +15,7 @@
   .account-name {
     font-size: 14px;
     flex: 1;
+    cursor: pointer;
   }
   .arrow {
     position: relative;
@@ -22,6 +23,7 @@
     width: 10px;
     height: 8px;
     cursor: pointer;
+    margin-left: 8px;
     &.arrow-hide {
       display: none;
     }
@@ -31,9 +33,10 @@
       width: 8px;
       height: 8px;
       border: 1px solid #999999;
+      // transition: 0.3s all ease-in-out;
     }
     &.arrow-down {
-      margin-left: 8px;
+      // margin-left: 8px;
       &:before {
         transform: translateY(-4px) rotateZ(45deg);
         border-top-color: transparent;
@@ -42,7 +45,7 @@
     }
 
     &.arrow-right {
-      margin-left: 5px;
+      // margin-left: 5px;
       &:before {
         transform: translateY(-1px) rotateZ(45deg);
         border-bottom-color: transparent;
