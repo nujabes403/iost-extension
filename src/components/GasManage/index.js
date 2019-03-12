@@ -198,7 +198,7 @@ class GasManage extends Component<Props> {
                 <Input name="resourceAddress" value={resourceAddress} placeholder={I18n.t('GasManage_Optional')} onChange={this.handleChange} className="input-address" />
               </div>
             </div>
-            <Button className="gas-btn-submit" onClick={this.onSubmit} disabled={isStake?Number(buyAmount)<=0:Number(buyAmount)<=0}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
+            <Button className="gas-btn-submit" onClick={this.onSubmit} disabled={isStake?Number(buyAmount)<=0:Number(sellAmount)<=0}>{isLoading?<LoadingImage />: I18n.t('Transfer_Submit')}</Button>
             {isStake?'':<p className="gas-tip">{I18n.t('GasManage_Tip')}</p>}
           </div>
 

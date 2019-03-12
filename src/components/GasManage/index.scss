@@ -67,6 +67,7 @@
     font-weight: bold;
     .toggle-buy, .toggle-sell {
       position: relative;
+      cursor: pointer;
       &.active {
         &:before {
           content: '';

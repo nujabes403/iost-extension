@@ -35,6 +35,11 @@ class Index extends Component<Props> {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.getResourceBalance()
+  }
+  
+
   componentWillUnmount() {
     this._isMounted = false
   }
