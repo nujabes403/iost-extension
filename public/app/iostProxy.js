@@ -84,15 +84,20 @@ const IWalletJS = {
   enable: () => {
     //获取当前账号，后期可以改为账号选择
     return new Promise((resolve, reject) => {
-      if(IWalletJS.iost){
-        resolve(IWalletJS.iost.account._id)
-      }else if(IWalletJS.account != 'empty' && IWalletJS.account != null){
-        resolve(IWalletJS.account)
-      }else {
-        reject({
-          type: 'locked'
-        })
-      }
+      const invertal = setInterval(() => {
+        if(IWalletJS.network){
+          clearInterval(invertal)
+          if(IWalletJS.iost){
+            resolve(IWalletJS.iost.account._id)
+          }else if(IWalletJS.account != 'empty' && IWalletJS.account != null){
+            resolve(IWalletJS.account)
+          }else {
+            reject({
+              type: 'locked'
+            })
+          }
+        }
+      },100)
     })
   },
 
