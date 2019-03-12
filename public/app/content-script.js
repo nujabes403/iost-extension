@@ -50,8 +50,8 @@ function listenForProviderRequest() {
       default:
     }
 
-    var port = chrome.runtime.connect({name: "knockknock"});
-    console.log(port)
+    // var port = chrome.runtime.connect({name: "knockknock"});
+    // console.log(port)
   })
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
