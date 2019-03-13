@@ -140,40 +140,73 @@ class Index extends Component<Props> {
     const handler = new iost.pack.TxHandler(tx, iost.rpc)
 
     this.setState({ isSending: true })
-    let intervalID
     handler
       .onPending(async (res) => {
-        intervalID = setInterval(async() => {
-          const tx = await iost.rpc.transaction.getTxByHash(res.hash)
-        }, 1000)
+        let times = 90
+        const inverval = setInterval(async () => {
+          times--;
+          if(times){
+            iost.rpc.transaction.getTxByHash(res.hash)
+            .then( data => {
+              const tx_receipt = data.transaction.tx_receipt
+              if(tx_receipt){
+                clearInterval(inverval);
+                if (tx_receipt.status_code === "SUCCESS") {
+                  this.setState({ isSending: false })
+                  ui.settingTransferInfo(tx_receipt)
+                  this.moveTo('/tokenTransferSuccess')()
+                } else {
+                  if (typeof tx_receipt === 'string') {
+                    this.setState({
+                      isSending: false,
+                      errorMessage: typeof tx_receipt === 'string' && tx_receipt,
+                    })
+                  } else {
+                    this.setState({
+                      isSending: false,
+                    })
+                    ui.settingTransferInfo(tx_receipt)
+                    this.moveTo('/tokenTransferFailed')()
+                  }
+                }
+              }
+            })
+          }else {
+            clearInterval(inverval);
+            this.port.postMessage({
+              actionId,
+              failed: `Error: tx ${res.hash} on chain timeout.`
+            });
+          }
+        },1000)
       })
-      .onSuccess(async (response) => {
-        clearInterval(intervalID)
-        this.setState({ isSending: false })
-        ui.settingTransferInfo(response)
-        this.moveTo('/tokenTransferSuccess')()
-        // ui.openPopup({
-        //   content: <TokenTransferSuccess tx={response} />
-        // })
-      })
-      .onFailed((err) => {
-        clearInterval(intervalID)
-        if (typeof err === 'string') {
-          this.setState({
-            isSending: false,
-            errorMessage: typeof err === 'string' && err,
-          })
-        } else {
-          this.setState({
-            isSending: false,
-          })
-          ui.settingTransferInfo(err)
-          this.moveTo('/tokenTransferFailed')()
-          // ui.openPopup({
-          //   content: <TokenTransferFailed tx={err} />
-          // })
-        }
-      })
+      // .onSuccess(async (response) => {
+      //   // clearInterval(intervalID)
+      //   this.setState({ isSending: false })
+      //   ui.settingTransferInfo(response)
+      //   this.moveTo('/tokenTransferSuccess')()
+      //   // ui.openPopup({
+      //   //   content: <TokenTransferSuccess tx={response} />
+      //   // })
+      // })
+      // .onFailed((err) => {
+      //   // clearInterval(intervalID)
+      //   if (typeof err === 'string') {
+      //     this.setState({
+      //       isSending: false,
+      //       errorMessage: typeof err === 'string' && err,
+      //     })
+      //   } else {
+      //     this.setState({
+      //       isSending: false,
+      //     })
+      //     ui.settingTransferInfo(err)
+      //     this.moveTo('/tokenTransferFailed')()
+      //     // ui.openPopup({
+      //     //   content: <TokenTransferFailed tx={err} />
+      //     // })
+      //   }
+      // })
       .send()
       .listen(1000, 60)
   }

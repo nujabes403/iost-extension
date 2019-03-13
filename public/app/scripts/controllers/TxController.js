@@ -13,6 +13,10 @@ const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001'
 function TxController(state) {
   this.state = state
   this.txQueue = []
+  this.port = null
+  chrome.runtime.onConnect.addListener( (port) => {
+    this.port = port
+  })
 }
 
 TxController.prototype.addTx = function(txInfo) {
@@ -68,31 +72,85 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
       //   tx.addApprove("iost", txABI[2][3])
       // }
       const handler = iostController.iost.signAndSend(tx)
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        const activeTab = tabs[0].id
-        handler
-        .on('pending', (pending) => {
-          console.log(actionId, pending)
-          chrome.tabs.sendMessage(activeTab, {
-            actionId,
-            pending: pending
-          })
-        })
-        .on('success', (response) => {
-          console.log(actionId, response)
-          chrome.tabs.sendMessage(activeTab, {
-            actionId,
-            success: response
-          })
-        })
-        .on('failed', (err) => {
-          console.log(actionId, err)
-          chrome.tabs.sendMessage(activeTab, {
-            actionId,
-            failed: err.stack?err.message:err
-          })
-        })
+      handler
+      .on('pending', (pending) => {
+        this.port.postMessage({
+          actionId,
+          pending: pending
+        });
+        let times = 90
+        const inverval = setInterval(async () => {
+          times--;
+          if(times){
+            iostController.rpc.transaction.getTxByHash(pending)
+            .then( data => {
+              const tx_receipt = data.transaction.tx_receipt
+              if(tx_receipt){
+                clearInterval(inverval);
+                if (tx_receipt.status_code === "SUCCESS") {
+                  // console.log('successBy: ', tx_receipt)
+                  this.port.postMessage({
+                    actionId,
+                    success: tx_receipt
+                  });
+                } else {
+                  // console.log('failedBy: ', tx_receipt)
+                  this.port.postMessage({
+                    actionId,
+                    failed: tx_receipt.stack?tx_receipt.message:tx_receipt
+                  });
+                }
+              }
+            })
+          }else {
+            clearInterval(inverval);
+            this.port.postMessage({
+              actionId,
+              failed: `Error: tx ${pending} on chain timeout.`
+            });
+          }
+        },1000)
       })
+      // .on('success', (response) => {
+      //   console.log('success: ', response)
+      //   this.port.postMessage({
+      //     actionId,
+      //     success: response
+      //   });
+      // })
+      // .on('failed', (err) => {
+      //   console.log('failed: ', err)
+      //   this.port.postMessage({
+      //     actionId,
+      //     failed: err.stack?err.message:err
+      //   });
+      // })
+
+      // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      //   const activeTab = tabs[0].id
+      //   handler
+      //   .on('pending', (pending) => {
+      //     console.log(actionId, pending)
+      //     chrome.tabs.sendMessage(activeTab, {
+      //       actionId,
+      //       pending: pending
+      //     })
+      //   })
+      //   .on('success', (response) => {
+      //     console.log(actionId, response)
+      //     chrome.tabs.sendMessage(activeTab, {
+      //       actionId,
+      //       success: response
+      //     })
+      //   })
+      //   .on('failed', (err) => {
+      //     console.log(actionId, err)
+      //     chrome.tabs.sendMessage(activeTab, {
+      //       actionId,
+      //       failed: err.stack?err.message:err
+      //     })
+      //   })
+      // })
     }else {
       //not find account
     }
@@ -153,15 +211,19 @@ TxController.prototype.cancelTx = function(txIdx) {
   const txInfo = this.txQueue[txIdx]
   
   if(txInfo){
-    setTimeout(() => {
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        const activeTab = tabs[0].id
-        chrome.tabs.sendMessage(activeTab, {
-          actionId: txInfo.actionId,
-          failed: 'User rejected the signature request'
-        })
-      })
-    },200)
+    this.port.postMessage({
+      actionId: txInfo.actionId,
+      failed: 'User rejected the signature request'
+    });
+    // setTimeout(() => {
+    //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //     const activeTab = tabs[0].id
+    //     chrome.tabs.sendMessage(activeTab, {
+    //       actionId: txInfo.actionId,
+    //       failed: 'User rejected the signature request'
+    //     })
+    //   })
+    // },200)
   }
   if (!txInfo) throw new Error(`That TX is not exist. slotIdx: ${txIdx}`)
   this.txQueue.splice(txIdx, 1)

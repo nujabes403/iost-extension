@@ -49,10 +49,14 @@ function listenForProviderRequest() {
         break;
       default:
     }
-
-    // var port = chrome.runtime.connect({name: "knockknock"});
-    // console.log(port)
   })
+
+  const port = chrome.runtime.connect({name: "contentscript"});
+  port.onMessage.addListener((message) => {
+    window.postMessage({
+      message,
+    }, '*')
+  });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // From content script to webpage injected script.
