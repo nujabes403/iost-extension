@@ -4,6 +4,7 @@ import { I18n } from 'react-redux-i18n'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { Header, Modal, Toast } from 'components'
 import classnames from 'classnames'
+import iost from 'iostJS/iost'
 import * as accountActions from 'actions/accounts'
 import ui from 'utils/ui';
 import './index.scss'
@@ -42,6 +43,15 @@ class AccountManage extends Component<Props> {
     const accounts = this.props.accounts.filter(item => `${item.name}_${item.network}` != `${this.delItem.name}_${this.delItem.network}`)
     chrome.storage.local.set({accounts: accounts})
     this.props.dispatch(accountActions.setAccounts(accounts))
+    chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
+      if(activeAccount && activeAccount.name == this.delItem.name && activeAccount.network == this.delItem.network){
+        // reset current account
+        const url = accounts[0].network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
+        iost.changeNetwork(url)
+        iost.loginAccount(accounts[0].name, accounts[0].publicKey)
+        chrome.storage.local.set({ activeAccount: accounts[0] })
+      }
+    })
     ui.toggleModal()
     if(!accounts.length){
       this.props.changeLocation('/accountImport')

@@ -42,10 +42,20 @@ class AccountImport extends Component<Props> {
     privateKey: '',
     isLoading: false,
     errorMessage: '',
+    canBack: true
   }
 
   componentDidMount() {
     ui.settingLocation('/accountImport')
+    chrome.runtime.sendMessage({
+      action: 'GET_PASSWORD',
+    },(res)=> {
+      if(res){
+        this.setState({
+          canBack: false
+        })
+      }
+    })
   }
 
   onSubmit = async () => {
@@ -156,15 +166,16 @@ class AccountImport extends Component<Props> {
   backTo = () => {
     const { changeLocation, locationList } = this.props
     console.log(locationList)
-    ui.deleteLocation()
-    changeLocation(locationList[locationList.length - 1])
+    
+    // ui.deleteLocation()
+    // changeLocation(locationList[locationList.length - 1])
   }
 
   render() {
-    const { isLoading } = this.state
+    const { isLoading, canBack } = this.state
     return (
       <Fragment>
-        <Header title={I18n.t('firstLogin_ImportAccount')} onBack={this.backTo} hasSetting={false} />
+        <Header title={I18n.t('firstLogin_ImportAccount')} logo={!canBack} onBack={this.backTo} hasSetting={false} />
         <div className="accountImport-box">
           <textarea name="privateKey" id="" className="privateKey-content" onChange={this.handleChange} placeholder={I18n.t('ImportAccount_EnterPrivate')}/>
 

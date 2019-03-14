@@ -61,7 +61,7 @@ class Lock extends Component<Props> {
           if(accounts.length){
             this.moveTo('/account')()
           }else {
-            this.moveTo('/AccountImport')()
+            this.moveTo('/accountImport')()
           }
         })      
       }else {
