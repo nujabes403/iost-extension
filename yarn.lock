@@ -4625,10 +4625,10 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
 
-iost@0.0.21:
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/iost/-/iost-0.0.21.tgz#e0541360bef592472ede076ec26d0086e95f878a"
-  integrity sha512-qUxfnPSTrLvhGsMIq0kH8e6uudNSBkrZ2RW5sA5wqoRZYKqFXA0ayY5vDVrnLDGG2z4pbrJPIsKLI0mjfF8KAg==
+iost@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/iost/-/iost-0.1.7.tgz#455e7441aff0b5c1ca45f839012a3643191e3f83"
+  integrity sha512-cw/9JJJaaaE5CKpUDKgV2EDPb+gRyytSh+jq4/W+G3rmSk1K4wArrlqDIXZd+JnScuvhlKSyQ05AI2iNOIoI8g==
   dependencies:
     atob "^2.1.2"
     axios "^0.18.0"

@@ -189,26 +189,26 @@ class Index extends Component<Props> {
       //   //   content: <TokenTransferSuccess tx={response} />
       //   // })
       // })
-      // .onFailed((err) => {
-      //   // clearInterval(intervalID)
-      //   if (typeof err === 'string') {
-      //     this.setState({
-      //       isSending: false,
-      //       errorMessage: typeof err === 'string' && err,
-      //     })
-      //   } else {
-      //     this.setState({
-      //       isSending: false,
-      //     })
-      //     ui.settingTransferInfo(err)
-      //     this.moveTo('/tokenTransferFailed')()
-      //     // ui.openPopup({
-      //     //   content: <TokenTransferFailed tx={err} />
-      //     // })
-      //   }
-      // })
+      .onFailed((err) => {
+        // clearInterval(intervalID)
+        if (typeof err === 'string') {
+          this.setState({
+            isSending: false,
+            errorMessage: typeof err === 'string' && err,
+          })
+        } else {
+          this.setState({
+            isSending: false,
+          })
+          ui.settingTransferInfo(err)
+          this.moveTo('/tokenTransferFailed')()
+          // ui.openPopup({
+          //   content: <TokenTransferFailed tx={err} />
+          // })
+        }
+      })
       .send()
-      .listen(1000, 60)
+      // .listen(1000, 60)
   }
 
   moveTo = (location) => () => {

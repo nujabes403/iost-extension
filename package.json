@@ -29,7 +29,7 @@
     "elliptic": "^6.4.1",
     "gulp": "^4.0.0",
     "hash.js": "^1.1.7",
-    "iost": "0.0.21",
+    "iost": "^0.1.7",
     "json-format": "^1.0.1",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
@@ -47,7 +47,8 @@
     "react-tooltip": "^3.9.2",
     "recharts": "^1.4.2",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

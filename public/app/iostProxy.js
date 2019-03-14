@@ -1,6 +1,6 @@
 // const iost = require('iost')
 const ACTION = require('./extensionActions')
-
+const uuidv4 = require('uuid/v4');
 class Callback {
   constructor() {
       this.map = {}
@@ -112,12 +112,13 @@ window.postMessage({action: 'GET_ACCOUNT'}, '*')
 
 function signAndSend(tx){
   const domain = document.domain
+  const actionId = uuidv4()
   const cb = new Callback()
   const action = tx.actions[0]
   const network = this.currentRPC._provider._host.indexOf('//api.iost.io') > -1?'MAINNET':'TESTNET'
   const message = {
     action: ACTION.TX_ASK,
-    actionId: 0,
+    actionId: actionId,
     payload: {
       tx,
       domain,
@@ -126,7 +127,7 @@ function signAndSend(tx){
       txABI: [action.contract, action.actionName, JSON.parse(action.data)]
     }
   }
-  actionMap[0] = cb
+  actionMap[actionId] = cb
   window.postMessage(message, '*')
   return cb
 }
@@ -138,17 +139,19 @@ window.addEventListener('message', (e) => {
   if (e.source !== window) return
   const messageData = e.data && e.data.message
   if (messageData && messageData.actionId !== undefined) {
-    // console.log(messageData)
     const fire = actionMap[messageData.actionId]
-    if (messageData.pending) {
-      fire.pushMsg("pending", messageData.pending)
-      // fire.pending(messageData.pending)
-    } else if (messageData.success) {
-      fire.pushMsg("success", messageData.success)
-      // fire.success(messageData.success)
-    } else if (messageData.failed) {
-      fire.pushMsg("failed", messageData.failed)
-      // fire.failed(messageData.failed)
+    if(fire){
+      if (messageData.pending) {
+        fire.pushMsg("pending", messageData.pending)
+        // fire.pending(messageData.pending)
+      } else if (messageData.success) {
+        fire.pushMsg("success", messageData.success)
+        // fire.success(messageData.success)
+      } else if (messageData.failed) {
+        fire.pushMsg("failed", messageData.failed)
+        // fire.failed(messageData.failed)
+      }
+      delete actionMap[messageData.actionId]
     }else if(messageData.payload){
       IWalletJS.setAccount(messageData.payload)
     }

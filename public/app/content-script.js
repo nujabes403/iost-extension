@@ -52,11 +52,25 @@ function listenForProviderRequest() {
   })
 
   const port = chrome.runtime.connect({name: "contentscript"});
+
   port.onMessage.addListener((message) => {
     window.postMessage({
       message,
     }, '*')
   });
+  port.onDisconnect.addListener(() => {
+    // console.log(port)
+  })
+  
+  // setInterval(() => {
+  //   const message = {
+  //     actionId: 1,
+  //     time: new Date()
+  //   }
+  //   window.postMessage({
+  //     message,
+  //   }, '*')
+  // },3000)
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // From content script to webpage injected script.

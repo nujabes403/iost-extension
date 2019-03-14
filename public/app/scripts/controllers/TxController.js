@@ -1,4 +1,5 @@
 const iostController = require('./IostController')
+const uuidv4 = require('uuid/v4');
 const crypto = require('crypto')
 
 const getStorage = (name, defvalue) => new Promise((resolve, reject) => {
@@ -13,9 +14,17 @@ const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001'
 function TxController(state) {
   this.state = state
   this.txQueue = []
-  this.port = null
+  this.port = new Map()
   chrome.runtime.onConnect.addListener( (port) => {
-    this.port = port
+    // this.port = port
+    const name = `${port.name}_${uuidv4()}`
+    // console.log('connect: ' + name)
+    this.port.set(name, port)
+
+    port.onDisconnect.addListener(() => {
+      // console.log('disconnect: '+ name)
+      this.port.delete(name);
+    })
   })
 }
 
@@ -72,14 +81,19 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
       //   tx.addApprove("iost", txABI[2][3])
       // }
       const handler = iostController.iost.signAndSend(tx)
+      let inverval = null
+      console.log('start')
       handler
       .on('pending', (pending) => {
-        this.port.postMessage({
-          actionId,
-          pending: pending
-        });
+        console.log('pending',pending)
+        this.port.forEach((port) => {
+          port.postMessage({
+            actionId,
+            pending: pending
+          });
+        })
         let times = 90
-        const inverval = setInterval(async () => {
+        inverval = setInterval(async () => {
           times--;
           if(times){
             iostController.rpc.transaction.getTxByHash(pending)
@@ -89,42 +103,44 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
                 clearInterval(inverval);
                 if (tx_receipt.status_code === "SUCCESS") {
                   // console.log('successBy: ', tx_receipt)
-                  this.port.postMessage({
-                    actionId,
-                    success: tx_receipt
-                  });
+                  this.port.forEach((port) => {
+                    port.postMessage({
+                      actionId,
+                      success: tx_receipt
+                    });
+                  })
                 } else {
                   // console.log('failedBy: ', tx_receipt)
-                  this.port.postMessage({
-                    actionId,
-                    failed: tx_receipt.stack?tx_receipt.message:tx_receipt
-                  });
+                  this.port.forEach((port) => {
+                    port.postMessage({
+                      actionId,
+                      failed: tx_receipt.stack?tx_receipt.message:tx_receipt
+                    });
+                  })
                 }
               }
             })
           }else {
             clearInterval(inverval);
-            this.port.postMessage({
-              actionId,
-              failed: `Error: tx ${pending} on chain timeout.`
-            });
+            this.port.forEach((port) => {
+              port.postMessage({
+                actionId,
+                failed: `Error: tx ${pending} on chain timeout.`
+              });
+            })
           }
         },1000)
       })
-      // .on('success', (response) => {
-      //   console.log('success: ', response)
-      //   this.port.postMessage({
-      //     actionId,
-      //     success: response
-      //   });
-      // })
-      // .on('failed', (err) => {
-      //   console.log('failed: ', err)
-      //   this.port.postMessage({
-      //     actionId,
-      //     failed: err.stack?err.message:err
-      //   });
-      // })
+      .on('failed', (err) => {
+        clearInterval(inverval)
+        console.log('failed: ', err)
+        this.port.forEach((port) => {
+          port.postMessage({
+            actionId,
+            failed: err.stack?err.message:err
+          });
+        })
+      })
 
       // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       //   const activeTab = tabs[0].id
@@ -211,10 +227,12 @@ TxController.prototype.cancelTx = function(txIdx) {
   const txInfo = this.txQueue[txIdx]
   
   if(txInfo){
-    this.port.postMessage({
-      actionId: txInfo.actionId,
-      failed: 'User rejected the signature request'
-    });
+    this.port.forEach((port) => {
+      port.postMessage({
+        actionId: txInfo.actionId,
+        failed: 'User rejected the signature request'
+      });
+    })
     // setTimeout(() => {
     //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     //     const activeTab = tabs[0].id
