@@ -94,6 +94,9 @@ class AskPopup extends Component<Props> {
     //     }
     //   })
     // });
+    window.onbeforeunload = () => {
+      this.cancelTx()
+    }
   }
 
   confirmTx = () => {
