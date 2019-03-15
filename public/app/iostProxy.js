@@ -127,7 +127,7 @@ function signAndSend(tx){
       txABI: [action.contract, action.actionName, JSON.parse(action.data)]
     }
   }
-  console.log(message)
+  // console.log(message)
   actionMap[actionId] = cb
   window.postMessage(message, '*')
   return cb
