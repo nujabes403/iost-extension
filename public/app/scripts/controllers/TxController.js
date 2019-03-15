@@ -141,37 +141,23 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
           });
         })
       })
-
-      // chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-      //   const activeTab = tabs[0].id
-      //   handler
-      //   .on('pending', (pending) => {
-      //     console.log(actionId, pending)
-      //     chrome.tabs.sendMessage(activeTab, {
-      //       actionId,
-      //       pending: pending
-      //     })
-      //   })
-      //   .on('success', (response) => {
-      //     console.log(actionId, response)
-      //     chrome.tabs.sendMessage(activeTab, {
-      //       actionId,
-      //       success: response
-      //     })
-      //   })
-      //   .on('failed', (err) => {
-      //     console.log(actionId, err)
-      //     chrome.tabs.sendMessage(activeTab, {
-      //       actionId,
-      //       failed: err.stack?err.message:err
-      //     })
-      //   })
-      // })
     }else {
       //not find account
+      this.port.forEach((port) => {
+        port.postMessage({
+          actionId: txInfo.actionId,
+          failed: `User does not login or not exist. slotIdx: ${txIdx}`
+        });
+      })
     }
   }else {
     //not find account
+    this.port.forEach((port) => {
+      port.postMessage({
+        actionId: txInfo.actionId,
+        failed: `User does not exist. slotIdx: ${txIdx}`
+      });
+    })
   }
   
   // const tx = iostController.iostInstance.callABI(...txObject)

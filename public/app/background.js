@@ -95,7 +95,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           let middleY = parseInt(window.screen.availHeight/2 - (height/2));
           const url = 'askTx.html'
           + `?slotIdx=${slotIdx}`
-          + `&accountId=${iostController.account.getID()}`
+          + `&accountId=${_tx.account}`
           + `&tx=${encodeURIComponent(JSON.stringify(message.payload.txABI))}`
           chrome.windows.create({
             url,
