@@ -75,6 +75,7 @@ class AskPopup extends Component<Props> {
       console.log(e)
       this.txInfo = []
     }
+    this.hasClick = false
     
   }
 
@@ -95,11 +96,14 @@ class AskPopup extends Component<Props> {
     //   })
     // });
     window.onbeforeunload = () => {
-      this.cancelTx()
+      if(!this.hasClick){
+        this.cancelTx()
+      }
     }
   }
 
   confirmTx = () => {
+    this.hasClick = true
     chrome.runtime.sendMessage({
       action: 'TX_CONFIRM',
       payload: {
@@ -111,6 +115,7 @@ class AskPopup extends Component<Props> {
   }
 
   cancelTx = () => {
+    this.hasClick = true
     chrome.runtime.sendMessage({
       action: 'TX_CANCEL',
       payload: {
