@@ -11,7 +11,7 @@ const settingList = [
   { id: 2, name: 'changeLanguage' },
   { id: 3, name: 'changePwd' },
   { id: 4, name: 'lock' },
-  { id: 5, name: 'iostWallet' },
+  // { id: 5, name: 'iostWallet' },
 ]
 type Props = {
 

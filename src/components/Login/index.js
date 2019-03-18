@@ -61,10 +61,10 @@ class Login extends Component<Props> {
 
   onImport = () => {
     const { password, isChecked } = this.state
-    if (!isChecked) {
-      Toast.html(I18n.t('firstLogin_AgreementTip3'))
-      return
-    }
+    // if (!isChecked) {
+    //   Toast.html(I18n.t('firstLogin_AgreementTip3'))
+    //   return
+    // }
     if (this.onCheckPassword()) {
       // save password
       const en_password = hash.sha256().update(password).digest('hex')
@@ -124,11 +124,11 @@ class Login extends Component<Props> {
     changeLocation(location)
   }
 
-  toggleChecked = () => {
-    this.setState({
-      isChecked: !this.state.isChecked,
-    })
-  }
+  // toggleChecked = () => {
+  //   this.setState({
+  //     isChecked: !this.state.isChecked,
+  //   })
+  // }
 
   render() {
     const { password, repassword, isChecked, errorMessage } = this.state
@@ -157,13 +157,13 @@ class Login extends Component<Props> {
           <div className="line"></div>
           {/*<Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>*/}
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
-          <div className="radio-box">
-            <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
-            <span>
-              {I18n.t('firstLogin_AgreementTip1')}<br />
-              <a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('firstLogin_AgreementTip2')}</a>
-            </span>
-          </div>
+          {/*<div className="radio-box">*/}
+            {/*<i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />*/}
+            {/*<span>*/}
+              {/*{I18n.t('firstLogin_AgreementTip1')}<br />*/}
+              {/*<a href='javascript:;' onClick={this.moveTo('/userAgreement')}> {I18n.t('firstLogin_AgreementTip2')}</a>*/}
+            {/*</span>*/}
+          {/*</div>*/}
         </div>
       </Fragment>
     )
