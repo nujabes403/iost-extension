@@ -157,6 +157,7 @@ class Login extends Component<Props> {
           <div className="line"></div>
           {/*<Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>*/}
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
+          <p>{I18n.t('firstLogin_NoAndCreate1')}<a href="https://iostaccount.endless.game" className="third-create" target="_blank">{I18n.t('firstLogin_NoAndCreate2')}</a></p>
           <div className="radio-box">
             <i className={isChecked ? '' : 'noChecked'} onClick={this.toggleChecked} />
             <span>
