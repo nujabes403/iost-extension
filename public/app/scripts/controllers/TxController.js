@@ -82,10 +82,10 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
       // }
       const handler = iostController.iost.signAndSend(tx)
       let inverval = null
-      console.log('start')
+      // console.log('start')
       handler
       .on('pending', (pending) => {
-        console.log('pending',pending)
+        // console.log('pending',pending)
         this.port.forEach((port) => {
           port.postMessage({
             actionId,

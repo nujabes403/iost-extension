@@ -147,11 +147,12 @@ window.addEventListener('message', (e) => {
       } else if (messageData.success) {
         fire.pushMsg("success", messageData.success)
         // fire.success(messageData.success)
+        delete actionMap[messageData.actionId]
       } else if (messageData.failed) {
         fire.pushMsg("failed", messageData.failed)
         // fire.failed(messageData.failed)
+        delete actionMap[messageData.actionId]
       }
-      delete actionMap[messageData.actionId]
     }else if(messageData.payload){
       IWalletJS.setAccount(messageData.payload)
     }
