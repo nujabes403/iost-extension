@@ -107,43 +107,39 @@ class GasManage extends Component<Props> {
     const { isStake, buyAmount, resourceAddress, sellAmount } = this.state
     const account = iost.account.getID()
     if(isStake){
-      iost.sendTransaction('gas.iost', 'pledge', [account, resourceAddress || account, buyAmount])
-      .onPending(() => {
+      iost.signAndSend('gas.iost', 'pledge', [account, resourceAddress || account, buyAmount])
+      .on('pending', () => {
         this.setState({
           isLoading: true,
         })
       })
-      .onSuccess((response) => {
+      .on('success', (response) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(response)
         this.moveTo('/tokenTransferSuccess')()
-        // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
-      .onFailed((err) => {
+      .on('failed', (err) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(err)
         this.moveTo('/tokenTransferFailed')()
-        // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }else{
-      iost.sendTransaction('gas.iost', 'unpledge', [account, resourceAddress || account, sellAmount])
-        .onPending(() => {
-          this.setState({
-            isLoading: true,
-          })
+      iost.signAndSend('gas.iost', 'unpledge', [account, resourceAddress || account, sellAmount])
+      .on('pending', () => {
+        this.setState({
+          isLoading: true,
         })
-        .onSuccess((response) => {
-          this.setState({ isLoading: false })
-          ui.settingTransferInfo(response)
-          this.moveTo('/tokenTransferSuccess')()
-          // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
-        })
-        .onFailed((err) => {
-          this.setState({ isLoading: false })
-          ui.settingTransferInfo(err)
-          this.moveTo('/tokenTransferFailed')()
-          // ui.openPopup({ content: <TransactionFailed tx={err} /> })
-        })
+      })
+      .on('success', (response) => {
+        this.setState({ isLoading: false })
+        ui.settingTransferInfo(response)
+        this.moveTo('/tokenTransferSuccess')()
+      })
+      .on('failed', (err) => {
+        this.setState({ isLoading: false })
+        ui.settingTransferInfo(err)
+        this.moveTo('/tokenTransferFailed')()
+      })
     }
   }
 

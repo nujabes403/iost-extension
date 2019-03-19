@@ -117,47 +117,39 @@ class RamManage extends Component<Props> {
     const account = iost.account.getID()
     if(isBuy){
       const _buyAmount = parseInt(buyAmount * 1024)
-      iost.sendTransaction('ram.iost', 'buy', [account, resourceAddress || account, _buyAmount])
-      .onPending(() => {
+      iost.signAndSend('ram.iost', 'buy', [account, resourceAddress || account, _buyAmount])
+      .on('pending', () => {
         this.setState({
           isLoading: true,
         })
       })
-      .onSuccess((response) => {
+      .on('success', (response) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(response)
         this.moveTo('/tokenTransferSuccess')()
-        // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
-      .onFailed((err) => {
-        console.log(err)
+      .on('failed', (err) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(err)
         this.moveTo('/tokenTransferFailed')()
-
-        // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }else {
       const _sellAmount = parseInt(sellAmount*1024)
-      iost.sendTransaction('ram.iost', 'sell', [account, account, _sellAmount])
-      .onPending(() => {
+      iost.signAndSend('ram.iost', 'sell', [account, account, _sellAmount])
+      .on('pending', () => {
         this.setState({
           isLoading: true,
         })
       })
-      .onSuccess((response) => {
+      .on('success', (response) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(response)
         this.moveTo('/tokenTransferSuccess')()
-
-        // ui.openPopup({ content: <TransactionSuccess tx={response} /> })
       })
-      .onFailed((err) => {
+      .on('failed', (err) => {
         this.setState({ isLoading: false })
         ui.settingTransferInfo(err)
         this.moveTo('/tokenTransferFailed')()
-
-        // ui.openPopup({ content: <TransactionFailed tx={err} /> })
       })
     }
   }

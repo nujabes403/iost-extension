@@ -4,6 +4,26 @@ import store from '../store'
 const IOST = require('iost')
 const bs58 = require('bs58')
 
+class Callback {
+  constructor() {
+      this.map = {}
+  }
+
+  on(msg, f) {
+      this.map[msg] = f;
+      return this;
+  }
+
+  pushMsg(msg, args) {
+      const f = this.map[msg];
+      if (f === undefined) {
+          return
+      }
+      f(args)
+  }
+}
+
+
 const DEFAULT_IOST_CONFIG = {
   gasPrice: 100,
   gasLimit: 100000,
@@ -25,6 +45,7 @@ const iost = {
     const newNetworkProvider = new IOST.HTTPProvider(url)
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
+    iost.iost.setRPC(iost.rpc)
     chrome.runtime.sendMessage({
       action: 'CHANGE_NETWORK',
       payload: {
@@ -128,6 +149,70 @@ const iost = {
         return handler
       }
     }
+  },
+  signAndSend: (contractAddress, contractAction, args) => {
+    // const tx = new iostController.pack.Tx()
+    
+    const tx = iost.iost.callABI(contractAddress, contractAction, args)
+    tx.addApprove("*", "unlimited")
+
+    if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
+      tx.setChainID(1023)
+    }
+
+    const fire = new Callback()
+
+    const handler = iost.iost.signAndSend(tx)
+    let inverval = null
+    handler.on('pending', (pending) => {
+      fire.pushMsg("pending", pending)
+
+      let times = 90
+      inverval = setInterval(async () => {
+        times--;
+        if(times){
+          iost.rpc.transaction.getTxByHash(pending)
+          .then( data => {
+            const tx_receipt = data.transaction.tx_receipt
+            if(tx_receipt){
+              clearInterval(inverval);
+              if (tx_receipt.status_code === "SUCCESS") {
+                fire.pushMsg("success", tx_receipt)
+              } else {
+                fire.pushMsg("failed", tx_receipt.stack?tx_receipt.message:tx_receipt)
+              }
+            }
+          })
+        }else {
+          clearInterval(inverval);
+          fire.pushMsg("failed", `Error: tx ${pending} on chain timeout.`)
+        }
+      },1000)
+    })
+    .on('failed', (err) => {
+      clearInterval(inverval)
+      console.log('failed: ', err)
+      fire.pushMsg("failed", err.stack?err.message:err)
+    })
+
+    return fire
+
+    
+
+    // return {
+    //   onPending: (callback) => {
+    //     fire.pending = callback
+    //     return handler
+    //   },
+    //   onSuccess: (callback) => {
+    //     fire.success = callback
+    //     return handler
+    //   },
+    //   onFailed: (callback) => {
+    //     fire.failed = callback
+    //     return handler
+    //   }
+    // }
   }
 }
 
