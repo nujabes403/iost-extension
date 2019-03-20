@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API = false? 'https://endless.game/api/': 'http://18.223.43.49:8081/api/'
+const API = ''
 
 const api = {
   login: `${API}users/login`,
@@ -19,7 +19,7 @@ const theseus = {
       })
       const { data } = await axios.post(api.login, sdata)
       if(data.code == 0){
-        
+
       }else {
 
       }
