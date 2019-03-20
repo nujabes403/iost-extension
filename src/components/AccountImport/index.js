@@ -9,6 +9,7 @@ import iost from 'iostJS/iost'
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils'
 import ui from 'utils/ui';
+import theseus from 'utils/theseus';
 import * as accountActions from 'actions/accounts'
 
 import './index.scss'
@@ -149,6 +150,11 @@ class AccountImport extends Component<Props> {
     }
   }
 
+  onLoginTheseus = async () => {
+    // const data = await theseus.login(phone, password)
+    // login theseus account
+  }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -166,7 +172,6 @@ class AccountImport extends Component<Props> {
   backTo = () => {
     const { changeLocation, locationList } = this.props
     console.log(locationList)
-    
     // ui.deleteLocation()
     // changeLocation(locationList[locationList.length - 1])
   }

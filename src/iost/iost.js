@@ -46,6 +46,7 @@ const iost = {
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
     iost.iost.setRPC(iost.rpc)
+    console.log(1232313)
     chrome.runtime.sendMessage({
       action: 'CHANGE_NETWORK',
       payload: {
@@ -111,7 +112,7 @@ const iost = {
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
     }
-
+    
     iost.account.signTx(tx)
 
     const fire = {
@@ -159,8 +160,8 @@ const iost = {
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
     }
-
     const fire = new Callback()
+    iost.iost.setAccount(iost.account);
 
     const handler = iost.iost.signAndSend(tx)
     let inverval = null

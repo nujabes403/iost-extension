@@ -65,7 +65,10 @@ class Index extends Component<Props> {
 
   getResourceBalance = () => {
     return new Promise((resolve, reject) => {
-      iost.rpc.blockchain.getAccountInfo(iost.account.getID())
+      const { account } = this.props
+      const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
+      iost.changeNetwork(url)
+      iost.rpc.blockchain.getAccountInfo(account.name)
       .then(({balance, frozen_balances, gas_info, ram_info}) => {
         const frozenAmount = frozen_balances.reduce((prev, next) => (prev += next.amount, prev), 0)
         this.setState({
@@ -88,7 +91,7 @@ class Index extends Component<Props> {
   render() {
     const { frozenAmount, amount, gas, gas_used, ram, ram_used, isLoading } = this.state
     const { selectedTokenSymbol, account, moveTo } = this.props
-    const url = account?`${account.network == 'MAINNET'?'https://explorer.iost.io':'http://54.249.186.224'}/account/${account.name}`:'#'
+    const url = account?`${account.network == 'MAINNET'?'https://www.iostabc.com':'http://54.249.186.224'}/account/${account.name}`:'#'
     return (
       <div className="TokenBalance-box">
         <a target={account?"_blank":''} href={url}>
