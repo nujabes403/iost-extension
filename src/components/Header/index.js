@@ -10,14 +10,17 @@ class Header extends Component<Props> {
   componentDidMount() {}
 
   render() {
-    const { onBack, onSetting, onAdd, title, setting = true, hasSetting = true, logo = false, children } = this.props
+    const { onBack, onSetting, onAddIost, title, setting = true, hasSetting = true, logo = false, children } = this.props
     return (
       <div className="header-box">
         <i className={logo ? 'icon-logo' : 'icon-back'} onClick={onBack} />
         { title && <span className="title">{title}</span> }
         {children}
         {
-          hasSetting ? (setting ? <i className="icon-setting" onClick={onSetting} /> : <span className="add-account" onClick={onAdd}>{I18n.t('ManageAccount_Add')}</span>) : <i />
+          hasSetting ? (setting ? <i className="icon-setting" onClick={onSetting} /> : 
+          <span className="add-account" onClick={onAddIost}>
+            <span>{I18n.t('ManageAccount_Add')}</span>
+          </span>) : <i />
         }
       </div>
     )

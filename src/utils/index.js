@@ -16,6 +16,9 @@ const utils = {
   },
   delay(ms){
     return new Promise(resolve => setTimeout(resolve, ms));
+  },
+  getNetWork(type){
+    return type == 'MAINNET'?'https://api.iost.io':'https://test.api.iost.io'
   }
 }
 

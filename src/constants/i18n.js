@@ -297,6 +297,7 @@ const zhTranslation = {
   "txid": "交易 ID",
   "gasUsage": "iGas 用量",
   "transferClose": "关闭",
+
 }
 
 
@@ -445,6 +446,7 @@ const koTranslation = {
   "txid": "거래 ID",
   "gasUsage": "iGas 소비",
   "transferClose": "닫기",
+
 }
 
 export default {

@@ -1,3 +1,4 @@
+const crypto = require('crypto')
 const ACTION = require('./extensionActions')
 const TxController = require('./scripts/controllers/TxController')
 const IostController = require('./scripts/controllers/IostController')
@@ -66,8 +67,34 @@ iostController.setState(store)
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
     case ACTION.TX_ASK:
-      if (iostController.account.getID() === 'empty')
-        throw Error('Index should be logged in to send a tx')
+      if(!store.unlock){
+        txController.port.forEach((port) => {
+          port.postMessage({
+            actionId: message.actionId,
+            failed: 'locked'
+          });
+        })
+        return  true
+      }
+      if(!iostController.activeAccount){
+        txController.port.forEach((port) => {
+          port.postMessage({
+            actionId: message.actionId,
+            failed: 'Index should be logged in to send a tx'
+          });
+        })
+        return  true
+        // throw Error('Index should be logged in to send a tx')
+      }else if(iostController.account.getID() === 'empty'){
+        txController.port.forEach((port) => {
+          port.postMessage({
+            actionId: message.actionId,
+            failed: 'Index should be logged in to send a tx'
+          });
+        })
+        return true
+        // throw Error('Index should be logged in to send a tx')
+      }
       const _tx = {
         tx: message.payload.tx,
         txABI: message.payload.txABI,
@@ -86,7 +113,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       }
       // const [contractAddress, abi, args] = message.payload
       chrome.storage.local.get(['whitelist'], ({whitelist}) => {
-        if(whitelist && whitelist.length && whitelist.find(item =>item.network == message.payload.network && item.domain == _tx.domain && item.account == _tx.account && item.contract == contract && item.action == actionName && item.to == _to)){
+        if(whitelist && whitelist.length && whitelist.find(item => item.network == message.payload.network && item.domain == _tx.domain && item.account == _tx.account.name && item.contract == contract && item.action == actionName && item.to == _to)){
           txController.processTx(slotIdx)
         }else {
           const height = 600;
@@ -95,7 +122,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           let middleY = parseInt(window.screen.availHeight/2 - (height/2));
           const url = 'askTx.html'
           + `?slotIdx=${slotIdx}`
-          + `&accountId=${_tx.account}`
+          + `&accountId=${_tx.account.name}`
           + `&tx=${encodeURIComponent(JSON.stringify(message.payload.txABI))}`
           chrome.windows.create({
             url,
@@ -117,7 +144,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case ACTION.CHANGE_NETWORK:
       iostController.changeNetwork(message.payload.url)
       break
+    case ACTION.CHANGE_ACCOUNT:
+      iostController.changeAccount(message.payload)
+      break
     case ACTION.LOGIN_SUCCESS:
+      // iost login
       iostController.loginAccount(
         message.payload.id,
         message.payload.encodedPrivateKey,
@@ -141,14 +172,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case 'GET_PASSWORD': 
       sendResponse(store.getPassword())
       break
-    case 'GET_ACCOUNT': 
-      store.getLockState()?sendResponse({
-        account: iostController.account.getID(),
-        network: iostController.network.indexOf('//api.iost.io') > -1? 'MAINNET':'TESTNET'
-      }):sendResponse({
-        account: null,
-        network: 'MAINNET',
-      })
+    case 'GET_ACCOUNT': {
+        const account = iostController.activeAccount;
+        store.getLockState()?sendResponse({
+          account: {
+            name: account.name,
+            network: account.network,
+            proxyAccount: account.proxyAccount
+          },
+          network: account.network,
+        }):sendResponse({
+          account: {
+            name: null,
+            type: null
+          },
+          network: 'MAINNET',
+        })
+      }
       break
     case 'CHECK_CREATE_ACCOUNT': 
       iostController.checkCreateAccount(message.payload)
@@ -156,3 +196,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     default:
   }
 })
+
+function aesDecrypt(encrypted, key){
+  const decipher = crypto.createDecipher('aes192', key);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
+}

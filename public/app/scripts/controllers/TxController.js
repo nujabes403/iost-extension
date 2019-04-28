@@ -2,6 +2,7 @@ const iostController = require('./IostController')
 const uuidv4 = require('uuid/v4');
 const crypto = require('crypto')
 
+
 const getStorage = (name, defvalue) => new Promise((resolve, reject) => {
   chrome.storage.local.get([name], (result) => {
     resolve(result[name] || defvalue)
@@ -9,7 +10,7 @@ const getStorage = (name, defvalue) => new Promise((resolve, reject) => {
 })
 
 const IOST_NODE_URL = 'https://api.iost.io' //当前节点
-const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' 
+const IOST_TEST_NODE_URL = 'https://test.api.iost.io' 
 
 function TxController(state) {
   this.state = state
@@ -48,7 +49,7 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
     whitelist.push({
       network,
       domain,
-      account,
+      account: account.name,
       contract,
       action: actionName,
       to: _to
@@ -65,11 +66,11 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
 
   const accounts = await getStorage('accounts', [])
   if(accounts.length){
-    const acc = accounts.find(item => item.name == account && item.network == network)
+    const acc = accounts.find(item => item.name == account.name && item.network == network)
     if(acc){
       const encodedPrivateKey = aesDecrypt(acc.privateKey, this.state.password)
       iostController.changeNetwork(network == 'MAINNET'?IOST_NODE_URL: IOST_TEST_NODE_URL)
-      iostController.loginAccount(account, encodedPrivateKey)
+      iostController.loginAccount(account.name, encodedPrivateKey)
       const tx = new iostController.pack.Tx()
       Object.keys(_tx).map(key => tx[key] = _tx[key])
       if(network != 'MAINNET'){

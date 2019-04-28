@@ -6,7 +6,9 @@ import { Header, Modal, Toast } from 'components'
 import classnames from 'classnames'
 import iost from 'iostJS/iost'
 import * as accountActions from 'actions/accounts'
+import utils from 'utils';
 import ui from 'utils/ui';
+import user from 'utils/user';
 import './index.scss'
 
 
@@ -39,23 +41,28 @@ class AccountManage extends Component<Props> {
     }
   }
 
-  onDelete = () => {
-    const accounts = this.props.accounts.filter(item => `${item.name}_${item.network}` != `${this.delItem.name}_${this.delItem.network}`)
-    chrome.storage.local.set({accounts: accounts})
-    this.props.dispatch(accountActions.setAccounts(accounts))
-    chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-      if(activeAccount && activeAccount.name == this.delItem.name && activeAccount.network == this.delItem.network){
+  onDelete = async () => {
+
+    
+    const accounts = this.props.accounts.filter(item => user.getUserUnique(item) != user.getUserUnique(this.delItem))
+    await user.setUsers(accounts)
+    const activeAccount = await user.getActiveAccount()
+    if(activeAccount && user.getUserUnique(activeAccount) == user.getUserUnique(this.delItem)){
+      if(accounts.length){
+        const account = accounts[0]
         // reset current account
-        const url = accounts[0].network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
-        iost.changeNetwork(url)
-        iost.loginAccount(accounts[0].name, accounts[0].publicKey)
-        chrome.storage.local.set({ activeAccount: accounts[0] })
+        
+        iost.changeNetwork(utils.getNetWork(account.network))
+        // iost.loginAccount(account.name, account.publicKey)
+        iost.changeAccount(account)
+        user.setActiveAccount(account)
+        
+      }else {
+        await user.removeActiveAccount()
+        this.props.changeLocation('/accountImport')
       }
-    })
-    ui.toggleModal()
-    if(!accounts.length){
-      this.props.changeLocation('/accountImport')
     }
+    ui.toggleModal()
   }
 
   deleteAccount = (item) => () => {
@@ -67,15 +74,20 @@ class AccountManage extends Component<Props> {
     const { accounts } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('Settings_accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />
+        <Header 
+          title={I18n.t('Settings_accountManage')} 
+          onBack={this.backTo} 
+          onAddIost={this.moveTo('/accountImport')} 
+          setting={false} 
+        />
         {/*<Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />*/}
         <div className="accountManage-box">
           {
             accounts.map((item) =>
-              <div className="account-item" key={item.name + '_' + item.network}>
+              <div className="account-item" key={user.getUserUnique(item)}>
                 <div className="left">
                   <div className="account-name-box">
-                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
+                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>IOST {item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
                   </div>
                   <div className="publicKey-box">

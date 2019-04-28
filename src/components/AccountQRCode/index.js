@@ -39,7 +39,7 @@ class AccountQRCode extends Component<Props> {
               {I18n.t('Receive_Copy')}
             </Button>
           </CopyToClipboard>
-          <p className="receiptTips">{I18n.t('Receive_Tip')}</p>
+          {/*<p className="receiptTips">{I18n.t('Receive_Tip')}</p>*/}
         </div>
       </Fragment>
 

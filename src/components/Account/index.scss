@@ -68,7 +68,7 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 220px;
+    width: 280px;
     border-radius: 4px;
     background-color: $gray;
     overflow: hidden;
@@ -93,7 +93,7 @@
         }
         .account-title {
           text-align: center;
-          width: 50px;
+          width: 110px;
           height: 20px;
           line-height: 20px;
           color: $white;
@@ -114,7 +114,7 @@
         .account-name {
           font-size: 14px;
           flex: 1;
-
+          
         }
         .check {
           display: inline-block;
@@ -131,10 +131,32 @@
   }
 
   .btn-box {
-    display: flex;
     align-items: center;
     justify-content: center;
+    display: none;
+    &.active{
+      display: flex;
+    }
     > button {
+      &:hover {
+        background-color: #000000;
+        color: $white;
+      }
+    }
+    a{
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      outline: 0;
+      text-align: center;
+      transition: background-color 300ms, color 300ms;
+      width: 120px;
+      height: 40px;
+      line-height: 40px;
+      background-color: #FFFFFF;
+      color: #000000;
+      border: 1px solid;
+      text-decoration: none;
       &:hover {
         background-color: #000000;
         color: $white;

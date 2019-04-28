@@ -7,36 +7,36 @@
   background-color: $gray;
   padding: 15px;
   overflow: auto;
-}
-
-.progress-box {
-  height: 80px;
-  background-color: $white;
-  border-radius: 4px;
-  padding: 15px;
-  .ram-default {
-    font-size: 14px;
-    line-height: 14px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .ram-used {
-    font-size: 12px;
-    line-height: 12px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .progress-wrap {
-    margin: 10px 0 5px;
-    background-color: #DCE6F2;
-    border-radius: 5px;
-    .progress-inner {
+  .progress-box {
+    height: 80px;
+    background-color: $white;
+    border-radius: 4px;
+    padding: 15px;
+    .ram-default {
+      font-size: 14px;
+      line-height: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ram-used {
+      font-size: 12px;
+      line-height: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-wrap {
+      margin: 10px 0 5px;
+      background-color: #DCE6F2;
       border-radius: 5px;
-      background-color: #6598F4;
-      height: 10px;
+      .progress-inner {
+        border-radius: 5px;
+        background-color: #6598F4;
+        height: 10px;
+      }
     }
   }
 }
+
 
 .selling-gas{
   margin: 15px 0;

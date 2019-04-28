@@ -9,20 +9,9 @@ import Popup from 'components/Popup'
 
 import iost from 'iostJS/iost'
 import utils from 'utils'
+import user from 'utils/user'
 import * as accountActions from 'actions/accounts'
 import './App.scss'
-
-const getPassword = () => new Promise((resolve, reject) => {
-  chrome.runtime.sendMessage({
-    action: 'GET_PASSWORD',
-  },(res)=> {
-    if(res != ''){
-      resolve(res)
-    }else {
-      reject('no password')
-    }
-  })
-})
 
 type Props = {
   children: React.DOM,
@@ -37,52 +26,48 @@ class App extends Component<Props> {
     // chrome.storage.local.remove(['password'],({ password }) => {
     //   console.log(password)
     // })
-    chrome.storage.local.get(['password'],({ password }) => {
-      if(password){
-        chrome.runtime.sendMessage({
-          action: 'GET_UNLOCK_STATE',
-        },(res)=> {
-          if(res === false){
-            //解锁页面
-            this.changeLocation('/lock')
-          }else {
-            chrome.storage.local.get(['accounts'], ({accounts}) => {
-              // console.log('账号列表', accounts)
-              if (accounts && accounts.length){
-                this.props.dispatch(accountActions.setAccounts(accounts));
-                chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-                  // console.log('当前账号', activeAccount)
-                  const account = activeAccount || accounts[0]
-                  const { name, privateKey } = account
-                  chrome.runtime.sendMessage({
-                    action: 'GET_PASSWORD',
-                  },(res)=> {
-                    if(res){
-                      const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-                      const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
-                      iost.changeNetwork(url)
-                      iost.loginAccount(name, encodedPrivateKey)
-                      chrome.storage.local.set({ activeAccount: account },() => {
-                        // this.changeLocation('/gasManage')
-                        this.changeLocation('/account')
-                      })
-                    }else {
-                      this.changeLocation('/lock')
-                    }
+    this.init()
+  }
 
-                  })
-                })
-              }else {
-                this.changeLocation('/accountImport')
-              }
+  init = async () => {
+    try {
+      const enpassword = await user.getEnPassword()
+      if(enpassword){
+        const lockState = await user.getLockState()
+        if(lockState === false){
+          //解锁页面
+          this.changeLocation('/lock')
+        }else {
+          const accounts = await user.getUsers()
+          if (accounts.length){
+            user.setUsers(accounts)
+            const activeAccount = await user.getActiveAccount()
+            const account = activeAccount || accounts[0]
+            const { type, name, privateKey } = account
+            const password = await user.getLockPassword()
+            const encodedPrivateKey = utils.aesDecrypt(privateKey, password)
+            iost.changeNetwork(utils.getNetWork(account.network))
+            // this.changeLocation('/gasManage')
+            
+            iost.changeAccount(account)
+            await user.setActiveAccount(account)
+            this.changeLocation('/account')
+
+            chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
+              // console.log('当前账号', activeAccount)
             })
+          }else {
+            this.changeLocation('/accountImport')
           }
-        })
+        }
       }else {
         this.changeLocation('/login')
       }
-    })
+    } catch (err) {
+      console.log(err)
+    }
   }
+
   changeLocation = (location) => {
     this.setState({
       currentLocation: location,

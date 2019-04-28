@@ -9,7 +9,8 @@ import iost from 'iostJS/iost'
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils'
 import ui from 'utils/ui';
-import theseus from 'utils/theseus';
+import user from 'utils/user';
+import _trim from 'lodash/trim'
 import * as accountActions from 'actions/accounts'
 
 import './index.scss'
@@ -30,13 +31,6 @@ const getPassword = () => new Promise((resolve, reject) => {
   })
 })
 
-const getAccounts = () => new Promise((resolve, reject) => {
-  chrome.storage.local.get(['accounts'], ({accounts}) => {
-    resolve(accounts || [])
-  })
-})
-
-
 class AccountImport extends Component<Props> {
 
   state = {
@@ -47,14 +41,22 @@ class AccountImport extends Component<Props> {
   }
 
   componentDidMount() {
-    ui.settingLocation('/accountImport')
+    const { locationList } = this.props
+    if(locationList[locationList.length-1].indexOf('accountImport') < 0){
+      ui.settingLocation('/accountImport')
+    }
     chrome.runtime.sendMessage({
       action: 'GET_PASSWORD',
-    },(res)=> {
+    },async (res)=> {
       if(res){
-        this.setState({
-          canBack: false
-        })
+        try {
+          const accounts = await user.getUsers()
+          this.setState({
+            canBack: accounts.length
+          })
+        } catch (err) {
+          console.log(err)
+        }
       }
     })
   }
@@ -63,7 +65,7 @@ class AccountImport extends Component<Props> {
     this.setState({
       isLoading: true
     })
-    const { privateKey } = this.state
+    const privateKey = _trim(this.state.privateKey)
     const { changeLocation } = this.props
     
     let publicKey, accounts = []
@@ -73,7 +75,7 @@ class AccountImport extends Component<Props> {
       let accounts1 = await publickKeyToAccount(publicKey, true)
       let accounts2 = await publickKeyToAccount(publicKey, false)
       
-      const password = await getPassword()
+      const password = await user.getLockPassword()
       accounts1 = accounts1.map(item => {
         return {
           name: item.account_info.name,
@@ -114,45 +116,33 @@ class AccountImport extends Component<Props> {
     }
 
     try {
-      const laccounts = await getAccounts()
-      const hash = {}
-      accounts = laccounts.concat(accounts).reduce((prev, next) => {
-        const _h = `${next.name}_${next.network}`
-        hash[_h] ? '' : hash[_h] = true && prev.push(next);
-        return prev
-      },[]);
-      chrome.storage.local.set({accounts: accounts})
-      this.props.dispatch(accountActions.setAccounts(accounts));
-      chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-        if(activeAccount){
-          changeLocation('/accountManage')
-        }else {
-          const url = accounts[0].network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
-          iost.changeNetwork(url)
+      
+      accounts = await user.addUsers(accounts)
+      const activeAccount = await user.getActiveAccount()
+      if(activeAccount){
+        changeLocation('/accountManage')
+      }else {
+        iost.changeNetwork(utils.getNetWork(accounts[0].network))
 
-          iost.rpc.blockchain.getAccountInfo(accounts[0].name)
-          .then((accountInfo) => {
-            if (!iost.isValidAccount(accountInfo, accounts[0].publicKey)) {
-              this.throwErrorMessage()
-              return
-            }
-            iost.loginAccount(accounts[0].name, accounts[0].publicKey)
-            chrome.storage.local.set({ activeAccount: accounts[0] },() => {
-              changeLocation('/accountManage')
-            })
+        iost.rpc.blockchain.getAccountInfo(accounts[0].name)
+        .then((accountInfo) => {
+          if (!iost.isValidAccount(accountInfo, accounts[0].publicKey)) {
+            this.throwErrorMessage()
+            return
+          }
+          iost.changeAccount(accounts[0])
+
+          // iost.loginAccount(accounts[0].name, accounts[0].publicKey)
+          chrome.storage.local.set({ activeAccount: accounts[0] },() => {
+            changeLocation('/accountManage')
           })
-          .catch(this.throwErrorMessage)
-        }
-      })
+        })
+        .catch(this.throwErrorMessage)
+      }
       
     } catch (e) {
       console.log(e)
     }
-  }
-
-  onLoginTheseus = async () => {
-    // const data = await theseus.login(phone, password)
-    // login theseus account
   }
 
   handleChange = (e) => {
@@ -171,13 +161,16 @@ class AccountImport extends Component<Props> {
   // 首次登陆页，或添加账号页
   backTo = () => {
     const { changeLocation, locationList } = this.props
-    console.log(locationList)
-    // ui.deleteLocation()
-    // changeLocation(locationList[locationList.length - 1])
+    const { canBack } = this.state
+    if(canBack){
+      ui.deleteLocation()
+      changeLocation(locationList[locationList.length - 1])
+    }
   }
 
   render() {
     const { isLoading, canBack } = this.state
+    const { changeLocation, locationList } = this.props
     return (
       <Fragment>
         <Header title={I18n.t('firstLogin_ImportAccount')} logo={!canBack} onBack={this.backTo} hasSetting={false} />

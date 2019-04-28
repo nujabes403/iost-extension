@@ -1,8 +1,12 @@
 import * as userActions from 'actions/user'
 // const IOST = require('../../../iost.js')
 import store from '../store'
+import user from 'utils/user'
+import utils from 'utils'
+
 const IOST = require('iost')
 const bs58 = require('bs58')
+
 
 class Callback {
   constructor() {
@@ -46,13 +50,32 @@ const iost = {
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
     iost.iost.setRPC(iost.rpc)
-    console.log(1232313)
     chrome.runtime.sendMessage({
       action: 'CHANGE_NETWORK',
       payload: {
         url,
       }
     })
+  },
+  changeAccount: async (account) => {
+    try {
+      chrome.runtime.sendMessage({
+        action: 'CHANGE_ACCOUNT',
+        payload: account
+      })
+      iost.account = new IOST.Account(account.name)
+      const password = await user.getLockPassword()
+      const encodedPrivateKey = utils.aesDecrypt(account.privateKey, password)
+      const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey),encodedPrivateKey.length>50?2:1)
+      iost.account.addKeyPair(kp, "owner")
+      iost.account.addKeyPair(kp, "active")
+      iost.iost.setAccount(iost.account);
+      // Redux dispatch
+      store.dispatch(userActions.setUserInfo(account.name, kp.id))
+      
+    } catch (err) {
+      console.log(err)
+    }
   },
   // account
   loginAccount: (id, encodedPrivateKey) => {

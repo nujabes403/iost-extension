@@ -25,9 +25,15 @@ export const privateKeyToPublicKey = (privateKey) => {
 // http://54.249.186.224
 export const publickKeyToAccount = async (publickKey, isProd = true) => {
   const url = isProd? 'https://explorer.iost.io/': ' http://54.249.186.224/'
-  const { data } = await axios.get(`${url}iost-api/accounts/${publickKey}`)
-  if(data.code == 0){
-    return data.data.accounts || []
+  try {
+    const { data } = await axios.get(`${url}iost-api/accounts/${publickKey}`,{
+      timeout: 10000
+    })
+    if(data.code == 0){
+      return data.data.accounts || []
+    }
+  } catch (err) {
+    console.log(err)
   }
   return []
   // throw new Error('Invlid publickKey');

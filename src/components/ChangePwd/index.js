@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import Input from 'components/Input'
 import { Header } from 'components'
 import Button from 'components/Button'
-import utils from 'utils'
 import hash from 'hash.js'
 import * as accountActions from 'actions/accounts'
+import utils from 'utils'
+import user from 'utils/user'
 
 import './index.scss'
 
@@ -34,18 +35,9 @@ class AccountSetting extends Component<Props> {
   }
 
   onCheckCurrentPwd = async () => {
-    const getEnPassword = () => new Promise((resolve, reject) => {
-      chrome.storage.local.get(['password'],({password: en_password}) => {
-        if(en_password){
-          resolve(en_password)
-        }else{
-          reject()
-        }
-      })
-    })
-    const { currentPwd } = this.state
     try {
-      const en_password = await getEnPassword()
+      const { currentPwd } = this.state
+      const en_password = await user.getEnPassword()
       const _password = hash.sha256().update(currentPwd).digest('hex')
       if(_password === en_password){
         this.setState({
@@ -56,9 +48,8 @@ class AccountSetting extends Component<Props> {
           isCurrentPwd: false
         })
       }
-      // utils.aesDecrypt(en_password, currentPwd)
-      
     } catch (err) {
+      console.log(err)
       this.setState({
         isCurrentPwd: false
       })
@@ -79,7 +70,7 @@ class AccountSetting extends Component<Props> {
     }
   }
 
-  onUpdatePwd = () => {
+  onUpdatePwd = async () => {
     const { newPwd, currentPwd, isCurrentPwd, isDifferent } = this.state
     const reg = new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
     if (!reg.test(newPwd)){
@@ -92,41 +83,38 @@ class AccountSetting extends Component<Props> {
       // const en_password = utils.aesEncrypt('account', newPwd)
       const en_password = hash.sha256().update(newPwd).digest('hex')
       chrome.storage.local.set({password: en_password})
+
+
       chrome.runtime.sendMessage({
         action: 'SET_PASSWORD',
         payload: {
           password: newPwd
         }
       })
-      //重新设置账号列表
-      chrome.storage.local.get(['accounts'], ({accounts}) => {
-        if(accounts && accounts.length){
-          accounts = accounts.map(item => {
-            return {
-              name: item.name,
-              network: item.network,
-              privateKey: utils.aesEncrypt(utils.aesDecrypt(item.privateKey, currentPwd), newPwd),
-              publicKey: item.publicKey,
-            }
-          })
-          chrome.storage.local.set({accounts: accounts},() =>{
-            this.props.dispatch(accountActions.setAccounts(accounts));
 
-            //修改当前账号
-            chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-              if(activeAccount){
-                activeAccount.privateKey = utils.aesEncrypt(utils.aesDecrypt(activeAccount.privateKey, currentPwd), newPwd)
-                chrome.storage.local.set({ activeAccount: activeAccount },() => {
-                  this.moveTo('/accountSetting')()
-                })
-              }
-            })
-            
-          })
-        }else {
+      //重新设置账号列表
+      let accounts = await user.getUsers()
+      if(accounts.length){
+        accounts = accounts.map(item => {
+          return{
+            name: item.name,
+            network: item.network,
+            privateKey: utils.aesEncrypt(utils.aesDecrypt(item.privateKey, currentPwd), newPwd),
+            publicKey: item.publicKey,
+          }
+        })
+        await user.setUsers(accounts)
+        //修改当前账号
+        const activeAccount = await user.getActiveAccount()
+        if(activeAccount){
+          const account = accounts.find(item => `${item.network}_${item.name}` == `${activeAccount.network}_${activeAccount.name}`)
+          await user.setActiveAccount(account)
           this.moveTo('/accountSetting')()
         }
-      })
+      }else {
+        this.moveTo('/accountSetting')()
+      }
+      
     } catch (err) {
       console.log(err)
     }

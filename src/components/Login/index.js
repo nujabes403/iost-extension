@@ -81,6 +81,7 @@ class Login extends Component<Props> {
     }
   }
 
+
   tryLogin = async () => {
     const { account, privateKey } = this.state
     const { changeLocation } = this.props
@@ -99,14 +100,15 @@ class Login extends Component<Props> {
       return
     }
 
+    iost.changeNetwork(utils.getNetWork(account.network))
     iost.rpc.blockchain.getAccountInfo(account)
       .then((accountInfo) => {
         if (!iost.isValidAccount(accountInfo, publicKey)) {
           this.throwErrorMessage()
           return
         }
-
-        iost.loginAccount(account, privateKey)
+        iost.changeAccount(account)
+        // iost.loginAccount(account, privateKey)
         changeLocation('/account')
       })
       .catch(this.throwErrorMessage)
@@ -155,7 +157,6 @@ class Login extends Component<Props> {
           />
           {!!errorMessage && <p className="login-errorMessage">{errorMessage}</p>}
           <div className="line"></div>
-          {/*<Button className="btn-accountCreate" onClick={this.tryLogin} disabled={true}>{I18n.t('firstLogin_CreateAccount')}</Button>*/}
           <Button className="btn-accountImport" onClick={this.onImport}>{I18n.t('firstLogin_ImportAccount')}</Button>
           <p>{I18n.t('firstLogin_NoAndCreate1')}<a href="https://iostaccount.endless.game" className="third-create" target="_blank">{I18n.t('firstLogin_NoAndCreate2')}</a></p>
           <div className="radio-box">

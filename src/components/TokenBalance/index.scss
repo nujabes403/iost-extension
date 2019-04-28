@@ -6,6 +6,7 @@
   margin-bottom: 25px;
   min-height: 169px;
   text-decoration: none;
+  width: 100%;
   .logo-box {
     margin-top: 30px;
     .logo {
@@ -14,6 +15,10 @@
   }
   .TokenBalance-amount-box {
     margin: 15px 0 10px;
+    font-size: 16px;
+  }
+  .TokenBalance-number-box{
+    
   }
   .TokenBalance__amount {
     font-size: 22px;
@@ -58,4 +63,36 @@
       }
     }
   }
+  .progress-box {
+    margin-top: 10px;
+    height: 60px;
+    cursor: pointer;
+    // background-color: $white;
+    // border-radius: 4px;
+    // padding: 15px;
+    .ram-default {
+      font-size: 14px;
+      line-height: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ram-used {
+      font-size: 12px;
+      line-height: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-wrap {
+      margin: 10px 0 5px;
+      background-color: #DCE6F2;
+      border-radius: 5px;
+      .progress-inner {
+        border-radius: 5px;
+        background-color: #6598F4;
+        height: 10px;
+        transition: width 1s;
+      }
+    }
+  }
 }
+

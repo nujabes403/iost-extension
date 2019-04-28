@@ -2,6 +2,7 @@ const IOST = require('iost')
 const bs58 = require('bs58')
 const crypto = require('crypto')
 
+
 const getAccounts = () => new Promise((resolve, reject) => {
   chrome.storage.local.get(['accounts'], ({accounts}) => {
     resolve(accounts || [])
@@ -28,6 +29,7 @@ const iost = {
   account: new IOST.Account('empty'),
   network: IOST_NODE_URL,
   state: null,
+  activeAccount: null, //当前账户
   // network
   changeNetwork: async (url) => {
     const newNetworkProvider = new IOST.HTTPProvider(url)
@@ -39,6 +41,16 @@ const iost = {
     chrome.storage.local.set({
       activeNetwork: url
     })
+  },
+  changeAccount: (account) => {
+    iost.activeAccount = account
+    iost.account = new IOST.Account(account.name)
+    const password = iost.state.password
+    const encodedPrivateKey = aesDecrypt(account.privateKey, password)
+    const kp = new IOST.KeyPair(bs58.decode(encodedPrivateKey),encodedPrivateKey.length>50?2:1)
+    iost.account.addKeyPair(kp, "owner")
+    iost.account.addKeyPair(kp, "active")
+    iost.iost.setAccount(iost.account)
   },
   // account
   loginAccount: (name, encodedPrivateKey) => {
@@ -90,6 +102,13 @@ function aesEncrypt(encrypted, key){
   let crypted = cipher.update(data, 'utf8', 'hex');
   crypted += cipher.final('hex');
   return crypted;
+}
+
+function aesDecrypt(encrypted, key){
+  const decipher = crypto.createDecipher('aes192', key);
+  let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+  decrypted += decipher.final('utf8');
+  return decrypted;
 }
 
 module.exports = iost

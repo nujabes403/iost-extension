@@ -67,7 +67,7 @@ const DEFAULT_IOST_CONFIG = {
 }
 
 const IOST_NODE_URL = 'https://api.iost.io' //当前节点
-const IOST_TEST_NODE_URL = 'http://13.52.105.102:30001' //当前节点
+const IOST_TEST_NODE_URL = 'https://test.api.iost.io' //当前节点
 const IWalletJS = {
   newIOST: (IOST) => {
       IWalletJS.pack = IOST
@@ -77,7 +77,7 @@ const IWalletJS = {
       IWalletJS.iost.signAndSend = signAndSend
       IWalletJS.iost.setRPC(IWalletJS.rpc)
       IWalletJS.iost.setAccount(IWalletJS.iost.account)
-      IWalletJS.iost.account = new IOST.Account(IWalletJS.account)
+      IWalletJS.iost.account = new IOST.Account(IWalletJS.account.name)
       IWalletJS.iost.rpc = IWalletJS.rpc
       return IWalletJS.iost
   },
@@ -89,8 +89,8 @@ const IWalletJS = {
           clearInterval(invertal)
           if(IWalletJS.iost){
             resolve(IWalletJS.iost.account._id)
-          }else if(IWalletJS.account != 'empty' && IWalletJS.account != null){
-            resolve(IWalletJS.account)
+          }else if(IWalletJS.account.name != null){
+            resolve(IWalletJS.account.name)
           }else {
             reject({
               type: 'locked'
@@ -122,16 +122,20 @@ function signAndSend(tx){
     payload: {
       tx,
       domain,
-      account: this.account._id,
+      account: IWalletJS.account,
       network,
       txABI: [action.contract, action.actionName, JSON.parse(action.data)]
     }
   }
   actionMap[actionId] = cb
-  window.postMessage(message, '*')
+  if(IWalletJS.account){
+    window.postMessage(message, '*')
+  }else {
+    setTimeout(() => { cb.pushMsg("failed", 'no account') },0)
+  }
+  
   return cb
 }
-
 
 // window.iost = IWalletJS
 

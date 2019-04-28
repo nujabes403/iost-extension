@@ -30,7 +30,7 @@ class AccountSetting extends Component<Props> {
   backTo = () => {
     const { changeLocation, locationList } = this.props
     ui.deleteLocation()
-    console.log(locationList)
+    // console.log(locationList)
     changeLocation(locationList[locationList.length - 1])
   }
 

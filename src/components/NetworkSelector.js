@@ -20,7 +20,7 @@ const _iostNetworks = [
   {
     label: 'IOST TESTNET (EVEREST 2.0)',
     // value: 'https://api.iost.io',
-    value: 'http://13.52.105.102:30001',
+    value: 'https://test.api.iost.io',
   },
 ]
 

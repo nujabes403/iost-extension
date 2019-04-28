@@ -6,6 +6,7 @@ import iost from 'iostJS/iost'
 import { Header, TokenBalance } from 'components'
 import Button from 'components/Button'
 import ui from 'utils/ui'
+import user from 'utils/user'
 import * as accountActions from 'actions/accounts';
 import { privateKeyToPublicKey, publickKeyToAccount } from 'utils/key'
 import utils from 'utils';
@@ -37,31 +38,36 @@ class Account extends Component<Props> {
   }
 
   componentDidMount() {
-
-   console.log(iost)
-    chrome.storage.local.get(['accounts'], ({accounts}) => {
-      if (accounts && accounts.length){
-        this.props.dispatch(accountActions.setAccounts(accounts));
-        chrome.storage.local.get(['activeAccount'], ({activeAccount}) => {
-          const account = activeAccount || accounts[0]
-          const { name, privateKey } = activeAccount
-          chrome.runtime.sendMessage({
-            action: 'GET_PASSWORD',
-          },(res)=> {
-            const encodedPrivateKey = utils.aesDecrypt(privateKey,res)
-            iost.loginAccount(name, encodedPrivateKey)
-            chrome.storage.local.set({ activeAccount: account })
-            this.setState({
-              loading: false,
-              currentAccount: account,
-            })
+    this.init()
+  }
+  
+  init = async () => {
+    try {
+      const accounts = await user.getUsers()
+      if(accounts.length){
+        user.setUsers(accounts)
+        const activeAccount = await user.getActiveAccount()
+        const account = activeAccount || accounts[0]
+        const { type, name, privateKey } = account
+        const password = await user.getLockPassword()
+        if(password){
+          iost.changeNetwork(utils.getNetWork(account.network))
+          // const encodedPrivateKey = utils.aesDecrypt(privateKey, password)
+          // iost.loginAccount(name, encodedPrivateKey)
+         
+          iost.changeAccount(account)
+          await user.setActiveAccount(account)
+          this.setState({
+            loading: false,
+            currentAccount: account,
           })
-
-        })
+        }
       }else {
         this.changeLocation('/accountImport')
       }
-    })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   logout = () => {
@@ -82,24 +88,30 @@ class Account extends Component<Props> {
     })
   }
 
-  chooseAccount = (account) => () => {
-    const { name, privateKey, publicKey, network } = account
-    
-    chrome.runtime.sendMessage({
-      action: 'GET_PASSWORD',
-    },(res)=> {
-      const encodedPrivateKey = utils.aesDecrypt(privateKey, res)
-      const url = account.network == 'MAINNET'?'https://api.iost.io':'http://13.52.105.102:30001';
-      iost.changeNetwork(url)
-      iost.loginAccount(name, encodedPrivateKey)
-      this.setState({
-        currentAccount: account,
-      })
-      chrome.storage.local.set({ 'activeAccount': account }, () => {
-        console.log('switch account')
+  chooseAccount = (account) => async () => {
+    // const { type, name, privateKey, publicKey, network } = account
+    try {
+      const ipassword = await user.getLockPassword()
+      if(ipassword){
+        iost.changeNetwork(utils.getNetWork(account.network))
+        // const encodedPrivateKey = utils.aesDecrypt(privateKey, ipassword)
+        // iost.changeNetwork(utils.getNetWork(account.network))
+        // iost.loginAccount(name, encodedPrivateKey)
+       
+        iost.changeAccount(account)
+        this.setState({
+          currentAccount: account,
+        })
+        await user.setActiveAccount(account)
+        // console.log('switch account')
         this.toggleAccountList()
-      })
-    })
+      }else {
+        // lock
+      }
+    } catch (err) {
+      
+    }
+   
   }
 
   render() {
@@ -121,17 +133,17 @@ class Account extends Component<Props> {
             <ul className="accountName-list">
               {
                 accounts.map((item) =>
-                  <li key={item.name + '_' + item.network} onClick={this.chooseAccount(item)}>
+                  <li key={user.getUserUnique(item)} onClick={this.chooseAccount(item)}>
                     {/*<i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />*/}
-                    <span className={cx('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
+                    <span className={cx('account-title', item.network != 'MAINNET' ? 'test' : '')}>IOST {item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
-                    <i className={cx('check', ((item.name + '_' + item.network) == (currentAccount.name + '_' + currentAccount.network)) ? 'checked' : '')} />
+                    <i className={cx('check', user.getUserUnique(item) == user.getUserUnique(currentAccount) ? 'checked' : '')} />
                   </li>)
               }
             </ul>
           </div>
           <TokenBalance account={currentAccount} moveTo={this.moveTo}/>
-          <div className="btn-box">
+          <div className={cx("btn-box", 'active')}>
             <Button
               className="btn-transfer"
               account

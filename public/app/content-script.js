@@ -26,7 +26,6 @@ function injectInpageScript() {
 function listenForProviderRequest() {
   window.addEventListener('message', ({ source, data }) => {
     if (source !== window || !data || !data.action) return
-
     switch (data.action) {
       case ACTION.TX_ASK:
         chrome.runtime.sendMessage({
@@ -37,7 +36,7 @@ function listenForProviderRequest() {
         break;
       case 'GET_ACCOUNT': 
         chrome.runtime.sendMessage({
-          action: 'GET_ACCOUNT',
+          action: data.action,
         },(payload) => {
           window.postMessage({
             message: {
@@ -61,16 +60,6 @@ function listenForProviderRequest() {
   port.onDisconnect.addListener(() => {
     // console.log(port)
   })
-  
-  // setInterval(() => {
-  //   const message = {
-  //     actionId: 1,
-  //     time: new Date()
-  //   }
-  //   window.postMessage({
-  //     message,
-  //   }, '*')
-  // },3000)
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // From content script to webpage injected script.
