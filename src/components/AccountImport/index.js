@@ -67,14 +67,14 @@ class AccountImport extends Component<Props> {
     })
     const privateKey = _trim(this.state.privateKey)
     const { changeLocation } = this.props
-    
+
     let publicKey, accounts = []
     try {
       publicKey = privateKeyToPublicKey(privateKey)
 
       let accounts1 = await publickKeyToAccount(publicKey, true)
       let accounts2 = await publickKeyToAccount(publicKey, false)
-      
+
       const password = await user.getLockPassword()
       accounts1 = accounts1.map(item => {
         return {
@@ -116,7 +116,7 @@ class AccountImport extends Component<Props> {
     }
 
     try {
-      
+
       accounts = await user.addUsers(accounts)
       const activeAccount = await user.getActiveAccount()
       if(activeAccount){
@@ -139,7 +139,7 @@ class AccountImport extends Component<Props> {
         })
         .catch(this.throwErrorMessage)
       }
-      
+
     } catch (e) {
       console.log(e)
     }

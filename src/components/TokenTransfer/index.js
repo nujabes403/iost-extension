@@ -117,8 +117,10 @@ class Index extends Component<Props> {
       'transfer',
       JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
     )
-    tx.setTime(defaultConfig.expiration, defaultConfig.delay)
-    tx.addApprove("*", defaultConfig.defaultLimit)
+    tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
+    // tx.addApprove("*", defaultConfig.defaultLimit)
+    tx.addApprove("iost", +amount)
+
 
     // const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
 

@@ -89,7 +89,7 @@
       .account-title {
         margin-right: 10px;
         text-align: center;
-        width: 110px;
+        width: 50px;
         height: 20px;
         line-height: 20px;
         color: $white;
@@ -117,6 +117,7 @@
       }
 
       .check {
+        margin-left: 10px;
         display: inline-block;
         width: 10px;
         height: 8px;
@@ -131,7 +132,8 @@
 }
 
 .x-account-currentName-box {
-  margin-right: -50px;
+  position: absolute;
+  right: 20px;
 
   .circle {
     display: inline-block;

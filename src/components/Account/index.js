@@ -135,7 +135,7 @@ class Account extends Component<Props> {
                 accounts.map((item) =>
                   <li key={user.getUserUnique(item)} onClick={this.chooseAccount(item)}>
                     {/*<i className={cx('circle', item.network != 'MAINNET' ? 'test' : '')} />*/}
-                    <span className={cx('account-title', item.network != 'MAINNET' ? 'test' : '')}>IOST {item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
+                    <span className={cx('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
                     <i className={cx('check', user.getUserUnique(item) == user.getUserUnique(currentAccount) ? 'checked' : '')} />
                   </li>)
@@ -145,13 +145,13 @@ class Account extends Component<Props> {
           <TokenBalance account={currentAccount} moveTo={this.moveTo}/>
           <div className={cx("btn-box", 'active')}>
             <Button
-              className="btn-transfer"
+              className="btn-transfer btn-account"
               onClick={this.moveTo('/tokenTransfer')}
             >
               {I18n.t('Account_Transfer')}
             </Button>
             <Button
-              className="btn-receipt"
+              className="btn-receipt btn-account"
               onClick={this.moveTo('/accountQRCode')}
             >
               {I18n.t('Account_Receive')}

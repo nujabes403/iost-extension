@@ -9,7 +9,8 @@ const i18n = {
     "RequestXAmount": "Request${X} Amount",
     "RequestXMemo": "Request${X} Memo",
     "ActionX": "Action${X}",
-    "XActionsNeedYouPermission": "actions need you permission",
+    "XActionsNeedYouPermission": "action need your permission",
+    "XActionsNeedYouPermissionS": "actions need your permission",
     "Dapp_iGasPrice": "iGas Price",
     "Dapp_iGasAmount": "Amount",
     "Dapp_ResourceFees": "Resource Fees",
@@ -32,6 +33,7 @@ const i18n = {
     "RequestXMemo": "액션 ${X} Memo",
     "ActionX": "액션 ${X}",
     "XActionsNeedYouPermission": "가지 액션 권한이 필요합니다.",
+    "XActionsNeedYouPermissionS": "가지 액션 권한이 필요합니다.",
     "Dapp_iGasPrice": "iGas 가격",
     "Dapp_iGasAmount": "수량",
     "Dapp_ResourceFees": "리소스 비용",
@@ -49,16 +51,17 @@ const i18n = {
     "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   zh: {
-    "RequestXTo": "请求${X} 给",
-    "RequestXAmount": "请求${X} 总量",
+    "RequestXTo": "请求${X} To",
+    "RequestXAmount": "请求${X} 代币数量",
     "RequestXMemo": "请求${X} Memo",
     "ActionX": "操作${X}",
     "XActionsNeedYouPermission": "个操作需要您的许可",
+    "XActionsNeedYouPermissionS": "个操作需要您的许可",
     "Dapp_iGasPrice": "iGas价格",
     "Dapp_iGasAmount": "数量",
     "Dapp_ResourceFees": "资源费用",
-    "Dapp_AmountLimitTips": "* Amount Limit为本次交易最高可消耗代币数量。请谨慎授权",
-    "Dapp_From": "从",
+    "Dapp_AmountLimitTips": "* Amount Limit为本次交易最高可消耗代币数量, 请谨慎授权",
+    "Dapp_From": "From",
     "Dapp_Account": "账号",
     "Dapp_AccountLimit": "Amount Limit",
     "Dapp_Authorization": "请求授权",
@@ -88,7 +91,7 @@ export default class extends Component {
     this.hasClick = false
 
     this.state = {
-      lan: 'en',
+      lang: 'en',
       tx: null,
       isAddWhitelist: false,
       iGASPrice: 1,
@@ -197,7 +200,7 @@ export default class extends Component {
             {transLocal(lang, 'Dapp_WhiteList')}
           </span>
           <h1 className="title">{transLocal(lang, hasTransfer ? 'Dapp_Signature' : 'Dapp_Authorization')}</h1>
-          <p className="memo">{tx.actions.length} {transLocal(lang, 'XActionsNeedYouPermission')}</p>
+          <p className="memo">{tx.actions.length} {transLocal(lang, tx.actions.length > 1 ? 'XActionsNeedYouPermissionS' : 'XActionsNeedYouPermission')}</p>
         </div>
         <div className="content">
           <section className="list">
@@ -219,7 +222,7 @@ export default class extends Component {
               <div className="item-val">
                 {
                   tx.amount_limit.map(limit => (
-                    <div key={limit.token}>{limit.value} {limit.token}</div>
+                    <span className="account-limit-item" key={limit.token}>{limit.value} {limit.token}</span>
                   ))
                 }
               </div>

@@ -1,6 +1,6 @@
 @import "colors.scss";
 
-body {
+.multi-action {
   font-family: -apple-system-font, "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   font-size: 14px;
   user-select: none;
@@ -8,14 +8,12 @@ body {
   -webkit-font-smoothing: antialiased;
   height: 580px!important;
   width: 600px!important;
-}
 
-* {
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
+  * {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
 
-.multi-action {
   .header {
     position: relative;
     background-color: #F6F6F6;
@@ -228,6 +226,8 @@ body {
       input {
         padding: 0 10px;
         width: 180px;
+        height: 30px;
+        line-height: 1;
       }
     }
 
@@ -245,6 +245,12 @@ body {
         background-size: cover;
         vertical-align: middle;
       }
+    }
+  }
+
+  .account-limit-item {
+    + .account-limit-item:before {
+      content: ', ';
     }
   }
 }

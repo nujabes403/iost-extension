@@ -68,7 +68,7 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    width: 280px;
+    width: 220px;
     border-radius: 4px;
     background-color: $gray;
     overflow: hidden;
@@ -93,7 +93,7 @@
         }
         .account-title {
           text-align: center;
-          width: 110px;
+          width: 50px;
           height: 20px;
           line-height: 20px;
           color: $white;
@@ -114,7 +114,7 @@
         .account-name {
           font-size: 14px;
           flex: 1;
-          
+
         }
         .check {
           display: inline-block;
@@ -184,7 +184,7 @@
       }
     }
     .list-box {
-      
+
       font-size: 14px;
       overflow: scroll;
       height: 203px;

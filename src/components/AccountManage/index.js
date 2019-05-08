@@ -43,7 +43,7 @@ class AccountManage extends Component<Props> {
 
   onDelete = async () => {
 
-    
+
     const accounts = this.props.accounts.filter(item => user.getUserUnique(item) != user.getUserUnique(this.delItem))
     await user.setUsers(accounts)
     const activeAccount = await user.getActiveAccount()
@@ -51,12 +51,12 @@ class AccountManage extends Component<Props> {
       if(accounts.length){
         const account = accounts[0]
         // reset current account
-        
+
         iost.changeNetwork(utils.getNetWork(account.network))
         // iost.loginAccount(account.name, account.publicKey)
         iost.changeAccount(account)
         user.setActiveAccount(account)
-        
+
       }else {
         await user.removeActiveAccount()
         this.props.changeLocation('/accountImport')
@@ -74,11 +74,11 @@ class AccountManage extends Component<Props> {
     const { accounts } = this.props
     return (
       <Fragment>
-        <Header 
-          title={I18n.t('Settings_accountManage')} 
-          onBack={this.backTo} 
-          onAddIost={this.moveTo('/accountImport')} 
-          setting={false} 
+        <Header
+          title={I18n.t('Settings_accountManage')}
+          onBack={this.backTo}
+          onAddIost={this.moveTo('/accountImport')}
+          setting={false}
         />
         {/*<Header title={I18n.t('accountManage')} onBack={this.backTo} onAdd={this.moveTo('/accountImport')} setting={false} />*/}
         <div className="accountManage-box">
@@ -87,7 +87,7 @@ class AccountManage extends Component<Props> {
               <div className="account-item" key={user.getUserUnique(item)}>
                 <div className="left">
                   <div className="account-name-box">
-                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>IOST {item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
+                    <span className={classnames('account-title', item.network != 'MAINNET' ? 'test' : '')}>{item.network != 'MAINNET' ? I18n.t('ManageAccount_Test') : I18n.t('ManageAccount_Official')}</span>
                     <span className="account-name">{item.name}</span>
                   </div>
                   <div className="publicKey-box">
@@ -118,4 +118,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(AccountManage)
-

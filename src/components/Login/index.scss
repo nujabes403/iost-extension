@@ -4,7 +4,7 @@
 .login-box {
   width: 320px;
   //margin: 70px auto 0;
-  margin: 30px auto 0;
+  margin: 100px auto 0;
   text-align: center;
   .input-password {
     padding: 0 15px;
@@ -28,9 +28,9 @@
 
   .btn-accountCreate {
     margin-bottom: 15px;
-    background-color: transparent;
-    color: black;
-    border: 1px solid #000000;
+    // background-color: transparent;
+    // color: black;
+    // border: 1px solid #000000;
     &:disabled {
       cursor: not-allowed;
       background-color: $gray;
