@@ -1,0 +1,250 @@
+@import "colors.scss";
+
+body {
+  font-family: -apple-system-font, "SF Pro SC", "SF Pro Text", "SF Pro Icons", "PingFang SC", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 14px;
+  user-select: none;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  height: 580px!important;
+  width: 600px!important;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.multi-action {
+  .header {
+    position: relative;
+    background-color: #F6F6F6;
+    padding: 15px 30px;
+
+    .title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .whitelist-btn {
+      display: inline-block;
+      float: right;
+      padding: 0 10px;
+      color: #999999;
+      background-color: transparent;
+      border-radius: 2px;
+      border: 1px solid #999999;
+      font-size: 12px;
+      line-height: 30px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+
+      &.active {
+        border-color: #1E64E2;
+        color: #1E64E2;
+      }
+    }
+
+    .memo {
+      margin: 8px 150px 0 0;
+      font-size: 13px;
+      color: #999;
+    }
+  }
+
+  .content {
+    display: flex;
+    padding: 10px 20px;
+
+    .detail,
+    .list {
+      max-height: 310px;
+      overflow-y: auto;
+    }
+
+    .list {
+      background-color: #f6f6f6;
+      border-radius: 4px;
+      width: 180px;
+      flex: 0 0 auto;
+
+      ol {
+        margin: 0;
+        padding: 10px 20px 10px 25px;
+      }
+
+      li {
+        margin: 10px 0;
+        font-size: 14px;
+      }
+
+      .arrow {
+        color: #999;
+        letter-spacing: -3px;
+      }
+    }
+
+    .detail {
+      margin-left: 20px;
+      flex: 0 1 auto;
+    }
+
+    .item-group {
+      margin-bottom: 8px;
+      padding: 10px 5px;
+      border: 1px solid #dedede;
+      border-radius: 4px;
+    }
+
+    .item {
+      margin-bottom: 8px;
+    }
+
+    .item-tit {
+      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .item-val {
+      padding: 8px 16px;
+      max-height: 160px;
+      line-height: 1.4;
+      border-radius: 4px;
+      background-color: #F6F6F6;
+      border: 1px solid #C4C4C4;
+      font-size: 14px;
+      overflow-y: auto;
+    }
+
+    .item-tips {
+      padding: 10px 0 0;
+      line-height: 1.2;
+      font-size: 12px;
+      color: #b92419;
+    }
+  }
+
+  .tips {
+    padding: 0 20px;
+
+    p {
+      margin: 2px 0;
+      font-size: 12px;
+      color: #999999;
+    }
+  }
+
+  .footer {
+    padding: 10px 20px 0;
+    text-align: right;
+
+    .ft-btn {
+      width: 130px;
+      height: 40px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      background-color: #fff;
+      font-size: 16px;
+      color: #000;
+
+      &.whitelist {
+        border-color: #1E64E2;
+        color: #1E64E2;
+      }
+
+      &.primary {
+        background-color: #000;
+        color: #fff;
+        margin-left: 15px;
+
+        &.whitelist {
+          background-color: #1E64E2;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .gas-setting {
+    height: 40px;
+  }
+
+  .transferAmount-box {
+    padding: 0 20px;
+    display: flex;
+    line-height: 40px;
+    align-items: center;
+    font-size: 14px;
+
+    .transferAmount {
+      margin-right: 10px;
+    }
+
+    .balance {
+      color: $blue;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .iGAS-price {
+      cursor: pointer;
+      color: #333333;
+
+      > i {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background-image: url("/static/images/arrow-right.png");
+        background-size: cover;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .gas-form {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+
+    .gas-form-item {
+      display: flex;
+      align-items: center;
+
+      & + .gas-form-item {
+        margin-left: 20px;
+      }
+
+      span {
+        margin-right: 10px;
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 13px;
+      }
+
+      input {
+        padding: 0 10px;
+        width: 180px;
+      }
+    }
+
+    .back-btn {
+      padding: 10px 10px 10px 0;
+      margin-right: 5px;
+      display: inline-block;
+      cursor: pointer;
+
+      i {
+        display: inline-block;
+        width: 7px;
+        height: 13px;
+        background-image: url("/static/images/arrow-left.png");
+        background-size: cover;
+        vertical-align: middle;
+      }
+    }
+  }
+}

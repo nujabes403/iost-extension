@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import MultiAction from './popup-multiAction'
 // import i18n from './i18n'
 // import AskPopupSummary from './popup-summary'
 // import AskPopupDetail from './popup-detail'
@@ -15,7 +16,7 @@ const i18n = {
     "Dapp_Signature": "Signature Requested",
     "Dapp_WhiteList": "Enable Whitelist",
     "Dapp_Cancel": "Cancel",
-    "Dapp_Confirm": "Confirm", 
+    "Dapp_Confirm": "Confirm",
     "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   ko: {
@@ -72,11 +73,10 @@ class AskPopup extends Component<Props> {
     try {
       this.txInfo = JSON.parse(decodeURIComponent(this.tx))
     } catch (e) {
-      console.log(e)
       this.txInfo = []
     }
     this.hasClick = false
-    
+
   }
 
   componentDidMount() {
@@ -95,11 +95,11 @@ class AskPopup extends Component<Props> {
     //     }
     //   })
     // });
-    window.onbeforeunload = () => {
-      if(!this.hasClick){
-        this.cancelTx()
-      }
-    }
+    // window.onbeforeunload = () => {
+    //   if(!this.hasClick){
+    //     this.cancelTx()
+    //   }
+    // }
   }
 
   confirmTx = () => {
@@ -138,6 +138,10 @@ class AskPopup extends Component<Props> {
   render() {
     const { isAddWhitelist } = this.state
     const [contractAddress, abi, args = []] = this.txInfo
+
+    return (
+      <MultiAction txInfo={this.txInfo} slotIdx={this.slotIdx}/>
+    )
     return (
       <div className="AskPopup">
         <header className="AskPopup__header">
@@ -147,7 +151,7 @@ class AskPopup extends Component<Props> {
         </header>
         <div className="AskPopup__container">
           {abi == 'transfer'?
-          <TransferDetail 
+          <TransferDetail
           args={args}
           />:<ContractDetail
           accountId={this.accountId}
@@ -182,7 +186,7 @@ class AskPopup extends Component<Props> {
             </button>
           </div>
         </div>
-        
+
       </div>
     )
   }

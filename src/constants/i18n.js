@@ -35,7 +35,7 @@ const enTranslation = {
   "CreateAccount_ToastTip2": "Account not created yet ",
   "CreateAccount_ToastTip3": "账户创建成功",
 
-  "ImportAccount_EnterPrivate": "Fill in account private key",
+  "ImportAccount_EnterPrivate": "Fill in MainNet  / TestNet account private key",
   "ImportAccount_Submit": "Submit",
   "ImportAccount_Completed": "Import Completed",
   "ImportAccount_Failed": "Import failed, please try again.",
@@ -66,6 +66,7 @@ const enTranslation = {
   "Settings_changeLanguage": "Change Language",
   "Settings_changePwd": "Change Password",
   "Settings_lock": "Lock now",
+  "Settings_whitelist": "Manage Whitelist",
   "Settings_iostWallet": "About IOST Wallet",
   "ManageAccount_Add": "Import",
   "ManageAccount_PublicKey": "PubKey",
@@ -182,7 +183,7 @@ const zhTranslation = {
   "CreateAccount_ToastTip2": "账户尚未创建成功",
   "CreateAccount_ToastTip3": "账户创建成功",
 
-  "ImportAccount_EnterPrivate": "填写账户私钥",
+  "ImportAccount_EnterPrivate": "您可填写 测试网/正式网 私钥",
   "ImportAccount_Submit": "提交",
   "ImportAccount_Completed": "导入成功",
   "ImportAccount_Failed": "导入失败，请重试",
@@ -216,6 +217,7 @@ const zhTranslation = {
   "Settings_changeLanguage": "更改语言",
   "Settings_changePwd": "修改密码",
   "Settings_lock": "立即锁定",
+  "Settings_whitelist": "白名单管理",
   "Settings_iostWallet": "关于IOST钱包",
 
   "ManageAccount_Add": "添加",
@@ -339,7 +341,7 @@ const koTranslation = {
   "CreateAccount_ToastTip2": "아직 계정이 생성되지 않았습니다.",
   "CreateAccount_ToastTip3": "账户创建成功",
 
-  "ImportAccount_EnterPrivate": "계정 프라이빗 키 채우기",
+  "ImportAccount_EnterPrivate": "정식 / 테스트 계정 프라이빗 키 채우기",
   "ImportAccount_Submit": "제출",
   "ImportAccount_Completed": "가져오기 완료",
   "ImportAccount_Failed": "가져오기에 실패했습니다. 다시 시도하십시오.",
@@ -370,6 +372,7 @@ const koTranslation = {
   "Settings_changeLanguage": "언어 변경",
   "Settings_changePwd": "비밀번호 변경",
   "Settings_lock": "지금 잠구기",
+  "Settings_whitelist": "화이트리스트에  관리",
   "Settings_iostWallet": "IOST 지갑 정보",
   "ManageAccount_Add": "추가",
   "ManageAccount_PublicKey": "퍼블릭 키",

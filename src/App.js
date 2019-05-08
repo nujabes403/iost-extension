@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, TokenTransferFailed, TokenTransferSuccess,
   AccountQRCode, AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
-  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement, GasManage, RamManage
+  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement, GasManage, RamManage, WhiteList
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -48,7 +48,7 @@ class App extends Component<Props> {
             const encodedPrivateKey = utils.aesDecrypt(privateKey, password)
             iost.changeNetwork(utils.getNetWork(account.network))
             // this.changeLocation('/gasManage')
-            
+
             iost.changeAccount(account)
             await user.setActiveAccount(account)
             this.changeLocation('/account')
@@ -111,6 +111,8 @@ class App extends Component<Props> {
         return <AccountAdd changeLocation={this.changeLocation} />
       case '/changeLanguage':
         return <ChangeLanguage changeLocation={this.changeLocation} />
+      case '/whitelist':
+        return <WhiteList changeLocation={this.changeLocation} />
       case '/iostWallet':
         return <IostWallet changeLocation={this.changeLocation} />
       case '/userAgreement':
