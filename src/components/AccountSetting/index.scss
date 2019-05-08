@@ -39,6 +39,10 @@
           height: 25*0.8px;
           background-image: url("/static/images/icon-lock.png");
         }
+        &.whitelist {
+          height: 25*0.8px;
+          background-image: url("/static/images/icon-whitelist.png");
+        }
         &.iostWallet {
           height: 19*0.8px;
           background-image: url("/static/images/icon-iostWallet.png");

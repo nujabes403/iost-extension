@@ -1,0 +1,194 @@
+@import "colors.scss";
+
+.whitelist-box {
+  position: relative;
+  width: 100%;
+  height: 540px;
+  background-color: $gray;
+  padding-top: 40px;
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    height: 60px;
+    padding: 0 20px;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background-color: $white;
+    }
+  }
+
+  .item-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 22px;
+    background-image: url("/static/images/icon-user.png");
+    background-size: cover;
+  }
+
+  .domain-name {
+    flex: 1 1 auto;
+    font-size: 18px;
+    color: #333333;
+  }
+
+  .del-btn {
+    display: inline-block;
+    cursor: pointer;
+
+    .del-icon {
+      display: inline-block;
+      width: 20px;
+      height: 22px;
+      background-image: url("/static/images/delete.png");
+      background-size: cover;
+    }
+  }
+}
+
+.x-nameList-box {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-color: $gray;
+  overflow: hidden;
+  height: 0;
+  border: none;
+  transition: height 2s;
+  z-index: 1;
+
+  &.show {
+    height: auto;
+    border: 1px solid #C4C4C4;
+  }
+
+  .accountName-list {
+    max-height: 300px;
+    overflow: scroll;
+
+    li {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      padding: 0 25px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $white;
+      }
+
+      .account-title {
+        margin-right: 10px;
+        text-align: center;
+        width: 110px;
+        height: 20px;
+        line-height: 20px;
+        color: $white;
+        background-color: #E28A1E;
+
+        &.test {
+          background-color: $green;
+        }
+      }
+
+      .circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #E28A1E;
+
+        &.test {
+          background-color: $green;
+        }
+      }
+
+      .account-name {
+        font-size: 14px;
+        flex: 1;
+      }
+
+      .check {
+        display: inline-block;
+        width: 10px;
+        height: 8px;
+
+        &.checked {
+          background-image: url("/static/images/icon-nameChecked.png");
+          background-size: cover;
+        }
+      }
+    }
+  }
+}
+
+.x-account-currentName-box {
+  margin-right: -50px;
+
+  .circle {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #E28A1E;
+    margin-right: 8px;
+
+    &.test {
+      background-color: $green;
+    }
+  }
+
+  .account-name {
+    font-size: 14px;
+    flex: 1;
+    cursor: pointer;
+  }
+
+  .arrow {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 8px;
+    cursor: pointer;
+    margin-left: 8px;
+
+    &.arrow-hide {
+      display: none;
+    }
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 8px;
+      height: 8px;
+      border: 1px solid #999999;
+      // transition: 0.3s all ease-in-out;
+    }
+
+    &.arrow-down {
+      // margin-left: 8px;
+      &:before {
+        transform: translateY(-4px) rotateZ(45deg);
+        border-top-color: transparent;
+        border-left-color: transparent;
+      }
+    }
+
+    &.arrow-right {
+      // margin-left: 5px;
+      &:before {
+        transform: translateY(-1px) rotateZ(45deg);
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+      }
+    }
+  }
+}

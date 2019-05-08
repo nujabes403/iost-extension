@@ -11,7 +11,8 @@ const settingList = [
   { id: 2, name: 'changeLanguage' },
   { id: 3, name: 'changePwd' },
   { id: 4, name: 'lock' },
-  { id: 5, name: 'iostWallet' },
+  { id: 5, name: 'whitelist' },
+  { id: 6, name: 'iostWallet' },
 ]
 type Props = {
 
@@ -23,6 +24,7 @@ class AccountSetting extends Component<Props> {
 
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    
     ui.settingLocation(location)
     changeLocation(location)
   }

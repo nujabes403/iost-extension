@@ -72,7 +72,7 @@ const iost = {
       iost.iost.setAccount(iost.account);
       // Redux dispatch
       store.dispatch(userActions.setUserInfo(account.name, kp.id))
-      
+
     } catch (err) {
       console.log(err)
     }
@@ -130,12 +130,13 @@ const iost = {
   },
   sendTransaction: (contractAddress, contractAction, args) => {
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
-    tx.addApprove("*", "unlimited")
+    // tx.addApprove("*", "unlimited")
+    tx.addApprove("iost", +args[2])
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
     }
-    
+
     iost.account.signTx(tx)
 
     const fire = {
@@ -176,9 +177,10 @@ const iost = {
   },
   signAndSend: (contractAddress, contractAction, args) => {
     // const tx = new iostController.pack.Tx()
-    
+
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
-    tx.addApprove("*", "unlimited")
+    // tx.addApprove("*", "unlimited")
+    tx.addApprove("iost", +args[2])
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
@@ -221,7 +223,7 @@ const iost = {
 
     return fire
 
-    
+
 
     // return {
     //   onPending: (callback) => {

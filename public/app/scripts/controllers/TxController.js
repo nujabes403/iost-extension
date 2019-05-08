@@ -10,7 +10,7 @@ const getStorage = (name, defvalue) => new Promise((resolve, reject) => {
 })
 
 const IOST_NODE_URL = 'https://api.iost.io' //当前节点
-const IOST_TEST_NODE_URL = 'https://test.api.iost.io' 
+const IOST_TEST_NODE_URL = 'https://test.api.iost.io'
 
 function TxController(state) {
   this.state = state
@@ -29,12 +29,16 @@ function TxController(state) {
   })
 }
 
+TxController.prototype.findByIdx = function(idx) {
+  return this.txQueue[idx]
+}
+
 TxController.prototype.addTx = function(txInfo) {
   this.txQueue.push(txInfo)
   return this.txQueue.length
 }
 
-TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
+TxController.prototype.processTx = async function(txIdx, isAddWhitelist, iGASPrice, iGASLimit) {
   const txInfo = this.txQueue[txIdx]
   if (!txInfo) throw new Error(`That TX does not exist. slotIdx: ${txIdx}`)
 
@@ -76,6 +80,9 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
       if(network != 'MAINNET'){
         tx.setChainID(1023)
       }
+      tx.gasRatio = +iGASPrice
+      tx.gasLimit = +iGASLimit
+
       // tx.addApprove("*", "unlimited")
       // _tx.amount_limit.map(item => tx.addApprove(item.token, item.value))
       // if (txABI[1] === 'transfer') {
@@ -160,7 +167,7 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
       });
     })
   }
-  
+
   // const tx = iostController.iostInstance.callABI(...txObject)
   // if(iostController.network.indexOf('//api.iost.io') < 0){
   //   tx.setChainID(1023)
@@ -212,7 +219,7 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist) {
 
 TxController.prototype.cancelTx = function(txIdx) {
   const txInfo = this.txQueue[txIdx]
-  
+
   if(txInfo){
     this.port.forEach((port) => {
       port.postMessage({

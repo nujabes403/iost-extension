@@ -40,7 +40,7 @@ class Account extends Component<Props> {
   componentDidMount() {
     this.init()
   }
-  
+
   init = async () => {
     try {
       const accounts = await user.getUsers()
@@ -54,7 +54,7 @@ class Account extends Component<Props> {
           iost.changeNetwork(utils.getNetWork(account.network))
           // const encodedPrivateKey = utils.aesDecrypt(privateKey, password)
           // iost.loginAccount(name, encodedPrivateKey)
-         
+
           iost.changeAccount(account)
           await user.setActiveAccount(account)
           this.setState({
@@ -97,7 +97,7 @@ class Account extends Component<Props> {
         // const encodedPrivateKey = utils.aesDecrypt(privateKey, ipassword)
         // iost.changeNetwork(utils.getNetWork(account.network))
         // iost.loginAccount(name, encodedPrivateKey)
-       
+
         iost.changeAccount(account)
         this.setState({
           currentAccount: account,
@@ -109,9 +109,9 @@ class Account extends Component<Props> {
         // lock
       }
     } catch (err) {
-      
+
     }
-   
+
   }
 
   render() {
@@ -146,14 +146,12 @@ class Account extends Component<Props> {
           <div className={cx("btn-box", 'active')}>
             <Button
               className="btn-transfer"
-              account
               onClick={this.moveTo('/tokenTransfer')}
             >
               {I18n.t('Account_Transfer')}
             </Button>
             <Button
               className="btn-receipt"
-              account
               onClick={this.moveTo('/accountQRCode')}
             >
               {I18n.t('Account_Receive')}

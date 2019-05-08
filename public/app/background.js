@@ -46,7 +46,7 @@ const store = new Store()
 //   getPassword(){
 //     return this.password
 //   },
-  
+
 //   getLockState(){
 //     return this.unlock
 //   },
@@ -66,6 +66,11 @@ iostController.setState(store)
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   switch (message.action) {
+    case 'FIND_TX_BY_IDX':
+      const tx = txController.findByIdx(message.idx)
+
+      sendResponse(tx)
+      break
     case ACTION.TX_ASK:
       if(!store.unlock){
         txController.port.forEach((port) => {
@@ -116,8 +121,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if(whitelist && whitelist.length && whitelist.find(item => item.network == message.payload.network && item.domain == _tx.domain && item.account == _tx.account.name && item.contract == contract && item.action == actionName && item.to == _to)){
           txController.processTx(slotIdx)
         }else {
-          const height = 600;
-          const width = 500;
+          const height = 610;
+          const width = 600;
           let middleX = parseInt(window.screen.availWidth/2 - (width/2));
           let middleY = parseInt(window.screen.availHeight/2 - (height/2));
           const url = 'askTx.html'
@@ -135,8 +140,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       })
       break
-    case ACTION.TX_CONFIRM: 
-      txController.processTx(message.payload.slotIdx, message.payload.isAddWhitelist)
+    case ACTION.TX_CONFIRM:
+      txController.processTx(
+        message.payload.slotIdx,
+        message.payload.isAddWhitelist,
+        message.payload.iGASPrice,
+        message.payload.iGASLimit)
       break
     case ACTION.TX_CANCEL:
       txController.cancelTx(message.payload.slotIdx)
@@ -160,16 +169,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     case ACTION.SAVE_NEW_NETWORK:
       networkController.saveNewNetwork(message.payload.newNetworkURL)
       break
-    case 'GET_UNLOCK_STATE': 
+    case 'GET_UNLOCK_STATE':
       sendResponse(store.getLockState())
       break
-    case 'SET_LOCK': 
+    case 'SET_LOCK':
       store.lock()
       break
-    case 'SET_PASSWORD': 
+    case 'SET_PASSWORD':
       store.setPassword(message.payload.password)
       break
-    case 'GET_PASSWORD': 
+    case 'GET_PASSWORD':
       sendResponse(store.getPassword())
       break
     case 'GET_ACCOUNT': {
@@ -190,7 +199,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         })
       }
       break
-    case 'CHECK_CREATE_ACCOUNT': 
+    case 'CHECK_CREATE_ACCOUNT':
       iostController.checkCreateAccount(message.payload)
       break
     default:

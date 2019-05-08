@@ -25,6 +25,7 @@ import IostWallet from './IostWallet';
 import UserAgreement from './UserAgreement';
 import GasManage from './GasManage';
 import RamManage from './RamManage';
+import WhiteList from './WhiteList';
 
 export {
   Header,
@@ -52,6 +53,6 @@ export {
   IostWallet,
   UserAgreement,
   RamManage,
-  GasManage
+  GasManage,
+  WhiteList
 }
-

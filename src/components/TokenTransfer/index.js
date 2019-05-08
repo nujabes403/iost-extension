@@ -53,7 +53,7 @@ class Index extends Component<Props> {
       await utils.delay(5000)
     }
   }
-  
+
   componentWillUnmount() {
     this._isMounted = false
   }
