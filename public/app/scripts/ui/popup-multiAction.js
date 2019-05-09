@@ -85,13 +85,21 @@ const transLocal = (lan, name, ...args) => {
   return result
 }
 
+const checkLan = (str) => ['en','zh','ko'].indexOf(str)> -1 ? str : null
+
+const defaultLan = () => {
+  let lang = navigator.language||navigator.userLanguage;
+  lang = lang.substr(0, 2);
+  return checkLan(lang) || 'en'
+}
+
 export default class extends Component {
   constructor() {
     super()
     this.hasClick = false
 
     this.state = {
-      lang: 'en',
+      lang: defaultLan(),
       tx: null,
       isAddWhitelist: false,
       iGASPrice: 1,

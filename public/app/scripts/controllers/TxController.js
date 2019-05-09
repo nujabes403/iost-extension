@@ -80,8 +80,14 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist, iGASPri
       if(network != 'MAINNET'){
         tx.setChainID(1023)
       }
-      tx.gasRatio = +iGASPrice
-      tx.gasLimit = +iGASLimit
+
+      if (iGASPrice) {
+        tx.gasRatio = +iGASPrice
+      }
+
+      if (iGASLimit) {
+        tx.gasLimit = +iGASLimit
+      }
 
       // tx.addApprove("*", "unlimited")
       // _tx.amount_limit.map(item => tx.addApprove(item.token, item.value))
