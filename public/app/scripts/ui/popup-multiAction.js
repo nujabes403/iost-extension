@@ -5,9 +5,11 @@ import './popup-multiAction.scss'
 
 const i18n = {
   en: {
-    "RequestXTo": "Request${X} To",
-    "RequestXAmount": "Request${X} Amount",
-    "RequestXMemo": "Request${X} Memo",
+    "Transfer": "Transfer",
+    "Contract": "Contract",
+    "RequestTo": "To",
+    "RequestAmount": "Amount",
+    "RequestMemo": "Memo",
     "ActionX": "Action${X}",
     "XActionsNeedYouPermission": "action need your permission",
     "XActionsNeedYouPermissionS": "actions need your permission",
@@ -28,9 +30,11 @@ const i18n = {
     "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   ko: {
-    "RequestXTo": "액션 ${X} To",
-    "RequestXAmount": "액션 ${X} 수량",
-    "RequestXMemo": "액션 ${X} Memo",
+    "Transfer": "트랜스퍼",
+    "Contract": "계약",
+    "RequestTo": "To",
+    "RequestAmount": "수량",
+    "RequestMemo": "Memo",
     "ActionX": "액션 ${X}",
     "XActionsNeedYouPermission": "가지 액션 권한이 필요합니다.",
     "XActionsNeedYouPermissionS": "가지 액션 권한이 필요합니다.",
@@ -51,9 +55,11 @@ const i18n = {
     "Dapp_Tip3": "* If you add this contract to the white-list, it will allow you to sign directly when you initiate the same contract request to the same beneficiary, manual operation will be no longer applied.",
   },
   zh: {
-    "RequestXTo": "请求${X} To",
-    "RequestXAmount": "请求${X} 代币数量",
-    "RequestXMemo": "请求${X} Memo",
+    "Transfer": "转账",
+    "Contract": "合约",
+    "RequestTo": "To",
+    "RequestAmount": "代币数量",
+    "RequestMemo": "Memo",
     "ActionX": "操作${X}",
     "XActionsNeedYouPermission": "个操作需要您的许可",
     "XActionsNeedYouPermissionS": "个操作需要您的许可",
@@ -239,29 +245,42 @@ export default class extends Component {
             {
               tx.actions.map((action, idx) => {
                 const isTransfer = action.actionName === 'transfer'
-                const [token, _account, contract, amount, memo] = JSON.parse(action.data)
+                // const isTransfer = true
+                // action.data = JSON.stringify([
+                //   "iost",
+                //   "ContractFvXunxWKXe6qast1dvmBD6okbFPqk3QkqNjyMuh92RnG",
+                //   "mongol",
+                //   "20",
+                //   " 6410176 mongol winner! "
+                // ])
+                const [token, contract, _account, amount, memo] = JSON.parse(action.data)
 
                 return (
-                  <div key={idx} className={classnames(isTransfer && 'item-group')}>
+                  <React.Fragment>
+                    <div className="group-tit">{transLocal(lang, 'ActionX', idx+1)} - {transLocal(lang, isTransfer? 'Transfer': 'Contract')}</div>
                     {
-                      isTransfer && (
-                        <React.Fragment>
-                          <div className="item">
-                            <div className="item-tit">{transLocal(lang, 'RequestXTo', idx+1)}</div>
-                            <p className="item-val">{_account}</p>
+                      isTransfer ? (
+                          <div key={idx} className={classnames(isTransfer && 'item-group')}>
+                            <div className="item">
+                              <div className="item-tit">{transLocal(lang, 'RequestTo')}</div>
+                              <p className="item-val">{_account}</p>
+                            </div>
+                            <div className="item">
+                              <div className="item-tit">{transLocal(lang, 'RequestAmount')}</div>
+                              <p className="item-val">{amount}</p>
+                            </div>
+                            <div className="item">
+                              <div className="item-tit">{transLocal(lang, 'RequestMemo')}</div>
+                              <p className="item-val" style={{ fontSize: 12 }}>{memo}</p>
+                            </div>
                           </div>
-                          <div className="item">
-                            <div className="item-tit">{transLocal(lang, 'RequestXAmount', idx+1)}</div>
-                            <p className="item-val">{amount}</p>
-                          </div>
-                        </React.Fragment>
+                      ) : (
+                        <div className="item">
+                          <p className="item-val" style={{ fontSize: 12 }}>{action.data}</p>
+                        </div>
                       )
                     }
-                    <div className="item">
-                      <div className="item-tit">{isTransfer ? transLocal(lang, 'RequestXMemo', idx+1) : transLocal(lang, 'ActionX', idx+1)}</div>
-                      <p className="item-val" style={{fontSize: 12}}>{action.data}</p>
-                    </div>
-                  </div>
+                  </React.Fragment>
                 )
               })
             }
