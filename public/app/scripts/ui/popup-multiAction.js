@@ -245,14 +245,6 @@ export default class extends Component {
             {
               tx.actions.map((action, idx) => {
                 const isTransfer = action.actionName === 'transfer'
-                // const isTransfer = true
-                // action.data = JSON.stringify([
-                //   "iost",
-                //   "ContractFvXunxWKXe6qast1dvmBD6okbFPqk3QkqNjyMuh92RnG",
-                //   "mongol",
-                //   "20",
-                //   " 6410176 mongol winner! "
-                // ])
                 const [token, contract, _account, amount, memo] = JSON.parse(action.data)
 
                 return (

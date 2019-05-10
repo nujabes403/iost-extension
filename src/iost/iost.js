@@ -131,7 +131,7 @@ const iost = {
   sendTransaction: (contractAddress, contractAction, args) => {
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
     // tx.addApprove("*", "unlimited")
-    tx.addApprove("iost", +args[2])
+    tx.addApprove("iost", args[2])
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
@@ -180,7 +180,7 @@ const iost = {
 
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
     // tx.addApprove("*", "unlimited")
-    tx.addApprove("iost", +args[2])
+    tx.addApprove("iost", args[2].toString())
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
