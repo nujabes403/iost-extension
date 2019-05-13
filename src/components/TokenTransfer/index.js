@@ -120,7 +120,7 @@ class Index extends Component<Props> {
     tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
 
     // tx.addApprove("*", defaultConfig.defaultLimit)
-    tx.addApprove("iost", amount)
+    tx.addApprove("iost", +amount)
 
 
     // const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
