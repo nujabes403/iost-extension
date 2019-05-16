@@ -1,39 +1,36 @@
 @import "colors.scss";
 
-:global{
-  .toast{
-    position: fixed;
-    // width: 100%;
-    // height: 100%;
-    // display: flex;
-    // justify-content: center;
-    // // align-items: center;
-    // text-align: center;
-    // left: 0;
-    z-index: 99900;
-    top:65px;
-    left: 50%;
-  }
-  .toast-notice{
-    position: relative;
-    right: 50%;
-  }
-  .toast-notice-close{
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 20px;
-    padding: 5px;
-    box-sizing: border-box;
-    cursor: pointer;
+.toast{
+  position: fixed;
+  // width: 100%;
+  // height: 100%;
+  // display: flex;
+  // justify-content: center;
+  // // align-items: center;
+  // text-align: center;
+  // left: 0;
+  z-index: 99900;
+  top:65px;
+  left: 50%;
+}
+.toast-notice{
+  position: relative;
+  right: 50%;
+}
+.toast-notice-close{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 20px;
+  padding: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
 
-    &:after{
-      content: '\D7';
-      color: black;
-      width: 100%;
-    }
+  &:after{
+    content: '\D7';
+    color: black;
+    width: 100%;
   }
-
 }
 
 .toast-text{
