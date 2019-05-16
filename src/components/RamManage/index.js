@@ -113,11 +113,14 @@ class RamManage extends Component<Props> {
   }
 
   onSubmit = () => {
-    const { isBuy, buyAmount,sellAmount, resourceAddress  } = this.state
+    const { isBuy, buyAmount,sellAmount, resourceAddress, ramMarketInfo  } = this.state
     const account = iost.account.getID()
     if(isBuy){
       const _buyAmount = parseInt(buyAmount * 1024)
-      iost.signAndSend('ram.iost', 'buy', [account, resourceAddress || account, _buyAmount])
+      const ramPrice = (ramMarketInfo.buy_price*1024).toFixed(4)
+      const amountLimit = ['iost', (+ramPrice+1) * (+buyAmount)]
+
+      iost.signAndSend('ram.iost', 'buy', [account, resourceAddress || account, _buyAmount], amountLimit)
       .on('pending', () => {
         this.setState({
           isLoading: true,
@@ -135,7 +138,11 @@ class RamManage extends Component<Props> {
       })
     }else {
       const _sellAmount = parseInt(sellAmount*1024)
-      iost.signAndSend('ram.iost', 'sell', [account, account, _sellAmount])
+      // const ramPrice = (ramMarketInfo.sell_price*1024).toFixed(4)
+      const amountLimit = ['ram', _sellAmount]
+      // return console.log(amountLimit)
+      
+      iost.signAndSend('ram.iost', 'sell', [account, account, _sellAmount], amountLimit)
       .on('pending', () => {
         this.setState({
           isLoading: true,

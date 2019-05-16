@@ -5030,9 +5030,9 @@ invert-kv@^2.0.0:
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
 iost@^0.1.11:
-  version "0.1.11"
-  resolved "https://registry.yarnpkg.com/iost/-/iost-0.1.11.tgz#38c332c5d188ba76e30dff564c778615b474a14b"
-  integrity sha512-VtuH5Qe5Fmzs9+V6kVPg1OyZCfiMnPoJo0gUZHyzjbnWRxl8vpsUaZ0XyVcIQ3roHMNioozw3FKgjwkPycjbdw==
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/iost/-/iost-0.1.12.tgz#3a2ed0cc54b92b130eb696cf06b821069726e029"
+  integrity sha512-fW4UHweRHKbfYZT5VUcB376sWIvijgMA3zZ8Qrk63xbwuqiBhgeMCoCNPP9eolSOnUu4/YWbyg4Nk/30tffNKg==
   dependencies:
     atob "^2.1.2"
     axios "^0.18.0"

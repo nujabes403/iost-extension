@@ -175,12 +175,18 @@ const iost = {
       }
     }
   },
-  signAndSend: (contractAddress, contractAction, args) => {
+  signAndSend: (contractAddress, contractAction, args, presetAmountLimit) => {
     // const tx = new iostController.pack.Tx()
 
+    console.log('args:', args)
+
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
-    // tx.addApprove("*", "unlimited")
-    tx.addApprove("iost", +args[2])
+    console.log('tx:', tx)
+    if (presetAmountLimit) {
+      tx.addApprove(presetAmountLimit[0], presetAmountLimit[1])
+    } else {
+      tx.addApprove("iost", +args[2])
+    }
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
