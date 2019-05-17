@@ -108,25 +108,36 @@ class Index extends Component<Props> {
     const accountName = iost.account.getID()
 
     // 1. Create transfer tx
-    const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
-    if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
-      tx.setChainID(1023)
-    }
-    tx.addAction(
-      'token.iost',
-      'transfer',
-      JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
-    )
-    tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
+    // const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
+    // if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
+    //   tx.setChainID(1023)
+    // }
+    // tx.addAction(
+    //   'token.iost',
+    //   'transfer',
+    //   JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
+    // )
+    // tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
+    const tx = iost.iost.callABI('token.iost', 'transfer', [selectedTokenSymbol, accountName, to, amount, memo])
 
     // tx.addApprove("*", defaultConfig.defaultLimit)
     tx.addApprove("iost", +amount)
+
+    if (iGASPrice) {
+      tx.gasRatio = +iGASPrice
+    }
+
+    if (iGASLimit) {
+      tx.gasLimit = +iGASLimit
+    }
 
 
     // const tx = iost.iost.transfer(selectedTokenSymbol, accountName, to, amount)
 
     // 2. Sign on transfer tx
-    iost.account.signTx(tx)
+    // iost.account.signTx(tx)
+    const handler = iost.iost.signAndSend(tx)
+    // console.log('handler:', handler)
 
     // iost.signAndSend(tx)
     //   .on('pending', (response) => {
@@ -140,16 +151,16 @@ class Index extends Component<Props> {
     //   })
 
     // 3. Handle transfer tx
-    const handler = new iost.pack.TxHandler(tx, iost.rpc)
+    // const handler = new iost.pack.TxHandler(tx, iost.rpc)
 
     this.setState({ isSending: true })
-    handler
-      .onPending(async (res) => {
+    handler.on('pending', (res) => {
+      // .onPending(async (res) => {
         let times = 90
         const inverval = setInterval(async () => {
           times--;
           if(times){
-            iost.rpc.transaction.getTxByHash(res.hash)
+            iost.rpc.transaction.getTxByHash(res)
             .then( data => {
               const tx_receipt = data.transaction.tx_receipt
               if(tx_receipt){
@@ -192,7 +203,7 @@ class Index extends Component<Props> {
       //   //   content: <TokenTransferSuccess tx={response} />
       //   // })
       // })
-      .onFailed((err) => {
+      .on('failed', (err) => {
         // clearInterval(intervalID)
         if (typeof err === 'string') {
           this.setState({
@@ -210,7 +221,7 @@ class Index extends Component<Props> {
           // })
         }
       })
-      .send()
+      // .send()
       // .listen(1000, 60)
   }
 

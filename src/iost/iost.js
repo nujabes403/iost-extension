@@ -176,12 +176,8 @@ const iost = {
     }
   },
   signAndSend: (contractAddress, contractAction, args, presetAmountLimit) => {
-    // const tx = new iostController.pack.Tx()
-
-    console.log('args:', args)
-
     const tx = iost.iost.callABI(contractAddress, contractAction, args)
-    console.log('tx:', tx)
+    
     if (presetAmountLimit) {
       tx.addApprove(presetAmountLimit[0], presetAmountLimit[1])
     } else {
