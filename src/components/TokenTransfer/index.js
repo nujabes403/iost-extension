@@ -109,9 +109,6 @@ class Index extends Component<Props> {
 
     // 1. Create transfer tx
     // const tx = new iost.Tx(iGASPrice, iGASLimit, 0)
-    // if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
-    //   tx.setChainID(1023)
-    // }
     // tx.addAction(
     //   'token.iost',
     //   'transfer',
@@ -119,6 +116,10 @@ class Index extends Component<Props> {
     // )
     // tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
     const tx = iost.iost.callABI('token.iost', 'transfer', [selectedTokenSymbol, accountName, to, amount, memo])
+
+    if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
+      tx.setChainID(1023)
+    }
 
     // tx.addApprove("*", defaultConfig.defaultLimit)
     tx.addApprove("iost", +amount)
