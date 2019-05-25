@@ -137,6 +137,9 @@ class Index extends Component<Props> {
 
     // 2. Sign on transfer tx
     // iost.account.signTx(tx)
+    
+    iost.iost.setAccount(iost.account);
+    
     const handler = iost.iost.signAndSend(tx)
     // console.log('handler:', handler)
 
