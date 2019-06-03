@@ -35,7 +35,7 @@ const iost = {
     const newNetworkProvider = new IOST.HTTPProvider(url)
     iost.iost = new IOST.IOST(DEFAULT_IOST_CONFIG, newNetworkProvider)
     iost.rpc = new IOST.RPC(newNetworkProvider)
-    iost.iost.setRPC(iost.rpc)
+    await iost.iost.setRPC(iost.rpc)
     iost.network = url
     // Save last network you used in extension storage.
     chrome.storage.local.set({
