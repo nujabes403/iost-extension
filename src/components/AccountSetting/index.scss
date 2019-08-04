@@ -8,6 +8,8 @@
   padding-top: 40px;
   ul {
     padding: 0;
+    height: 80*6px;
+    overflow-y: auto;
     li {
       display: flex;
       align-items: center;

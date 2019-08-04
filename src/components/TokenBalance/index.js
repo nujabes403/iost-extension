@@ -12,6 +12,8 @@ import iconSrc from 'constants/icon'
 import utils from 'utils'
 import ui from "utils/ui";
 import user from "utils/user";
+import token, { defaultAssets } from 'utils/token'
+
 
 import './index.scss'
 
@@ -19,17 +21,23 @@ type Props = {
 
 }
 
+
+
 class Index extends Component<Props> {
   state = {
     amount: 0,
+    assetsList: [],
     isLoading: true,
     isError: false
   }
   _isMounted = false
 
   componentDidMount() {
+    // 每次要重置为iost
+    token.selectToken('iost')
     this._isMounted = true
     this.getData()
+    this.getAssets()
   }
 
   getData = async () => {
@@ -41,6 +49,8 @@ class Index extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     this.getResourceBalance(nextProps)
+    // 切换账号时，刷新资产
+    this.getAssets()
   }
   
 
@@ -102,72 +112,160 @@ class Index extends Component<Props> {
     })
   }
 
-  render() {
-    const { frozenAmount, amount, gas, gas_used, userGasInfo, ram, ram_used, isLoading } = this.state
-    const { selectedTokenSymbol, account, moveTo } = this.props
 
-    return <IOSTBalance {...this.state} {...this.props}/>
+  goToTokenDetail = (selectSymbol) => () => {
+    token.selectToken(selectSymbol)
+    this.props.moveTo('/tokenDetail')()
+  }
+
+
+  getAssets = () => {
+    Promise.all([
+      utils.getStorage('assets'),
+      user.getActiveAccount()
+    ]).then(([assetsList, account]) => {
+      if(assetsList){
+        this.setState({
+          assetsList: assetsList[`${account.name}-${account.network}`] || []
+        })
+      }
+    })
+  }
+
+
+
+  render() {
+    const { frozenAmount, amount, gas, gas_used, userGasInfo, userRamInfo, ram, ram_used, isLoading, assetsList } = this.state
+    const { account, moveTo } = this.props
+
+    const url = account?`${account.network == 'MAINNET'?'https://www.iostabc.com':'http://54.249.186.224'}/account/${account.name}`:'#'
+
+    return (
+      <div className="TokenBalance-box">
+        <a target={account?"_blank":''} href={url}>
+          <div className="logo-box">
+            <img className="logo" src="/static/images/logo.png" />
+          </div>
+          <div className="TokenBalance-amount-box">
+            <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
+            <span className="TokenBalance__symbol">IOST</span>
+            {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
+          </div>
+        </a>
+
+        {!isLoading && (
+          <div className="TokenBalance__resources">
+            <div className="progress-wrapper">
+              <div className="progress-box" onClick={moveTo('/gasManage')}>
+                <div className="ram-default">
+                  <span>iGAS</span>
+                  <span className="percent">{`${userGasInfo.limit ? Math.round(((1-userGasInfo.current_total/userGasInfo.limit)*10000))/100 : 0}%`}</span>
+                </div>
+                <div className="progress-wrap">
+                  <div className="progress-inner" style={{width: `${userGasInfo.limit ? Math.round((1-userGasInfo.current_total/userGasInfo.limit)*100):0}%`}}></div>
+                </div>
+              </div>
+
+              <div className="progress-box" onClick={moveTo('/ramManage')}>
+                <div className="ram-default">
+                  <span>iRAM</span>
+                  <span className="percent">{`${userRamInfo.total ? Math.round(userRamInfo.used/userRamInfo.total*10000)/100 : 0}%`}</span>
+                </div>
+                <div className="progress-wrap">
+                  <div className="progress-inner" style={{width: `${userRamInfo.total?userRamInfo.used/userRamInfo.total*100:0}%`}}></div>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="coin-list-wrapper">
+              {
+                defaultAssets.map(item =>
+                  <TokenContent symbol={item.symbol} key={item.symbol} account={account} goToTokenDetail={this.goToTokenDetail}/>
+                )
+              }
+
+              {
+                assetsList.map(item =>
+                  <TokenContent symbol={item.symbol} key={item.symbol} account={account} goToTokenDetail={this.goToTokenDetail}/>
+                )
+              }
+
+              <p className="add-token" onClick={moveTo('/assetManage')}><i />{I18n.t('Account_AddToken')}</p>
+            </div>
+
+
+            {/*<p className="TokenBalance__resources_manage">*/}
+            {/*  <a onClick={moveTo('/gasManage')}>{I18n.t('GasManage_Title')}</a>*/}
+            {/*  <a onClick={moveTo('/ramManage')}>{I18n.t('RamManage_Title')}</a>*/}
+            {/*</p>*/}
+          </div>
+        )}
+      </div>
+    )
+
   }
 }
 
 
-const IOSTBalance = ({ frozenAmount, amount, gas, gas_used, userGasInfo, ram, ram_used, userRamInfo, isLoading, selectedTokenSymbol, account, moveTo }) => {
-  const url = account?`${account.network == 'MAINNET'?'https://www.iostabc.com':'http://54.249.186.224'}/account/${account.name}`:'#'
+class TokenContent extends Component<Props> {
+  state = {
+    isLoading: true,
+    balance: 0,
+  }
+
+  interval = null
+
+  componentDidMount() {
+    this.getTokenBalance()
+    this.interval = setInterval(() => {
+      this.getTokenBalance()
+    }, 5000)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { account } = this.props
+    const { account: newAccount } = nextProps
+    if(`${account.name}-${account.network}` != `${newAccount.name}-${newAccount.network}`){
+      this.getTokenBalance()
+    }
+  }
   
-  return (
-    <div className="TokenBalance-box">
-      <a target={account?"_blank":''} href={url}>
-        <div className="logo-box">
-          <img className="logo" src={iconSrc[selectedTokenSymbol]} />
-        </div>
-        <div className="TokenBalance-amount-box">
-          <span className="TokenBalance__amount">{isLoading ? <LoadingImage /> : amount}</span>
-          <span className="TokenBalance__symbol">{selectedTokenSymbol}</span>
-          {/*(frozenAmount !== 0) && <span className="TokenBalance__frozenBalance"> (+ {frozenAmount})</span>*/}
-        </div>
-      </a>
 
-      {!isLoading && (
-        <div className="TokenBalance__resources">
-          <div className="progress-box" onClick={moveTo('/gasManage')}>
-            <div className="ram-default">
-              <span>iGAS</span>
-              <span>{userGasInfo.limit} iGAS</span>
-            </div>
-            <div className="progress-wrap">
-              <div className="progress-inner" style={{width: `${userGasInfo.limit?((1-userGasInfo.current_total/userGasInfo.limit)*100):0}%`}}></div>
-            </div>
-            <div className="ram-used">
-              <span>{I18n.t('GasManage_Locked')}: {parseInt(userGasInfo.limit-userGasInfo.current_total)} iGAS</span>
-              <span>{I18n.t('GasManage_Available')}: {parseInt(userGasInfo.current_total)} iGAS</span>
-            </div>
-          </div>
 
-          <div className="progress-box" onClick={moveTo('/ramManage')}>
-            <div className="ram-default">
-              <span>iRAM</span>
-              <span>{userRamInfo.total} KB</span>
-            </div>
-            <div className="progress-wrap">
-              <div className="progress-inner" style={{width: `${userRamInfo.total?userRamInfo.used/userRamInfo.total*100:0}%`}}></div>
-            </div>
-            <div className="ram-used">
-              <span>{I18n.t('RamManage_Used')}: {userRamInfo.used}KB</span>
-              <span>{I18n.t('RamManage_Remaining')}: {userRamInfo.available}KB</span>
-            </div>
-          </div>
+  componentWillUnmount() {
+    this.interval && clearInterval(this.interval)
+  }
 
-          {/*<p className="TokenBalance__gas" onClick={moveTo('/gasManage')}>iGAS：{parseInt(gas_used)} {I18n.t('GasManage_Lock')}/{parseInt(gas)} {I18n.t('GasManage_Available')}</p>
-          <p className="TokenBalance__ram" onClick={moveTo('/ramManage')}>iRAM：{ram_used}KB {I18n.t('RamManage_Used')}/{ram}KB {I18n.t('RamManage_Remaining')}</p> */}
-          <p className="TokenBalance__resources_manage"><a onClick={moveTo('/gasManage')}>{I18n.t('GasManage_Title')}</a><a onClick={moveTo('/ramManage')}>{I18n.t('RamManage_Title')}</a></p>
+
+  getTokenBalance = async () => {
+    const { symbol } = this.props
+    const { balance } = await iost.rpc.blockchain.getBalance(iost.account.getID(), symbol)
+    this.setState({
+      isLoading: false,
+      balance
+    })
+  }
+
+  render(){
+    const { balance, isLoading } = this.state
+    const { symbol, goToTokenDetail } = this.props
+
+    return(
+      <div className="coin-box" onClick={goToTokenDetail(symbol)}>
+        <div className="img-name">
+          <img className="coin-img" src={iconSrc[symbol] ? iconSrc[symbol] : iconSrc['default']} alt=''/>
+          <span>{symbol.toUpperCase()}</span>
         </div>
-      )}
-    </div>
-  )
+        <span>{isLoading ? <LoadingImage />: balance}</span>
+      </div>
+    )
+  }
 }
 
+
+
 const mapStateToProps = (state) => ({
-  selectedTokenSymbol: state.token.selectedTokenSymbol,
 })
 
 export default connect(mapStateToProps)(Index)

@@ -10,10 +10,10 @@ class Header extends Component<Props> {
   componentDidMount() {}
 
   render() {
-    const { onBack, onSetting, onAddIost, title, setting = true, hasSetting = true, logo = false, children } = this.props
+    const { onBack, onSetting, onAddIost, title, setting = true, hasSetting = true, logo = false, children, hasAdd } = this.props
     return (
       <div className="header-box">
-        <i className={logo ? 'icon-logo' : 'icon-back'} onClick={onBack} />
+        <i className={logo ? hasAdd ? 'icon-add': 'icon-logo' : 'icon-back'} onClick={onBack} />
         { title && <span className="title">{title}</span> }
         {children}
         {

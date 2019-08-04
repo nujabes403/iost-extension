@@ -59,6 +59,63 @@
     }
   }
 
+
+  .choose-token-box {
+    position: relative;
+    .token-list {
+      display: flex;
+      position: absolute;
+      z-index: -1;
+      top: 68px;
+      flex-direction: column;
+      width: 100%;
+      height: 0;
+      overflow-y: auto;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0, 0.05);
+      background-color: $white;
+      border-radius: 4px;
+      transition: 0.3s height;
+      &.active {
+        height: 160px;
+        z-index: 1;
+      }
+      > li {
+        font-size: 16px;
+        cursor: pointer;
+        color: $input-text;
+        font-weight: 300;
+        &:hover {
+          background-color: rgba(0,0,0,0.05);
+        }
+        .token-item {
+          display: inline-block;
+          width: 100%;
+          height: 40px;
+          padding: 9px 15px;
+        }
+      }
+    }
+
+    .icon-arrow {
+      position: absolute;
+      right: 10px;
+      width: 16px;
+      height: 15px;
+      top: 38px;
+      transform: rotateZ(-90deg);
+      background-image: url("/static/images/arrow-left.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: 0.3s transform;
+      &.active {
+        top: 44px;
+        transform: rotateZ(90deg);
+
+      }
+    }
+  }
+
 }
 
 .TokenTransfer__errorMessage {

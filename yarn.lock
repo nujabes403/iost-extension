@@ -5029,10 +5029,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-iost@0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/iost/-/iost-0.1.17.tgz#0bfb5accf22f9f70ba811308984f35ca9411114e"
-  integrity sha512-rg2p5luRa6YSmdQzVWM0Er383yaF4xsBw0PcUfLZ/FCMUtjltzV3oPRSSMPk5/Xp+j0+uLD3/nOyEVp4wWs2GQ==
+iost@0.1.19:
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/iost/-/iost-0.1.19.tgz#f2a4e47ead4e4dcd86c82d6882ab7956328cd101"
+  integrity sha512-YYhjB9jsbSRvxEtHRlLQkmatayRwVymQrqJx0IV01jpRc5JzoHShAurB6DEOnphzltNVB69DWcIliFSe98V2KQ==
   dependencies:
     atob "^2.1.2"
     axios "^0.18.0"

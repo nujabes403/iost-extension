@@ -1,0 +1,53 @@
+@import "colors.scss";
+
+.AssetManage-box {
+  display: inline-block;
+  background-color: $gray;
+  height: 540px;
+  padding: 20px 20px 0;
+  overflow: hidden;
+  width: 100%;
+
+  .label {
+    font-size: 14px;
+  }
+
+  .input-box {
+    display: flex;
+    align-items: center;
+    margin: 8px 0 20px;
+    .input {
+      padding-left: 15px;
+    }
+    .btn-add {
+      width: 85px;
+      margin-left: 10px;
+    }
+  }
+
+  .asset-title {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .token-list-wrapper {
+    overflow-y: auto;
+    height: 65*6px;
+    > li {
+      height: 65px;
+      border-bottom: 1px solid rgba(120,120,120, 0.1);
+      display: flex;
+      align-items: center;
+      &:last-child {
+        border-bottom: none;
+      }
+      > img {
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+
+
+}

@@ -8,6 +8,7 @@ import { privateKeyToPublicKey } from 'utils/key'
 import utils from 'utils'
 import hash from 'hash.js'
 import './index.scss'
+import ui from "utils/ui";
 
 type Props = {
 
@@ -32,6 +33,7 @@ class Lock extends Component<Props> {
 
   moveTo = (location) => () => {
     const { changeLocation } = this.props
+    ui.settingLocation(location)
     changeLocation(location)
   }
 

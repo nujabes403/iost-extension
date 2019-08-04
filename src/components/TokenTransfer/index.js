@@ -13,9 +13,13 @@ import TokenTransferSuccess from 'components/TokenTransferSuccess'
 import TokenTransferFailed from 'components/TokenTransferFailed'
 import ui from 'utils/ui'
 import utils from 'utils'
+import token, { defaultAssets } from 'utils/token'
+
 import LoadingImage from 'components/LoadingImage'
 
 import './index.scss'
+import user from "utils/user";
+import iconSrc from "constants/icon";
 
 const defaultConfig = {
   gasRatio: 1,
@@ -29,22 +33,44 @@ type Props = {
 
 }
 
+
+let tokenList = [
+  {symbol: 'iost', amount: '1234.56788765'},
+  {symbol: 'emogi', amount: '1234.56788765'},
+  {symbol: 'abct', amount: '1234.56788765'},
+  {symbol: 'iet', amount: '1234.56788765'},
+  {symbol: 'usdt', amount: '1234.56788765'},
+  {symbol: 'btc', amount: '1234.56788765'},
+  {symbol: 'eth', amount: '1234.56788765'},
+  {symbol: 'trx', amount: '1234.56788765'},
+]
+
+
 class Index extends Component<Props> {
-  state = {
-    to: '',
-    amount: 0,
-    memo: '',
-    isSending: false,
-    iGASPrice: defaultConfig.gasRatio,
-    iGASLimit: defaultConfig.gasLimit,
-    errorMessage: '',
-    isShowing: false, // 是否显示多余资源输入框
+  constructor(props){
+    super(props)
+    this.state = {
+      to: '',
+      amount: 0,
+      memo: '',
+      token: props.selectedTokenSymbol,
+      assetsList: [],
+      isSending: false,
+      balance: '-',
+      iGASPrice: defaultConfig.gasRatio,
+      iGASLimit: defaultConfig.gasLimit,
+      errorMessage: '',
+      isShowing: false, // 是否显示多余资源输入框
+      isShowTokenList: false, // 是否显示token列表
+    }
   }
+
   _isMounted = false
 
   componentDidMount() {
     this._isMounted = true
     this.getData()
+    this.getAssets()
   }
 
   getData = async () => {
@@ -58,22 +84,22 @@ class Index extends Component<Props> {
     this._isMounted = false
   }
 
-  getTokenBalance = async () => {
-    const { selectedTokenSymbol } = this.props
-    const { balance, frozen_balances } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)
-
-    let frozenAmount = 0
-
-    if (frozen_balances && frozen_balances.length !== 0) {
-      frozenAmount = frozen_balances.reduce((acc, cur) => (acc += cur.amount, acc), 0)
-    }
-
-    this.setState({
-      balance: balance,
-      frozenAmount,
-      isLoading: false,
-    })
-  }
+  // getTokenBalance = async () => {
+  //   const { selectedTokenSymbol } = this.props
+  //   const { balance, frozen_balances } = await iost.rpc.blockchain.getBalance(iost.account.getID(), selectedTokenSymbol)
+  //
+  //   let frozenAmount = 0
+  //
+  //   if (frozen_balances && frozen_balances.length !== 0) {
+  //     frozenAmount = frozen_balances.reduce((acc, cur) => (acc += cur.amount, acc), 0)
+  //   }
+  //
+  //   this.setState({
+  //     balance: balance,
+  //     frozenAmount,
+  //     isLoading: false,
+  //   })
+  // }
 
   getResourceBalance = () => {
     return new Promise((resolve, reject) => {
@@ -81,7 +107,6 @@ class Index extends Component<Props> {
       .then(({ balance, frozen_balances, gas_info, ram_info}) => {
         const frozenAmount = frozen_balances.reduce((prev, next) => (prev += next.amount, prev), 0)
         this.setState({
-          balance,
           frozenAmount,
           gas: gas_info.current_total,
           ram: ram_info.available,
@@ -103,7 +128,7 @@ class Index extends Component<Props> {
   }
 
   transfer = () => {
-    const { to, amount, iGASPrice, iGASLimit, memo } = this.state
+    const { to, amount, iGASPrice, iGASLimit, memo, token } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
 
@@ -115,14 +140,14 @@ class Index extends Component<Props> {
     //   JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
     // )
     // tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
-    const tx = iost.iost.callABI('token.iost', 'transfer', [selectedTokenSymbol, accountName, to, amount, memo])
+    const tx = iost.iost.callABI('token.iost', 'transfer', [token, accountName, to, amount, memo])
 
     if(iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0){
       tx.setChainID(1023)
     }
 
     // tx.addApprove("*", defaultConfig.defaultLimit)
-    tx.addApprove("iost", +amount)
+    tx.addApprove(token, +amount)
 
     if (iGASPrice) {
       tx.gasRatio = +iGASPrice
@@ -234,22 +259,84 @@ class Index extends Component<Props> {
     changeLocation(location)
   }
 
+  backTo = () => {
+    const { changeLocation, locationList } = this.props
+    ui.deleteLocation()
+    const currentLocation = locationList[locationList.length - 1]
+    changeLocation(currentLocation)
+  }
+
+
   toggleMenu = () => {
     this.setState({
       isShowing: !this.state.isShowing,
     })
   }
 
+
+  toggleTokenList = (symbol, balance) => {
+    this.setState({
+      token: symbol,
+      balance,
+      isShowTokenList: false
+    })
+  }
+
+
+  toggleToken = () => {
+    this.setState({
+      isShowTokenList: !this.state.isShowTokenList
+    })
+  }
+
+  getAssets = () => {
+    Promise.all([
+      utils.getStorage('assets'),
+      user.getActiveAccount()
+    ]).then(([assetsList, account]) => {
+      if(assetsList){
+        this.setState({
+          assetsList: assetsList[`${account.name}-${account.network}`] || []
+        })
+      }
+    })
+  }
+
+
   render() {
-    const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing, balance } = this.state
-    const { className, selectedTokenSymbol } = this.props
+    const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing, balance, isShowTokenList, token, assetsList } = this.state
+    const { selectedTokenSymbol } = this.props
     return (
       <Fragment>
-        <Header title={I18n.t('Account_Transfer')} onBack={this.moveTo('/account')} hasSetting={false} />
+        <Header title={I18n.t('Account_Transfer')} onBack={this.backTo} hasSetting={false} />
         <div className="tokenTransfer-box">
+          <div className="choose-token-box">
+            <label className="label">
+              {I18n.t('Transfer_Choose')}
+            </label>
+            <Input
+              name="token"
+              onChange={this.handleChange}
+              value={token.toUpperCase()}
+              className="input"
+              readOnly
+              onClick={this.toggleToken}
+            />
+            <i className={cx("icon-arrow", isShowTokenList ? "active" : '')} onClick={this.toggleToken}/>
+            <ul className={cx("token-list", isShowTokenList ? "active" : '')}>
+              {
+                defaultAssets.map(item => <li key={item.symbol}><TokenContent symbol={item.symbol} token={token} toggleTokenList={this.toggleTokenList}/></li>)
+              }
+              {
+                assetsList.map(item => <li key={item.symbol}><TokenContent symbol={item.symbol} token={token} toggleTokenList={this.toggleTokenList}/></li>)
+              }
+            </ul>
+          </div>
+
+
           <div className="transferAmount-box">
             <span className="transferAmount">{I18n.t('Transfer_Amount')}</span>
-            <span className="balance">{I18n.t('Transfer_Balance', { num: balance, token: selectedTokenSymbol })}</span>
+            <span className="balance">{I18n.t('Transfer_Balance', { num: balance, token })}</span>
           </div>
           <Input
             name="amount"
@@ -257,6 +344,7 @@ class Index extends Component<Props> {
             placeholder={I18n.t('Transfer_InputAmount')}
             className="input"
           />
+
           <label className="label">
             {I18n.t('Transfer_Payee')}
           </label>
@@ -314,7 +402,53 @@ class Index extends Component<Props> {
   }
 }
 
+
+class TokenContent extends Component<Props> {
+  state = {
+    isLoading: false,
+    balance: 0,
+  }
+
+  componentDidMount() {
+    this.getTokenBalance()
+  }
+
+
+  getTokenBalance = async () => {
+    const { symbol, token } = this.props
+    this.setState({
+      isLoading: true
+    })
+    const { balance } = await iost.rpc.blockchain.getBalance(iost.account.getID(), symbol)
+    this.setState({
+      isLoading: false,
+      balance
+    })
+
+    if (symbol == token) {
+      this.props.toggleTokenList(symbol, balance)
+    }
+  }
+
+  onSelect = () => {
+    const { symbol } = this.props
+    const { balance } = this.state
+    this.props.toggleTokenList(symbol, balance)
+  }
+
+  render(){
+    const { balance, isLoading } = this.state
+    const { symbol } = this.props
+
+    return <span onClick={this.onSelect} className="token-item">{symbol.toUpperCase()} ({isLoading ? '-' : balance})</span>
+  }
+}
+
+
+
+
 const mapStateToProps = (state) => ({
+  locationList: state.ui.locationList,
   selectedTokenSymbol: state.token.selectedTokenSymbol,
 })
 

@@ -3,18 +3,20 @@
 .TokenBalance-box {
   display: inline-block;
   text-align: center;
-  margin-bottom: 25px;
   min-height: 169px;
   text-decoration: none;
   width: 100%;
   .logo-box {
     margin-top: 30px;
+    >img {
+
+    }
     .logo {
       width: 72px;
     }
   }
   .TokenBalance-amount-box {
-    margin: 15px 0 10px;
+    margin: 15px 0 20px;
     font-size: 16px;
   }
   .TokenBalance-number-box{
@@ -63,36 +65,93 @@
       }
     }
   }
-  .progress-box {
-    margin-top: 10px;
-    height: 60px;
-    cursor: pointer;
-    // background-color: $white;
-    // border-radius: 4px;
-    // padding: 15px;
-    .ram-default {
-      font-size: 14px;
-      line-height: 14px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .ram-used {
-      font-size: 12px;
-      line-height: 12px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .progress-wrap {
-      margin: 10px 0 5px;
-      background-color: #DCE6F2;
-      border-radius: 5px;
-      .progress-inner {
+
+  .progress-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .progress-box {
+      width: 155px;
+      height: 64px;
+      padding: 15px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0, 0.05);
+      background-color: $white;
+      border-radius: 4px;
+      font-weight: 400;
+      .ram-default {
+        font-size: 14px;
+        line-height: 14px;
+        display: flex;
+        justify-content: space-between;
+
+      }
+      .ram-used {
+        font-size: 12px;
+        line-height: 12px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .percent {
+        color: #1E64E2;
+      }
+
+      .progress-wrap {
+        margin: 10px 0 5px;
+        background-color: #DCE6F2;
         border-radius: 5px;
-        background-color: #6598F4;
-        height: 10px;
-        transition: width 1s;
+        .progress-inner {
+          border-radius: 5px;
+          background-color: #6598F4;
+          height: 10px;
+          transition: width 1s;
+        }
       }
     }
   }
+
+
+  .coin-list-wrapper {
+    overflow-y: auto;
+    height: 200px;
+    margin-top: 10px;
+    .coin-box {
+      margin-bottom: 10px;
+      height: 60px;
+      padding: 10px 15px;
+      box-shadow: 0 2px 10px 0 rgba(0,0,0, 0.05);
+      background-color: $white;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 400;
+      .img-name {
+        display: flex;
+        align-items: center;
+        .coin-img {
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+        }
+      }
+    }
+
+    .add-token {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      i {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-size: cover;
+        background-image: url("/static/images/icon-add.png");
+        margin-right: 5px;
+      }
+    }
+  }
+
 }
 

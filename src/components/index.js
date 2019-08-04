@@ -26,6 +26,8 @@ import UserAgreement from './UserAgreement';
 import GasManage from './GasManage';
 import RamManage from './RamManage';
 import WhiteList from './WhiteList';
+import TokenDetail from './TokenDetail';
+import AssetManage from './AssetManage';
 
 export {
   Header,
@@ -54,5 +56,7 @@ export {
   UserAgreement,
   RamManage,
   GasManage,
-  WhiteList
+  WhiteList,
+  TokenDetail,
+  AssetManage,
 }

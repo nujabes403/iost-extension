@@ -1,5 +1,7 @@
 .App {
   position: relative;
+  // 为了解决，有的电脑莫名的出现滚动条
+  overflow: hidden;
   height: 600px;
 }
 

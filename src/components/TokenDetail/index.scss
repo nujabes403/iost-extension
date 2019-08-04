@@ -1,0 +1,76 @@
+@import "colors.scss";
+
+.TokenDetail-box {
+  display: inline-block;
+  background-color: $gray;
+  height: 540px;
+  padding: 0 20px;
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  .logo-box {
+    margin-top: 30px;
+    .logo {
+      width: 72px;
+    }
+  }
+  .amount-box {
+    margin: 15px 0 40px;
+    font-size: 16px;
+    > span {
+      display: inline-block;
+      font-size: 22px;
+      text-transform: uppercase;
+      &.amount {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .token-fullName, .view-detail {
+    font-size: 14px;
+    line-height: 14px;
+    color: #666666;
+    font-weight: 300;
+    margin-bottom: 10px;
+  }
+
+  .view-detail {
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+
+  .btn-box {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    > button {
+      &:hover {
+        background-color: #000000;
+        color: $white;
+      }
+    }
+    a{
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      outline: 0;
+      text-align: center;
+      transition: background-color 300ms, color 300ms;
+      width: 120px;
+      height: 40px;
+      line-height: 40px;
+      background-color: #FFFFFF;
+      color: #000000;
+      border: 1px solid;
+      text-decoration: none;
+      &:hover {
+        background-color: #000000;
+        color: $white;
+      }
+    }
+    .btn-receipt {
+      margin-left: 20px;
+    }
+  }
+}

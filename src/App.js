@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { Login, Account, AccountImport, AccountManage, TokenTransfer, TokenTransferFailed, TokenTransferSuccess,
   AccountQRCode, AccountCreateStep1, AccountCreateStep2, AccountCreateStep3, AccountSetting, ChangePwd,
-  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement, GasManage, RamManage, WhiteList
+  Lock, AccountAdd, ChangeLanguage, IostWallet, UserAgreement, GasManage, RamManage, WhiteList, TokenDetail,
+  AssetManage
 } from 'components'
 import Settings from 'components/Settings'
 import Popup from 'components/Popup'
@@ -12,6 +13,7 @@ import utils from 'utils'
 import user from 'utils/user'
 import * as accountActions from 'actions/accounts'
 import './App.scss'
+import ui from "utils/ui";
 
 type Props = {
   children: React.DOM,
@@ -121,6 +123,10 @@ class App extends Component<Props> {
         return <GasManage changeLocation={this.changeLocation} />
       case '/ramManage':
         return <RamManage changeLocation={this.changeLocation} />
+      case '/tokenDetail':
+        return <TokenDetail changeLocation={this.changeLocation} />
+      case '/assetManage':
+        return <AssetManage changeLocation={this.changeLocation} />
     }
   }
 

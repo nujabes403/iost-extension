@@ -42,6 +42,8 @@ class Account extends Component<Props> {
   }
 
   init = async () => {
+    ui.settingLocation('/account')
+    const { changeLocation } = this.props
     try {
       const accounts = await user.getUsers()
       if(accounts.length){
@@ -63,7 +65,7 @@ class Account extends Component<Props> {
           })
         }
       }else {
-        this.changeLocation('/accountImport')
+        changeLocation('/accountImport')
       }
     } catch (err) {
       console.log(err)
@@ -77,7 +79,7 @@ class Account extends Component<Props> {
   }
 
   moveTo = (location) => () => {
-    const { changeLocation } = this.props
+    const { changeLocation, locationList } = this.props
     ui.settingLocation(location)
     changeLocation(location)
   }
@@ -99,10 +101,10 @@ class Account extends Component<Props> {
         // iost.loginAccount(name, encodedPrivateKey)
 
         iost.changeAccount(account)
+        await user.setActiveAccount(account)
         this.setState({
           currentAccount: account,
         })
-        await user.setActiveAccount(account)
         // console.log('switch account')
         this.toggleAccountList()
       }else {
@@ -111,16 +113,16 @@ class Account extends Component<Props> {
     } catch (err) {
 
     }
-
   }
 
   render() {
     const { isShowAccountList, currentAccount, loading } = this.state
     const { accounts } = this.props
+
     if(loading) return <div></div>
     return (
       <Fragment>
-        <Header onSetting={this.moveTo('/accountSetting')} logo={true}>
+        <Header onSetting={this.moveTo('/accountSetting')} logo={true} hasAdd onBack={this.moveTo('/assetManage')}>
           <div className="account-currentName-box" onClick={this.toggleAccountList}>
             <i className={cx('circle', currentAccount.network != 'MAINNET' ? 'test' : '')} />
             <span className="account-name">{currentAccount.name}</span>
@@ -142,7 +144,9 @@ class Account extends Component<Props> {
               }
             </ul>
           </div>
+
           <TokenBalance account={currentAccount} moveTo={this.moveTo}/>
+
           <div className={cx("btn-box", 'active')}>
             <Button
               className="btn-transfer btn-account"

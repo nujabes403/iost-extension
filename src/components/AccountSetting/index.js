@@ -13,6 +13,7 @@ const settingList = [
   { id: 4, name: 'lock' },
   { id: 5, name: 'whitelist' },
   { id: 6, name: 'iostWallet' },
+  // { id: 7, name: 'assetManage' },
 ]
 type Props = {
 
@@ -24,7 +25,6 @@ class AccountSetting extends Component<Props> {
 
   moveTo = (location) => () => {
     const { changeLocation } = this.props
-    
     ui.settingLocation(location)
     changeLocation(location)
   }
@@ -32,7 +32,6 @@ class AccountSetting extends Component<Props> {
   backTo = () => {
     const { changeLocation, locationList } = this.props
     ui.deleteLocation()
-    // console.log(locationList)
     changeLocation(locationList[locationList.length - 1])
   }
 

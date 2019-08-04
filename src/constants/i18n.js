@@ -48,6 +48,9 @@ const enTranslation = {
   "Account_Confirmed": "Confirmed",
   "Account_NotApproved": "Not approved",
   "Account_Failed": "Failed",
+  "Account_AddToken": "Add Token",
+
+
   "Transfer_Amount": "Transfer Amount",
   "Transfer_Balance": "Balance: %{num} %{token}",
   "Transfer_InputAmount": "Input Amount",
@@ -58,7 +61,10 @@ const enTranslation = {
   "Transfer_Resource": "Resource Fees",
   "Transfer_Submit": "Submit",
   "Transfer_Tip": "If your resources are insufficient, we will help you pledge some IOST to complete the transfer.",
-  "Receive_Title": "This address only accept IOST transfer",
+  "Transfer_Choose": "Choose Token",
+
+
+  "Receive_Title": "This address only accept tokens on IOST blockchain",
   "Receive_Copy": "Copy payment address",
   "Receive_Tip": "* Now supports xxx wallet",
   "Settings_Title": "Settings",
@@ -68,6 +74,9 @@ const enTranslation = {
   "Settings_lock": "Lock now",
   "Settings_whitelist": "Whitelist",
   "Settings_iostWallet": "About IOST Wallet",
+  "Settings_assetManage": "Asset Management",
+
+
   "ManageAccount_Add": "Import",
   "ManageAccount_PublicKey": "PubKey",
   "ManageAccount_PrivateKey": "Private Key",
@@ -90,6 +99,17 @@ const enTranslation = {
   "Lock_Unlock": "Unlock Wallet",
   "AboutIOST_nodeVoting": "Join voting for nodes.",
   "AboutIOST_userAgreement": "User Agreement",
+
+  "AssetManage_TokenName": "Token Name",
+  "AssetManage_Add": "Add",
+  "AssetManage_AddSuccess": "Token added!",
+  "AssetManage_AddExisted": "Token already existed",
+  "AssetManage_AddNotFound": "Token not found, please retry",
+  "AssetManage_MyAsset": "My Asset",
+
+  "TokenDetail_Full": "Token Full Name",
+  "TokenDetail_Detail": "Detail",
+
 
   "Dapp_Unlock": "Unlock Now",
   "Dapp_Authorization": "Authorization Requested",
@@ -196,6 +216,7 @@ const zhTranslation = {
   "Account_Confirmed": "已确认",
   "Account_NotApproved": "未批准",
   "Account_Failed": "失败",
+  "Account_AddToken": "添加Token",
 
   "Transfer_Amount": "转账金额",
   "Transfer_Balance": "余额：%{num} %{token}",
@@ -207,8 +228,11 @@ const zhTranslation = {
   "Transfer_Resource": "资源费用",
   "Transfer_Submit": "提交",
   "Transfer_Tip": "*如果您的资源不足，在转账时我们将替您抵押部分 IOST 以完成转账。",
+  "Transfer_Choose": "选择Token",
 
-  "Receive_Title": "此地址只支持转入IOST",
+
+
+  "Receive_Title": "此地址只支持IOST链币种",
   "Receive_Copy": "复制收款地址",
   "Receive_Tip": "*目前已支持 XXX 钱包",
 
@@ -219,6 +243,7 @@ const zhTranslation = {
   "Settings_lock": "立即锁定",
   "Settings_whitelist": "白名单",
   "Settings_iostWallet": "关于IOST钱包",
+  "Settings_assetManage": "资产管理",
 
   "ManageAccount_Add": "添加",
   "ManageAccount_PublicKey": "公钥",
@@ -246,6 +271,19 @@ const zhTranslation = {
 
   "AboutIOST_nodeVoting": "参与节点投票",
   "AboutIOST_userAgreement": "用户协议",
+
+  "AssetManage_TokenName": "Token名称",
+  "AssetManage_Add": "添加",
+  "AssetManage_AddSuccess": "Token添加成功！",
+  "AssetManage_AddExisted": "Token已存在",
+  "AssetManage_AddNotFound": "未找到此Token，请重试",
+  "AssetManage_MyAsset": "我的资产",
+
+  "TokenDetail_Full": "Token全称",
+  "TokenDetail_Detail": "查看详情",
+
+
+
 
   "Dapp_Unlock": "立即解锁",
   "Dapp_Authorization": "请求授权",
@@ -354,6 +392,9 @@ const koTranslation = {
   "Account_Confirmed": "확인",
   "Account_NotApproved": "승인이 거절 됨",
   "Account_Failed": "실패했습니다",
+  "Account_AddToken": "Add Token",
+
+
   "Transfer_Amount": "트랜스퍼 수량",
   "Transfer_Balance": "밸런스: %{num} %{token}",
   "Transfer_InputAmount": "인풋 수량",
@@ -364,7 +405,11 @@ const koTranslation = {
   "Transfer_Resource": "리소스 비용",
   "Transfer_Submit": "제출하기",
   "Transfer_Tip": "귀하의 리소스가 충분하지 않은 경우 일부 IOST가 송금을 완료 할 것을 약속해드립니다.",
-  "Receive_Title": "이 주소는 IOST 전송 만 허용합니다.",
+  "Transfer_Choose": "Choose Token",
+
+
+
+  "Receive_Title": "This address only accept tokens on IOST blockchain",
   "Receive_Copy": "지불주소 복사",
   "Receive_Tip": "* 이제 xxx 지갑을 지원합니다.",
   "Settings_Title": "설정",
@@ -374,6 +419,9 @@ const koTranslation = {
   "Settings_lock": "지금 잠구기",
   "Settings_whitelist": "화이트리스트",
   "Settings_iostWallet": "IOST 지갑 정보",
+  "Settings_assetManage": "Asset Management",
+
+
   "ManageAccount_Add": "추가",
   "ManageAccount_PublicKey": "퍼블릭 키",
   "ManageAccount_PrivateKey": "프라이빗 키",
@@ -396,6 +444,16 @@ const koTranslation = {
   "Lock_Unlock": "지갑 잠금해제",
   "AboutIOST_nodeVoting": "노드 투표에 참여하십시오.",
   "AboutIOST_userAgreement": "사용자 동의서",
+
+  "AssetManage_TokenName": "Token Name",
+  "AssetManage_Add": "Add",
+  "AssetManage_AddSuccess": "Token added!",
+  "AssetManage_AddExisted": "Token already existed",
+  "AssetManage_AddNotFound": "Token not found, please retry",
+  "AssetManage_MyAsset": "My Asset",
+
+  "TokenDetail_Full": "Token Full Name",
+  "TokenDetail_Detail": "Detail",
 
   "Dapp_Unlock": "지금 잠금해제하기",
   "Dapp_Authorization": "승인 요청 됨",
