@@ -33,12 +33,14 @@ const enTranslation = {
   "CreateAccount_PaymentAddress": "Payment Address",
   "CreateAccount_CheckCreate": "Check account creation status",
   "CreateAccount_ToastTip2": "Account not created yet ",
-  "CreateAccount_ToastTip3": "账户创建成功",
+  "CreateAccount_ToastTip3": "Account successfully created",
 
-  "ImportAccount_EnterPrivate": "Fill in MainNet  / TestNet account private key",
+  "ImportAccount_EnterPrivate": "Fill in account private key",
+  "ImportAccount_EnterName": "Fill in LocalNet account name",
   "ImportAccount_Submit": "Submit",
   "ImportAccount_Completed": "Import Completed",
   "ImportAccount_Failed": "Import failed, please try again.",
+  "ImportAccount_LocalNetMessage": "To import a LocalNet account, please also enter account name below:",
   "ImportAccount_Tip1": "No corresponding account found",
   "ImportAccount_Tip2": "Private key can not be blank",
   "ImportAccount_Tip3": "No corresponding public key found ",
@@ -75,12 +77,14 @@ const enTranslation = {
   "Settings_whitelist": "Whitelist",
   "Settings_iostWallet": "About IOST Wallet",
   "Settings_assetManage": "Asset Management",
+  "Settings_developerMode": "Developer Mode",
 
 
   "ManageAccount_Add": "Import",
   "ManageAccount_PublicKey": "PubKey",
   "ManageAccount_PrivateKey": "Private Key",
   "ManageAccount_Official": "MainNet",
+  "ManageAccount_Local": "LocalNet",
   "ManageAccount_Test": "TestNet",
   "ManageAccount_Copy": "Successfully Copied",
   "ManageAccount_Delete": "Do you confirm to delete?",
@@ -99,6 +103,7 @@ const enTranslation = {
   "Lock_Unlock": "Unlock Wallet",
   "AboutIOST_nodeVoting": "Join voting for nodes.",
   "AboutIOST_userAgreement": "User Agreement",
+  "AboutIOST_developerMode": "Developer Mode",
 
   "AssetManage_TokenName": "Token Name",
   "AssetManage_Add": "Add",
@@ -203,10 +208,12 @@ const zhTranslation = {
   "CreateAccount_ToastTip2": "账户尚未创建成功",
   "CreateAccount_ToastTip3": "账户创建成功",
 
-  "ImportAccount_EnterPrivate": "您可填写 测试网/正式网 私钥",
+  "ImportAccount_EnterPrivate": "您可填写私钥",
+  "ImportAccount_EnterName": "输入本地网账户名",
   "ImportAccount_Submit": "提交",
   "ImportAccount_Completed": "导入成功",
   "ImportAccount_Failed": "导入失败，请重试",
+  "ImportAccount_LocalNetMessage": "若导入本地网帐户，请在下面输入帐户名：",
   "ImportAccount_Tip1": "未找到对应的账户",
   "ImportAccount_Tip2": "私钥不能为空",
   "ImportAccount_Tip3": "未找到对应的公钥",
@@ -244,12 +251,15 @@ const zhTranslation = {
   "Settings_whitelist": "白名单",
   "Settings_iostWallet": "关于IOST钱包",
   "Settings_assetManage": "资产管理",
+  "Settings_developerMode": "开发人员模式",
+
 
   "ManageAccount_Add": "添加",
   "ManageAccount_PublicKey": "公钥",
   "ManageAccount_PrivateKey": "私钥",
-  "ManageAccount_Official": "正式",
-  "ManageAccount_Test": "测试",
+  "ManageAccount_Official": "主网",
+  "ManageAccount_Test": "测试网",
+  "ManageAccount_Local": "本地网",
   "ManageAccount_Copy": "复制成功",
   "ManageAccount_Delete": "是否确认删除？",
   "ManageAccount_DeleteTip": "删除账号前请确定已导出私钥，否则删除后将无法恢复账号。",
@@ -271,6 +281,7 @@ const zhTranslation = {
 
   "AboutIOST_nodeVoting": "参与节点投票",
   "AboutIOST_userAgreement": "用户协议",
+  "AboutIOST_developerMode": "开发人员模式",
 
   "AssetManage_TokenName": "Token名称",
   "AssetManage_Add": "添加",
@@ -380,9 +391,11 @@ const koTranslation = {
   "CreateAccount_ToastTip3": "账户创建成功",
 
   "ImportAccount_EnterPrivate": "정식 / 테스트 계정 프라이빗 키 채우기",
+  "ImportAccount_EnterName": "로컬 네트워크 계정 이름을 적어주세요.",
   "ImportAccount_Submit": "제출",
   "ImportAccount_Completed": "가져오기 완료",
   "ImportAccount_Failed": "가져오기에 실패했습니다. 다시 시도하십시오.",
+  "ImportAccount_LocalNetMessage": "로컬 네트워크에 로그인 할 계정 이름을 적어주세요：",
   "ImportAccount_Tip1": "해당하는 계정정보가 없습니다",
   "ImportAccount_Tip2": "프라이빗 키는 빈칸일 수 없습니다",
   "ImportAccount_Tip3": "해당하는 퍼블릭 키 정보가 없습니다. ",
@@ -420,6 +433,7 @@ const koTranslation = {
   "Settings_whitelist": "화이트리스트",
   "Settings_iostWallet": "IOST 지갑 정보",
   "Settings_assetManage": "Asset Management",
+  "Settings_developerMode": "개발자 모드",
 
 
   "ManageAccount_Add": "추가",
@@ -427,6 +441,7 @@ const koTranslation = {
   "ManageAccount_PrivateKey": "프라이빗 키",
   "ManageAccount_Official": "정식",
   "ManageAccount_Test": "테스트",
+  "ManageAccount_Local": "로컬",
   "ManageAccount_Copy": "성공적으로 복사 됨",
   "ManageAccount_Delete": "삭제에 동의 하시겠습니까?",
   "ManageAccount_DeleteTip": "계정을 삭제하기 전에 프라이빗 키를 반드시 내 보내야합니다. 계정은 삭제 후에는 검색 할 수 없습니다.",
@@ -444,6 +459,8 @@ const koTranslation = {
   "Lock_Unlock": "지갑 잠금해제",
   "AboutIOST_nodeVoting": "노드 투표에 참여하십시오.",
   "AboutIOST_userAgreement": "사용자 동의서",
+  "AboutIOST_developerMode": "개발자 모드",
+
 
   "AssetManage_TokenName": "Token Name",
   "AssetManage_Add": "Add",
