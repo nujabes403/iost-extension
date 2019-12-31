@@ -83,11 +83,6 @@ class AccountManage extends Component<Props> {
     ui.toggleModal()
   }
 
-  
-  decodePrivateKey = (privateKey, password) => {
-    return utils.aesDecrypt(privateKey, password);
-  }
-
   render() {
     const { accounts } = this.props;
     if (!this.state.password) { return null; }
@@ -109,10 +104,10 @@ class AccountManage extends Component<Props> {
                     <span className="account-name">{item.name}</span>
                   </div>
                   <div className="publicKey-box">
-                  <span className="publicKey-title">{I18n.t('ManageAccount_PrivateKey')}</span>
+                  <span className="publicKey-title">{I18n.t('ManageAccount_PublicKey')}</span>
                     <span className="publicKey-name">
                       <span className="truncate">************</span>
-                      <CopyToClipboard onCopy={this.onCopy} text={this.decodePrivateKey(item.privateKey, this.state.password)}>
+                      <CopyToClipboard onCopy={this.onCopy} text={item.publicKey}>
                         <i className="copy" />
                       </CopyToClipboard>
                     </span>
