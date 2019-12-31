@@ -1,8 +1,9 @@
 const iconSrc = {
-  iost: '/static/images/logo3.png',
-  emogi: '/static/images/icon-token-emogi.png',
+  iost: '/static/images/icon-token-iost.png',
+  lol: '/static/images/icon-token-lol.png',
   abct: '/static/images/icon-token-abct.svg',
   default: '/static/images/icon-token-default.png',
 }
+
 
 export default iconSrc

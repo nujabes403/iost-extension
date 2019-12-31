@@ -33,19 +33,6 @@ type Props = {
 
 }
 
-
-let tokenList = [
-  {symbol: 'iost', amount: '1234.56788765'},
-  {symbol: 'emogi', amount: '1234.56788765'},
-  {symbol: 'abct', amount: '1234.56788765'},
-  {symbol: 'iet', amount: '1234.56788765'},
-  {symbol: 'usdt', amount: '1234.56788765'},
-  {symbol: 'btc', amount: '1234.56788765'},
-  {symbol: 'eth', amount: '1234.56788765'},
-  {symbol: 'trx', amount: '1234.56788765'},
-]
-
-
 class Index extends Component<Props> {
   constructor(props){
     super(props)

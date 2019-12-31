@@ -31,6 +31,6 @@ export default token
 
 export const defaultAssets = [
   {symbol: 'iost', fullName: 'iost'},
-  {symbol: 'emogi', fullName: 'EMOGI'},
+  {symbol: 'lol', fullName: 'EMOGI'},
   {symbol: 'abct', fullName: 'iostabc token'},
 ]

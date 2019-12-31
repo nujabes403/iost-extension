@@ -21,17 +21,6 @@ type Props = {
 
 }
 
-let tokenList = [
-  {symbol: 'iost', fullName: 'Endless Token'},
-  {symbol: 'emogi', fullName: 'Endless Token'},
-  {symbol: 'abct', fullName: 'Endless Token'},
-  {symbol: 'iet', fullName: 'Endless Token'},
-  {symbol: 'usdt', fullName: 'Endless Token'},
-  {symbol: 'btc', fullName: 'Endless Token'},
-  {symbol: 'eth', fullName: 'Endless Token'},
-  {symbol: 'trx', fullName: 'Endless Token'},
-]
-
 /**
  * assets = { ['account-network']: [{symbol:'',fullName: ''}]}
  */
