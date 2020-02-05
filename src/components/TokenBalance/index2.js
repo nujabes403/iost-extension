@@ -23,7 +23,7 @@ type Props = {
 
 let tokenList = [
   {symbol: 'iost', asset: '1234.56788765'},
-  {symbol: 'emogi', asset: '1234.56788765'},
+  {symbol: 'lol', asset: '1234.56788765'},
   {symbol: 'abct', asset: '1234.56788765'},
   {symbol: 'iet', asset: '1234.56788765'},
   {symbol: 'usdt', asset: '1234.56788765'},
