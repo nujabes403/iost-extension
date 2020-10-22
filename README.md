@@ -12,6 +12,9 @@ IOST Extension also lets the user sign transaction while doesn't exposing any se
 
 Because it adds functionality to the browser, IOST Extension requires the permission to read and write to any webpage. You can always "view the source" of IOST Extension the way you do any Chrome extension, or view the source code on Github:
 
+## Tech Docs
+[Doc](doc/README.md)
+
 ### How to run this code in my chrome browser?
 
 1. clone this repository  `git clone ...`

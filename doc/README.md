@@ -79,3 +79,41 @@ IWalletJS.enable().then((account) => {
     }
 })
 ```
+
+### How to verify the signature
+
+The actual signed message is prefixed with 4 bytes big endian length. For example, using iwallet to sign 'lianwantang' is actually signing "\x00\x00\x00\x0blianwantang".  
+After signing, you can check the signature like this:
+
+#### Javascript
+
+```
+const Signature = require('iost.js').Signature;
+const sigr = Signature.fromJSON(JSON.stringify({algorithm: "ED25519", public_key: "vrpJD/m2Jsl4fr3jjyQUwUD0mhd1t/jiV8qvqJnAH74=", signature: "ARbN/gXhpujahwlGxmaENbonVXqWLZJGhdiEEVkdBaa8rDkJtqxy1w3UUuqKRuGi/Ol1Winyn+FVDPpzOQe8Cg==", message: "lianwantang"}));
+let messageRaw = "lianwantang";
+let lenBuf = Buffer.alloc(4);
+lenBuf.writeInt32BE(messageRaw.length, 0);
+let messageFull = Buffer.concat([lenBuf, Buffer.from(messageRaw)])
+console.log("Signature recover result: ", sigr.verify(messageFull));)
+```
+
+Golang
+
+```
+  import ""github.com/iost-official/go-iost/crypto"
+  rawMessage := []byte("\x00\x00\x00\x0blianwantang")
+  pubkeyBytes, err := base64.StdEncoding.DecodeString("vrpJD/m2Jsl4fr3jjyQUwUD0mhd1t/jiV8qvqJnAH74=")
+  if err != nil {
+   panic(err)
+  }
+  sigBytes, err := base64.StdEncoding.DecodeString("ARbN/gXhpujahwlGxmaENbonVXqWLZJGhdiEEVkdBaa8rDkJtqxy1w3UUuqKRuGi/Ol1Winyn+FVDPpzOQe8Cg==")
+  if err != nil {
+   panic(err)
+  }
+  sign :=&crypto.Signature{
+   Algorithm: crypto.Ed25519,
+   Sig:       sigBytes,
+   Pubkey:    pubkeyBytes,
+  }
+  fmt.Println(sign.Verify(rawMessage))
+```
