@@ -152,11 +152,11 @@ function signMessage(message) {
         }, 0)
         return cb;
     }
-    let regex = /^[1-9a-zA-Z]{1,11}$/;
-    if (!regex.test(message)) {
+    let regex = /^[0-9a-zA-Z]{1,11}$/;
+    if (!(regex.test(message) || message.startsWith("IOST Signed Message:"))) {
         // throw new Error(`signMessage failure message must match '/^[1-9a-zA-Z]{12}$/'`);
         setTimeout(() => {
-            cb.pushMsg("failed", 'message must be [1-9a-zA-Z], size less than 12')
+            cb.pushMsg("failed", 'message must be either (1) [0-9a-zA-Z] with size less than 12 OR (2) start with "IOST Signed Message:"')
         }, 0)
         return cb;
     }

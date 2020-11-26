@@ -26,10 +26,11 @@ Because it adds functionality to the browser, IOST Extension requires the permis
 
 ### How to use for dapp?
 Here is a dapp sample. [iost-helloworld-dapp](https://github.com/lucusfly/iost-helloworld-dapp)
+Here is [another full featured defi/game DAPP](https://pumpkindefi.com/). You can use chrome dev tool to view to source code of the frontend of this DAPP.
 
 ### Community
 
-Please join our [telegram group](https://t.me/IOSTWallet) for more info.
+Please join our [telegram group](https://t.me/iostdev) for more info.
 
 
 <!-- const iost = IOSTJS.iost(IOST) -->

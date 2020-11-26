@@ -103,12 +103,12 @@ TxController.prototype.processTx = async function(txIdx, isAddWhitelist, iGASPri
 
       if (signMessageActionName === actionName) {
           const waitSignMessage = memo[0];
-          let regex = /^[1-9a-zA-Z]{1,11}$/;
-          if (!regex.test(waitSignMessage)) {
+          let regex = /^[0-9a-zA-Z]{1,11}$/;
+          if (!(regex.test(waitSignMessage) || waitSignMessage.startsWith("IOST Signed Message:"))) {
               this.port.forEach((port) => {
                   port.postMessage({
                       actionId: actionId,
-                      failed: `signMessage failure message must match '/^[1-9a-zA-Z]{12}$/'`
+                      failed: `signMessage failure message must match '/^[0-9a-zA-Z]{12}$/' or start with "IOST Signed Message:"`
                   });
               })
               return;
