@@ -30,7 +30,8 @@ export const getTokenInfo = async (token, isProd) => {
 export default token
 
 export const defaultAssets = [
-  {symbol: 'iost', fullName: 'iost'},
-  {symbol: 'lol', fullName: 'LOL'},
-  {symbol: 'abct', fullName: 'iostabc token'}
+  {symbol: 'iost', fullName: 'iost', onlyIssuerCanTransfer:false },
+  {symbol: 'husd', fullName: 'IOST-Peg HUSD Token', onlyIssuerCanTransfer:true, issuer:'Contract3zCNX76rb3LkiAamGxCgBRCNn6C5fXJLaPPhZu2kagY3'},
+  {symbol: 'lol', fullName: 'LOL', onlyIssuerCanTransfer:false},
+  {symbol: 'abct', fullName: 'iostabc token', onlyIssuerCanTransfer:false}
 ]

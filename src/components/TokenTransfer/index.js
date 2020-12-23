@@ -114,8 +114,8 @@ class Index extends Component<Props> {
     })
   }
 
-  transfer = () => {
-    const { to, amount, iGASPrice, iGASLimit, memo, token } = this.state
+  transfer =  () => {
+    const { to, amount, iGASPrice, iGASLimit, memo, token, assetsList } = this.state
     const { selectedTokenSymbol } = this.props
     const accountName = iost.account.getID()
 
@@ -127,7 +127,9 @@ class Index extends Component<Props> {
     //   JSON.stringify([selectedTokenSymbol, accountName, to, amount, memo]),
     // )
     // tx.setTime(defaultConfig.expiration, defaultConfig.delay, 0)
-    const tx = iost.iost.callABI('token.iost', 'transfer', [token, accountName, to, amount, memo])
+    const filterSymbol = this.filterSymbol(defaultAssets, token) || this.filterSymbol(assetsList, token)
+    const contract = this.assetsFilter(filterSymbol)
+    const tx = iost.iost.callABI(contract, 'transfer', [token, accountName, to, amount, memo])
 
     const chainId = ((iost.rpc.getProvider()._host.indexOf('//api.iost.io') < 0) && (iost.rpc.getProvider()._host.indexOf('//127.0.0.1') < 0) && (iost.rpc.getProvider()._host.indexOf('//localhost') < 0)) ? 1023 : 1024;
     tx.setChainID(chainId)
@@ -288,6 +290,15 @@ class Index extends Component<Props> {
     })
   }
 
+  filterSymbol = (list, token) =>{
+    let listfilter = list.filter(item => item.symbol === token )
+    console.log("listfilter", listfilter)
+    return  listfilter.length > 0 ?  listfilter : false
+  }
+
+  assetsFilter = (list) =>{
+    return list[0].onlyIssuerCanTransfer ? list[0].issuer : 'token.iost'
+  }
 
   render() {
     const { isSending, iGASPrice, iGASLimit, errorMessage, isShowing, balance, isShowTokenList, token, assetsList } = this.state

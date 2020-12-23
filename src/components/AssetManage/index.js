@@ -97,7 +97,7 @@ class AssetManage extends Component<Props> {
       // 未找到该币，会报错
       const data = await getTokenInfo(token, account.network)
       const assets = await utils.getStorage('assets', {})
-      const asset = { symbol: token, fullName: data.full_name }
+      const asset = { symbol: token, fullName: data.full_name, onlyIssuerCanTransfer:data.only_issuer_can_transfer, issuer:data.issuer  }
       assets[_user] = [...(assets[_user] || []), asset]
       await utils.setStorage('assets', assets)
       Toast.html(I18n.t('AssetManage_AddSuccess'))
